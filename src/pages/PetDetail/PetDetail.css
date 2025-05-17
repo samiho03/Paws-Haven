@@ -1,0 +1,595 @@
+/* Main Container */
+.pet-detail-container {
+    max-width: 1200px;
+    margin: 80px 20px;
+    padding: 2rem 1rem;
+    position: relative;
+  }
+  
+  /* Back Link */
+  .pet-detail-back {
+    margin-bottom: 1.5rem;
+  }
+  
+  .pet-detail-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  
+  .pet-detail-back-link:hover {
+    color: #2980b9;
+  }
+  
+  /* Main Content Layout */
+  .pet-detail-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  /* Gallery Section */
+  .pet-detail-gallery {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .pet-detail-main-image {
+    height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pet-detail-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Info Section */
+  .pet-detail-info {
+    padding: 0 1rem;
+  }
+  
+  .pet-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  
+  .pet-detail-name {
+    font-size: 2.2rem;
+    color: #2c3e50;
+    margin: 0;
+  }
+  
+  .pet-detail-actions {
+    display: flex;
+    gap: 0.8rem;
+  }
+  
+  .pet-detail-like-btn,
+  .pet-detail-share-btn {
+    background: #f8f9fa;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .pet-detail-like-btn:hover,
+  .pet-detail-share-btn:hover {
+    background: #e9ecef;
+  }
+  
+  .pet-detail-like-btn.liked {
+    color: #e74c3c;
+  }
+  
+  .pet-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .pet-detail-meta span {
+    background: #f1f5f9;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #4b5563;
+  }
+  
+  .pet-detail-location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+  }
+  
+  .pet-detail-location-icon {
+    color: #e74c3c;
+  }
+  
+  /* Sections */
+  .pet-detail-section {
+    margin-bottom: 2rem;
+  }
+  
+  .pet-detail-section-title {
+    font-size: 1.3rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .pet-detail-description {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .pet-detail-description strong {
+    color: #2c3e50;
+    font-weight: 600;
+  }
+
+  .pd-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .pd-feature-card {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 3px solid #3498db;
+  }
+  
+  .pd-feature-card-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .pd-feature-card-title svg {
+    color: #3498db;
+  }
+  
+  .pd-feature-card-content {
+    color: #4b5563;
+    line-height: 1.5;
+  }
+  
+  /* Owner Info */
+  .pet-detail-owner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .pet-detail-owner-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    color: #9ca3af;
+  }
+  
+  .pet-detail-owner-info {
+    flex: 1;
+  }
+  
+  .pet-detail-owner-name {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+  }
+  
+  .pet-detail-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .pet-detail-contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4b5563;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .pet-detail-contact-link:hover {
+    color: #3498db;
+  }
+  
+  /* Chat Button */
+  .pet-detail-chat-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 2rem;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .pet-detail-chat-btn:hover {
+    background: #2980b9;
+  }
+  
+  /* Recommended Pets */
+  .pet-detail-recommended {
+    margin-top: 4rem;
+  }
+  
+  .pet-detail-recommended-title {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .pet-detail-recommended-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .pet-detail-recommended-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .pet-detail-recommended-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pet-detail-recommended-image {
+    height: 180px;
+    position: relative;
+  }
+  
+  .pet-detail-recommended-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .pet-detail-recommended-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+  }
+  
+  .pet-detail-recommended-status.available {
+    background: rgba(46, 204, 113, 0.9);
+  }
+  
+  .pet-detail-recommended-status.adopted {
+    background: rgba(231, 76, 60, 0.9);
+  }
+  
+  .pet-detail-recommended-info {
+    padding: 1rem;
+  }
+  
+  .pet-detail-recommended-info h3 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.1rem;
+    color: #2c3e50;
+  }
+  
+  .pet-detail-recommended-info p {
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+  
+  /* Chat Box */
+  .pet-detail-chatbox {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 350px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow: hidden;
+  }
+  
+  .pet-detail-chatbox-header {
+    background: #3498db;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .pet-detail-chatbox-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  
+  .pet-detail-chatbox-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+  }
+  
+  .pet-detail-chatbox-body {
+    padding: 1rem;
+  }
+  
+  .pet-detail-chatbox-body textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 0.8rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    resize: none;
+    font-family: inherit;
+  }
+  
+  .pet-detail-chatbox-footer {
+    padding: 0.8rem 1rem;
+    background: #f9fafb;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .pet-detail-chatbox-send {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .pet-detail-chatbox-send:hover {
+    background: #2980b9;
+  }
+  
+  .pet-detail-chatbox-send:disabled {
+    background: #cbd5e1;
+    cursor: not-allowed;
+  }
+  
+  /* Loading and Error States */
+  .pet-detail-loading,
+  .pet-detail-error,
+  .pet-detail-not-found {
+    text-align: center;
+    padding: 3rem;
+  }
+  
+  .pet-detail-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 40px;
+    height: 40px;
+    animation: pet-detail-spin 1s linear infinite;
+    margin: 0 auto 1rem;
+  }
+
+  .pet-detail-owner-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #999;
+}
+
+/* For the FontAwesome fallback */
+.pet-detail-owner-avatar svg {
+    width: 100%;
+    height: 100%;
+}
+  
+  @keyframes pet-detail-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .pet-detail-error p {
+    color: #e74c3c;
+    margin-bottom: 1rem;
+  }
+  
+  .pet-detail-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #3498db;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  
+  .pet-detail-back-btn:hover {
+    background: #2980b9;
+  }
+  
+  .pet-detail-not-found h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 900px) {
+    .pet-detail-main {
+      grid-template-columns: 1fr;
+    }
+  
+    .pet-detail-main-image {
+      height: 400px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .pet-detail-container {
+      padding: 1rem;
+    }
+  
+    .pet-detail-main-image {
+      height: 300px;
+    }
+  
+    .pet-detail-chatbox {
+      width: calc(100% - 2rem);
+      right: 1rem;
+      bottom: 1rem;
+    }
+  }
+
+  /* Add to PetDetail.css */
+
+/* Quick Facts Section */
+.pet-detail-quick-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  .quick-fact {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .quick-fact svg {
+    color: #3498db;
+  }
+  
+  /* Tabs */
+  .pet-detail-tabs {
+    display: flex;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tab-button {
+    padding: 0.8rem 1.5rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .tab-button.active {
+    color: #3498db;
+    border-bottom-color: #3498db;
+  }
+  
+  .tab-button:hover:not(.active) {
+    color: #2c3e50;
+  }
+  
+  /* Tab Content */
+  .pet-detail-tab-content {
+    min-height: 200px;
+  }
+  
+  .pet-detail-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  
+  .pd-feature {
+    margin-bottom: 0.8rem;
+  }
+  
+  .pd-feature-label {
+    font-weight: 600;
+    color: #4b5563;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  
+  /* Section Title Icons */
+  .detail-section-title svg {
+    margin-right: 0.5rem;
+    color: #3498db;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 600px) {
+    .pet-detail-quick-facts {
+      grid-template-columns: 1fr;
+    }
+    
+    .pet-detail-tabs {
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+    
+    .tab-button {
+      padding: 0.6rem 1rem;
+      white-space: nowrap;
+    }
+  }

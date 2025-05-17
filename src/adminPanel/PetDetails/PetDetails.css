@@ -1,0 +1,170 @@
+
+  
+  /* Main container styling */
+  #pet-details-container {
+    max-width: 1200px;
+    margin-left: 20px;
+    padding: 20px;
+    /* background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
+  }
+  
+  /* Title styling */
+  .pet-list-title {
+   
+    color: #19222b;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    margin-top: -10px;
+  }
+  
+  
+  /* Table styling */
+  .pet-list-table {
+    width: 102%;
+    border-collapse: separate;
+    border-spacing: 0; /* Ensure border-radius doesn't collapse */
+    margin-bottom: 20px;
+    margin-top: 40px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden; /* Ensure the rounded corners are applied */
+  }
+  
+  /* Table header */
+  .pet-list-header th {
+    background-color: #171615;
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  /* Set the width of specific columns */
+  .pet-list-details-col {
+    width: 15%; /* Increase width of Pet Details column */
+  }
+  
+  
+  
+  /* Table cell styling */
+  .pet-list-body td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd; /* Add left border to create column distinction */
+  }
+  
+  .pet-list-body td:first-child {
+    border-left: none; /* Remove left border from the first column */
+  }
+  
+  .pet-list-body td:last-child {
+    border-right: none; /* Remove right border from the last column */
+  }
+  .pet-list-row:nth-child(even) {
+    background-color: #f3f1e8;
+  }
+  
+  /* Image Styling */
+  .pet-list-photo img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  .no-photo {
+    color: #888;
+    font-style: italic;
+  }
+  
+  /* Content Styling */
+  .pet-name, .pet-details, .pet-reason-temp, .pet-justify, .owner-details, .pet-reg-status {
+    color: #1a242f;
+  }
+  
+  .pet-details {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    text-align: left;
+  }
+  .pet-justify{
+    font-size: 0.8rem;
+  }
+  .pet-reason-temp {
+    font-size: 0.8rem;
+    text-align: left;
+  }
+  
+  .owner-details {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    text-align: left;
+  }
+  
+  /* Category label bold styling */
+  .category-label {
+    font-weight: bold;
+    color: #1a242f;
+    text-align: left;
+  }
+  
+  
+  /* Button Styling */
+  .approve-button, .reject-button {
+    /* padding: 5px 10px; */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .approve-button i, .reject-button i {
+    margin-right: 8px; /* Add some space between icon and text */
+  }
+  
+  .approve-button {
+    background-color: #27ae60;
+    color: white;
+  }
+  
+  .approve-button:hover {
+    background-color: #2ecc71;
+  }
+  
+  .reject-button {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .reject-button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Add some padding to ensure the buttons don't feel cramped */
+  .approve-button{
+    padding: 10px 5px;
+  }
+   .reject-button {
+     padding: 10px 12px; 
+  }
+  
+  /* Button container to align buttons in the decision column */
+  .button-container {
+    display: flex;
+    gap: 10px; /* Space between the buttons */
+    justify-content: center;
+  }
+  
+  /* No pets message */
+  .no-pets-message {
+    text-align: center;
+    color: #888;
+    font-size: 1.2rem;
+  }
+  

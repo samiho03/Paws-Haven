@@ -1,0 +1,121 @@
+
+  
+  /* Sidebar */
+  .sidebar {
+    width: 230px;
+    background-color: #1c1e21;
+    color: #fff;
+    height: 100vh;
+    padding: 0;
+    position: fixed;
+    left: 0;
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #ffc107;
+  }
+  
+  /* Sidebar List */
+  .sidebar-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar-list li {
+    margin: 15px 0;
+  }
+  
+  /* Modern Link Styling */
+  .sidebar-list li a {
+    display: block;
+    color: #adb5bd;
+    text-decoration: none;
+    font-size: 1.05rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: #1c1e21;
+  }
+  
+  .sidebar-list li a:hover {
+    background-color: #343a40;
+    color: #ffc107;
+  }
+  
+  /* Active Link Styling */
+  .active-link {
+    background-color: #ffc107 !important;
+    color: #343a40 !important;
+    font-weight: bold;
+    border-radius: 8px;
+  }
+  /* Icon Styling */
+.sidebar-icon {
+    margin-right: 10px;
+    font-size: 1rem; /* Adjust size as needed */
+  }
+  /* Content */
+  .content {
+    margin-left: 200px;
+     margin-bottom: 20px; 
+     padding: 20px; 
+    
+  }
+
+/* Style for the logo container */
+.sidebar-logo {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: -20px; /* Add some space below the image */
+}
+
+/* Style for the logo image */
+.sidebar-logo-img {
+  width: 80px; /* Adjust the width based on your design */
+  height: auto; /* Ensure the aspect ratio is maintained */
+  /* border-radius: 50%;  */
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensures that the logout button is at the bottom */
+  height: 100vh; /* Full viewport height */
+}
+
+.sidebar-list {
+  flex-grow: 1; /* This makes the list grow and pushes the logout button to the bottom */
+  padding-left: 0;
+}
+
+.sidebar-logout {
+  padding: 10px 20px;
+  margin-bottom: -10px;
+}
+
+.sidebar-logout .sidebar-icon {
+  margin-right: 10px;
+  font-size: 30px;
+  color:#ffc107;
+}
+
+.sidebar-logo-img {
+  width: 100px; /* Adjust size as needed */
+}
+
+.sidebar-title {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.active-link {
+  font-weight: bold;
+  color: #ff0000; /* Active link color */
+}
+

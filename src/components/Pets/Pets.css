@@ -1,0 +1,168 @@
+/* Recent Pets Section */
+.recent-pets-section {
+    padding: 5rem 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.recent-pets-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.recent-pets-header h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.recent-pets-header .paw-icon {
+    margin-right: 0.5rem;
+    color: #ff6b6b;
+}
+
+.recent-pets-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Pets Grid */
+.recent-pets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.recent-pet-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.recent-pet-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.recent-pet-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.recent-pet-image-container {
+    height: 230px;
+    overflow: hidden;
+}
+
+.recent-pet-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.recent-pet-card:hover .recent-pet-image-container img {
+    transform: scale(1.05);
+}
+
+.recent-pet-info {
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.recent-pet-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.recent-pet-breed {
+    color: #666;
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+}
+
+.recent-pet-age {
+    color: #888;
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+}
+
+/* View More Button */
+.recent-view-more-container {
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.recent-view-more-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.8rem 1.5rem;
+    background-color: #ff6b6b;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.recent-view-more-btn:hover {
+    background-color: #ff5252;
+}
+
+.recent-view-more-btn .arrow-icon {
+    margin-left: 0.5rem;
+}
+
+/* Loading and Error States */
+.recent-pets-loading,
+.recent-pets-error {
+    text-align: center;
+    padding: 2rem;
+}
+
+.loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #ff6b6b;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.no-pets-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .recent-pets-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .recent-pets-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .recent-pets-header h2 {
+        font-size: 1.5rem;
+    }
+}

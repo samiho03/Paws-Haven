@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap"');
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+Sinhala:wght@100..900&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+Sinhala:wght@100..900&family=Pacifico&family=Sniglet:wght@400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Jua&family=Noto+Sans+Sinhala:wght@100..900&family=Pacifico&family=Sniglet:wght@400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Jua&family=Noto+Sans+Sinhala:wght@100..900&family=Pacifico&family=Sniglet:wght@400;800&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+  .paw-prints {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    color: #ecdaff;
+  }
+  
+  .paw-print {
+    position: absolute;
+    animation: float 8s infinite ease-in-out;
+    opacity: 0;
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0) rotate(0deg) scale(1);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-150px) rotate(20deg) scale(0.8);
+      opacity: 0;
+    }
+  }
+  
+  .floating-pet {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    color: #e9d5ff;
+    will-change: transform;
+  }
+  
+
+
+ /* PetAdoptionHero.css */
+ /* Decorative corner images */
+.decorative-image {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    z-index: 1;
+  }
+  
+  .decorative-image.top-left {
+    top: 70px;
+    left: 155px;
+    animation-delay: 0.2s;
+  }
+  
+  .decorative-image.top-right {
+    top: 70px;
+    right: 155px;
+    animation-delay: 0.4s;
+  }
+  
+  .decorative-image.bottom-left {
+    width: 115px;
+    height: 115px;
+    top: 300px;
+    left: 155px;
+    animation-delay: 0.6s;
+
+  }
+  
+  .decorative-image.bottom-right {
+    width: 115px;
+    height: 115px;
+    top: 300px;
+    right: 155px;
+    animation-delay: 0.8s;
+
+  }
+  
+.hero-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
+    align-items: center;
+    text-align: center;
+    padding: 1rem 1.1rem;
+    gap: 1.5rem;
+    z-index: 2;
+  }
+  
+  .hero-title {
+    font-family: "DynaPuff", system-ui;
+    font-size: 3.2rem;
+    font-weight: 600;
+    color: black;
+    line-height: 1.5;
+    animation: textFadeIn 1s ease-out forwards;
+
+  }
+  
+  @keyframes textFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-description {
+    margin-top: -35px;
+    color: #6b7280;
+    max-width: 28rem;
+    animation: textFadeIn 1s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+  
+  .hero-button {
+    background-color: #8b5cf6;
+    border: none;
+    color: white;
+    padding: 1.2rem 2rem;
+    border-radius: 999px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .hero-button:hover {
+    background-color: #7c3aed;
+    transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+  }
+  
+  .hero-button:active {
+    transform: scale(0.98);
+  }
+
+  .hero-images {
+    display: flex;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+  }
+  
+  /* .pet-card {
+    padding: 3.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  } */
+  
+  .pink-bg {
+    background-color: #fbcfe8;
+  }
+  
+  .purple-bg {
+    background-color: #e9d5ff;
+  }
+  
+  .yellow-bg {
+    background-color: #fef08a;
+  }
+  
+  .always-hover {
+    transform: scale(0.9) translateY(0) !important;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  .always-hover .pet-image {
+    transform: scale(1.4) !important;
+  }
+
+  .always-hover:hover {
+    transform: scale(0.9) translateY(0) !important;
+  }
+  
+  .always-hover:hover .pet-image {
+    transform: scale(1.4) !important;
+  }
+
+  
+  .pet-image {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    transform-origin: center center;
+  }
+  
+  .pet-card:hover .pet-image {
+    transform: scale(1.4) !important; /* Force override */
+  }
+
+.pet-card {
+    margin-top: 60px;
+    margin-bottom: 20px;
+    padding: 0rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(50px);
+    opacity: 0;
+    animation: fadeInUp 0.8s forwards;
+    transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+
+  }
+  
+.pet-card:hover{
+    transform: scale(0.9) translateY(0) !important;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+  .pet-card:nth-child(1) {
+    animation-delay: 0.3s;
+  }
+  
+  .pet-card:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+  
+  .pet-card:nth-child(3) {
+    animation-delay: 0.7s;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-content h2 {
+      font-size: 2.5rem;
+      flex-direction: column;
+    }
+    
+    .hero-content p {
+      font-size: 1.2rem;
+    }
+    
+    .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
