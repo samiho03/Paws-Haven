@@ -1,9 +1,10 @@
 // FavoritesPage.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {   FaMapMarkerAlt } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPaw } from 'react-icons/fa';
 import axios from 'axios';
 import PetImage from '../Profile/PetImage';
+import FavoriteButton from './FavoriteButton';
 import './Favorites.css';
 
 const Favorites = () => {
@@ -54,12 +55,24 @@ const Favorites = () => {
 
     return (
         <div className="favorites-container">
-            <h1>Your Favorite Pets</h1>
+             <div className="plp-header-container">
+                    <div className="plp-header">
+                      <h1 className="plp-title">
+                        <span className="plp-title-highlight">Your Favorite Pets</span>
+                      </h1>
+                      <p className="plp-subtitle3">Keep track of the pets you love and revisit them anytime</p>
+                      <div className="plp-header-decoration">
+                        <div className="plp-header-paw plp-header-paw-1"><FaPaw /></div>
+                        <div className="plp-header-paw plp-header-paw-2"><FaPaw /></div>
+                        <div className="plp-header-paw plp-header-paw-3"><FaPaw /></div>
+                      </div>
+                    </div>
+                  </div>
             
             {favorites.length === 0 ? (
                 <div className="no-favorites">
                     <p>You haven't favorited any pets yet.</p>
-                    <Link to="/pets" className="browse-link">
+                    <Link to="/pets" className="favorite-browse-link">
                         Browse available pets
                     </Link>
                 </div>
@@ -67,16 +80,29 @@ const Favorites = () => {
                 <div className="favorites-grid">
                     {favorites.map(pet => (
                         <div key={pet.id} className="favorite-card">
-                            <Link to={`/petDetail/${pet.id}`}>
-                                <div className="favorite-image">
-                                    <PetImage pet={pet} />
+                            <div className="favorite-image-wrapper">
+                                <Link to={`/petDetail/${pet.id}`} className="favorite-card-link">
+                                    <div className="favorite-image">
+                                        <PetImage pet={pet} />
+                                    </div>
+                                </Link>
+                                <div className="favorite-button-container">
+                                    <FavoriteButton petId={pet.id} />
                                 </div>
-                                <div className="favorite-info">
+                            </div>
+                            <div className="favorite-info">
+                                <div className="pet-info-header">
                                     <h3>{pet.petName}</h3>
-                                    <p>{pet.breed} • {pet.age}</p>
-                                    <p><FaMapMarkerAlt /> {pet.location}</p>
+                                    <span className="pet-gender">{pet.gender}</span>
                                 </div>
-                            </Link>
+                                <div className="favorite-pet-details">
+                                    <p className="favorite-pet-breed">
+                                        {pet.breed}
+                                    </p>
+
+                                    <p className='favorite-pet-loc'><FaMapMarkerAlt /> {pet.location}</p>
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>

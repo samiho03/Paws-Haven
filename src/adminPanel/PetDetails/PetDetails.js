@@ -2,15 +2,23 @@ import './PetDetails.css';
 import React, { useState, useEffect } from "react";
 import axiosInstance from '../../api/axiosConfig';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { Link } from 'react-router-dom';
+import PetImage from '../../pages/Profile/PetImage';
 
 const PetDetails = () => {
   const [pets, setPets] = useState([]);
+  const [filteredPets, setFilteredPets] = useState([]);
+  const [searchId, setSearchId] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [petsPerPage] = useState(5); // Number of pets per page
+
 
   useEffect(() => {
     axiosInstance
       .get("/pets/getAll")
       .then((response) => {
         setPets(response.data);
+        setFilteredPets(response.data);
       })
       .catch((error) => {
         console.error("There was an error fetching the pet data!", error);
@@ -26,10 +34,29 @@ const PetDetails = () => {
             pet.id === id ? { ...pet, regStatus: status } : pet
           )
         );
+        setFilteredPets((prevPets) =>
+          prevPets.map((pet) =>
+            pet.id === id ? { ...pet, regStatus: status } : pet
+          )
+        );
       })
       .catch((error) => {
         console.error("Error updating the status!", error);
       });
+  };
+
+  const handleSearch = () => {
+    if (searchId.trim() === '') {
+      setFilteredPets(pets);
+      setCurrentPage(1);
+      return;
+    }
+    
+    const filtered = pets.filter(pet => 
+      pet.id.toString().includes(searchId.toString())
+    );
+    setFilteredPets(filtered);
+    setCurrentPage(1);
   };
 
   // Helper function to safely handle null values
@@ -43,21 +70,42 @@ const PetDetails = () => {
     return value ? 'Yes' : 'No';
   };
 
-  
+   // Get current pets for pagination
+   const indexOfLastPet = currentPage * petsPerPage;
+   const indexOfFirstPet = indexOfLastPet - petsPerPage;
+   const currentPets = filteredPets.slice(indexOfFirstPet, indexOfLastPet);
+ 
+   // Change page
+   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+ 
   return (
     <div id="pet-details-container">
       <h2 className="pet-list-title">Requested List</h2>
-      {pets.length > 0 ? (
+
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search by Pet ID"
+          value={searchId}
+          onChange={(e) => setSearchId(e.target.value)}
+          className="search-input"
+        />
+        <button onClick={handleSearch} className="search-button">
+          <i className="fas fa-search"></i> Search
+        </button>
+      </div>
+
+      {filteredPets.length > 0 ? (
+        <>
         <table className="pet-list-table">
           <thead className="pet-list-header">
             <tr>
+              <th className="pet-list-th">Image</th>
               <th className="pet-list-th">ID</th>
               <th className="pet-list-th">Pet Name</th>
               <th className="pet-list-th pet-list-details-col">Pet Details</th>
-              <th className="pet-list-th">Residency & Temporary</th>
               <th className="pet-list-th">Justification</th>
               <th className="pet-list-th">Owner Details</th>
-              <th className="pet-list-th">Reg. Status</th>
               <th className="pet-list-th">Decision</th>
             </tr>
           </thead>
@@ -65,6 +113,13 @@ const PetDetails = () => {
           <tbody className="pet-list-body">
             {pets.map((pet) => (
               <tr key={pet.id} className="pet-list-row">
+                <td className="pet-image-cell">
+                  <Link to={`/petDetail/${pet.id}`} className="pet-image-link">
+                    <div className="pet-image-container">
+                      <PetImage pet={pet} className="pet-image" />
+                    </div>
+                  </Link>
+                </td>
                 <td className="pet-name">{getSafeValue(pet.id)}</td>
                 <td className="pet-name">{getSafeValue(pet.petName)}</td>
                 <td className="pet-details">
@@ -83,14 +138,10 @@ const PetDetails = () => {
                     {pet.adoptionFeeFree ? 'Free' : `Rs.${getSafeValue(pet.adoptionFee, '0')}`}
                   </div>
                 </td>
-                <td className="pet-reason-temp">
-                  <span className="category-label">Residency:</span> {getSafeValue(pet.reason)}<br />
-                  <span className="category-label">If Temporary:</span> {getSafeValue(pet.ifTemp)}<br />
-                  <span className="category-label">Location:</span> {getSafeValue(pet.location)}
-                </td>
+              
                 <td className="pet-justify">
                   <div className="justification-text">
-                    {getSafeValue(pet.justify)}
+                  <span className="category-label">Justification:</span>{getSafeValue(pet.justify)}
                   </div>
                   {pet.specialNeeds && (
                     <div className="special-needs">
@@ -110,39 +161,72 @@ const PetDetails = () => {
                 </td>
                 <td className="owner-details">
                   <span className="category-label">Owner:</span> {getSafeValue(pet.ownerName)}<br />
+                  <span className="category-label">Location:</span> {getSafeValue(pet.location)} <br />
                   <span className="category-label">NIC:</span> {getSafeValue(pet.nic)}<br />
                   <span className="category-label">Email:</span> {getSafeValue(pet.contactEmail)}<br />
                   <span className="category-label">Phone No:</span> {getSafeValue(pet.contactPhoneNumber)}
                 </td>
-                <td className="pet-reg-status">
-                  <span className={`status-badge ${pet.regStatus ? pet.regStatus.toLowerCase() : 'pending'}`}>
-                    {getSafeValue(pet.regStatus, 'Pending')}
-                  </span>
-                </td>
-                <td>
-                  <div className="button-container">
-                    <button 
-                      className="approve-button" 
-                      onClick={() => handleStatusChange(pet.id, "Approved")}
-                      disabled={pet.regStatus === "Approved"}
-                    >
-                      <i className="fas fa-check"></i> Approve
-                    </button>
-                    <button 
-                      className="reject-button" 
-                      onClick={() => handleStatusChange(pet.id, "Rejected")}
-                      disabled={pet.regStatus === "Rejected"}
-                    >
-                      <i className="fas fa-times"></i> Reject
-                    </button>
+              
+                <td className="decision-cell">
+                  <div className="decision-container">
+                    <div className="button-row">
+                      <button 
+                        className="approve-button" 
+                        onClick={() => handleStatusChange(pet.id, "Approved")}
+                        disabled={pet.regStatus === "Approved"}
+                      >
+                        <i className="fas fa-check"></i> 
+                      </button>
+                      <button 
+                        className="reject-button" 
+                        onClick={() => handleStatusChange(pet.id, "Rejected")}
+                        disabled={pet.regStatus === "Rejected"}
+                      >
+                        <i className="fas fa-times"></i> 
+                      </button>
+                    </div>
+                    <div className="status-display">
+                      <span className={`status-badge ${pet.regStatus ? pet.regStatus.toLowerCase() : 'pending'}`}>
+                        {getSafeValue(pet.regStatus, 'Pending')}
+                      </span>
+                    </div>
                   </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+     {/* Pagination */}
+     <div className="pagination">
+            <button 
+              onClick={() => paginate(currentPage - 1)} 
+              disabled={currentPage === 1}
+              className="pagination-button"
+            >
+              Previous
+            </button>
+            
+            {Array.from({ length: Math.ceil(filteredPets.length / petsPerPage) }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => paginate(index + 1)}
+                className={`pagination-button ${currentPage === index + 1 ? 'active' : ''}`}
+              >
+                {index + 1}
+              </button>
+            ))}
+            
+            <button 
+              onClick={() => paginate(currentPage + 1)} 
+              disabled={currentPage === Math.ceil(filteredPets.length / petsPerPage)}
+              className="pagination-button"
+            >
+              Next
+            </button>
+          </div>
+        </>
       ) : (
-        <p className="no-pets-message">No pets available for adoption.</p>
+        <p className="no-pets-message">No pets found matching your criteria.</p>
       )}
     </div>
   );

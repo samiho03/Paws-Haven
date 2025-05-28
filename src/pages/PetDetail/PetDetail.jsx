@@ -162,279 +162,294 @@ const PetDetail = () => {
 
   return (
     <div className="pet-detail-container">
-    <div className="pet-detail-back">
-      <Link to="/pets" className="pet-detail-back-link">
-        <FaArrowLeft /> Back to all pets
-      </Link>
-    </div>
+      <div className="pet-detail-gradient-bg">
 
-    <div className="pet-detail-main">
-      <div className="pet-detail-gallery">
-        <div className="pet-detail-main-image">
-          <PetImage pet={pet} />
-        </div>
-      </div>
-
-      <div className="pet-detail-info">
-        <div className="pet-detail-header">
-          <h1 className="pet-detail-name">{pet.petName}</h1>
-          <div className="pet-detail-actions">
-            <FavoriteButton petId={pet.id} />
-            <button className="pet-detail-share-btn">
-              <FaShare />
-            </button>
-          </div>
-        </div>
-
-        <div className="pet-detail-meta">
-          <span className="pet-detail-specie">{pet.specie}</span>
-          <span className="pet-detail-breed">{pet.breed}</span>
-          <span className="pet-detail-age">{pet.age}</span>
-          <span className="pet-detail-gender">{pet.gender}</span>
-          <span className="pet-detail-size">{pet.size}</span>
-        </div>
-
-        <div className="pet-detail-location">
-          <FaMapMarkerAlt className="pet-detail-location-icon" />
-          <span>{pet.location}</span>
-        </div>
-
-        {/* New: Quick Facts Section */}
-        <div className="pet-detail-quick-facts">
-          <div className="quick-fact">
-            <FaSyringe />
-            <span>Vaccination: {pet.vaccinationStatus || 'Unknown'}</span>
-          </div>
-          <div className="quick-fact">
-            <FaCut />
-            <span>Spayed/Neutered: {pet.spayedNeutered ? 'Yes' : 'No'}</span>
-          </div>
-          {pet.adoptionFeeFree ? (
-            <div className="quick-fact">
-              <FaHeart />
-              <span>Adoption Fee: Free</span>
+        <div className="pet-detail-main">
+          <div className="pet-detail-gallery">
+            <div className="pet-detail-main-image highlight reflection">
+              <PetImage pet={pet} />
             </div>
-          ) : (
-            <div className="quick-fact">
-              <FaHeart />
-              <span>Adoption Fee: Rs.{pet.adoptionFee || 'Negotiable'}</span>
-            </div>
-          )}
-        </div>
+          </div>
 
-        {/* New: Tab Navigation */}
-        <div className="pet-detail-tabs">
-          <button 
-            className={`tab-button ${activeTab === 'about' ? 'active' : ''}`}
-            onClick={() => setActiveTab('about')}
-          >
-            About
-          </button>
-          <button 
-            className={`tab-button ${activeTab === 'health' ? 'active' : ''}`}
-            onClick={() => setActiveTab('health')}
-          >
-            Health
-          </button>
-          <button 
-            className={`tab-button ${activeTab === 'behavior' ? 'active' : ''}`}
-            onClick={() => setActiveTab('behavior')}
-          >
-            Behavior
-          </button>
-        </div>
-
-        {/* Tab Content */}
-        <div className="pet-detail-tab-content">
-        {activeTab === 'about' && (
-          <>
-            <div className="pet-detail-section">
-              <h3 className="pet-detail-section-title">
-                <FaInfoCircle /> About {pet.petName}
-              </h3>
-              <p className="pet-detail-description">{generateAboutText()}</p>
-              
-              <div className="pet-detail-features">
-                <div className="pd-feature">
-                  <span className="pd-feature-label">Breed:</span>
-                  <span>{pet.breed || 'Mixed breed'}</span>
-                </div>
-                <div className="pd-feature">
-                  <span className="pd-feature-label">Age:</span>
-                  <span>{pet.age || 'Unknown'}</span>
-                </div>
-                <div className="pd-feature">
-                  <span className="pd-feature-label">Gender:</span>
-                  <span>{pet.gender || 'Unknown'}</span>
-                </div>
-                {pet.colorMarkings && (
-                  <div className="pd-feature">
-                    <span className="pd-feature-label">Color/Markings:</span>
-                    <span>{pet.colorMarkings}</span>
-                  </div>
-                )}
+          <div className="pet-detail-info">
+            <div className="pet-detail-header">
+              <h1 className="pet-detail-name">{pet.petName}</h1>
+              <div className="pet-detail-actions">
+                <FavoriteButton petId={pet.id} />
+                <button className="pet-detail-share-btn">
+                  <FaShare />
+                </button>
               </div>
             </div>
 
-            <div className="pet-detail-section">
-              <h3 className="pet-detail-section-title">
-                <FaHeart /> Adoption Information
-              </h3>
-              <p className="pet-detail-description">
-                <strong>Reason for adoption:</strong> {pet.justify || 'Not specified'}
-              </p>
-              {pet.ifTemp && pet.reason === 'Temporary' && (
-                <p className="pet-detail-description">
-                  <strong>Temporary duration:</strong> {pet.ifTemp}
-                </p>
-              )}
+          <div className="pet-detail-meta">
+            <span className="pet-detail-specie">{pet.specie}</span>
+            <span className="pet-detail-breed">{pet.breed}</span>
+            <span className="pet-detail-age">{pet.age}</span>
+            <span className="pet-detail-gender">{pet.gender}</span>
+            <span className="pet-detail-size">{pet.size}</span>
+          </div>
+
+          <div className="pet-detail-location">
+            <FaMapMarkerAlt className="pet-detail-location-icon" />
+            <span>{pet.location}</span>
+          </div>
+
+          {/* New: Quick Facts Section */}
+          <div className="pet-detail-quick-facts">
+            <div className="quick-fact">
+              <FaSyringe />
+              <span>Vaccination: <br></br> {pet.vaccinationStatus || 'Unknown'}</span>
             </div>
-          </>
+            <div className="quick-fact">
+              <FaCut />
+              <span>Spayed/Neutered: <br></br> {pet.spayedNeutered ? 'Yes' : 'No'}</span>
+            </div>
+            {pet.adoptionFeeFree ? (
+              <div className="quick-fact">
+                <FaHeart /><span>Adoption Fee: <br></br> Free</span>
+              </div>
+            ) : (
+              <div className="quick-fact">
+                <FaHeart />
+                <span>Adoption Fee: Rs.{pet.adoptionFee || 'Negotiable'}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+        {/* New: Tab Navigation */}
+        <div className="full-width-content">
+          <div className="pet-detail-tabs">
+            <button 
+              className={`tab-button ${activeTab === 'about' ? 'active' : ''}`}
+              onClick={() => setActiveTab('about')}
+            >
+              About
+            </button>
+            <button 
+              className={`tab-button ${activeTab === 'health' ? 'active' : ''}`}
+              onClick={() => setActiveTab('health')}
+            >
+              Health
+            </button>
+            <button 
+              className={`tab-button ${activeTab === 'behavior' ? 'active' : ''}`}
+              onClick={() => setActiveTab('behavior')}
+            >
+              Behavior
+            </button>
+          </div>
+
+          {/* Tab Content */}
+            <div className="pet-detail-tab-content">
+            {activeTab === 'about' && (
+              <>
+                <div className="pet-detail-section">
+                  <h3 className="pet-detail-section-title">
+                    <FaInfoCircle /> About {pet.petName}
+                  </h3>
+                  <p className="pet-detail-description">{generateAboutText()}</p>
+                  
+                  <div className="pet-detail-features">
+                    <div className="pd-feature">
+                      <span className="pd-feature-label">Breed:</span>
+                      <span>{pet.breed || 'Mixed breed'}</span>
+                    </div>
+                    <div className="pd-feature">
+                      <span className="pd-feature-label">Age:</span>
+                      <span>{pet.age || 'Unknown'}</span>
+                    </div>
+                    <div className="pd-feature">
+                      <span className="pd-feature-label">Gender:</span>
+                      <span>{pet.gender || 'Unknown'}</span>
+                    </div>
+                    {pet.colorMarkings && (
+                      <div className="pd-feature">
+                        <span className="pd-feature-label">Color/Markings:</span>
+                        <span>{pet.colorMarkings}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="pet-detail-section">
+                  <h3 className="pet-detail-section-title">
+                    <FaHeart /> Adoption Information
+                  </h3>
+                  <p className="pet-detail-description">
+                    <strong>Reason for adoption:</strong> {pet.justify || 'Not specified'}
+                  </p>
+                  {pet.ifTemp && pet.reason === 'Temporary' && (
+                    <p className="pet-detail-description">
+                      <strong>Temporary duration:</strong> {pet.ifTemp}
+                    </p>
+                  )}
+                </div>
+              </>
+            )}
+
+            {activeTab === 'health' && (
+              <div className="pet-detail-section">
+                <h3 className="pet-detail-section-title">
+                  <FaNotesMedical /> Health Information
+                </h3>
+                <div className="pet-detail-features">
+                  <div className="pd-feature">
+                    <span className="pd-feature-label">Vaccination Status:  </span> 
+                    <span>{pet.vaccinationStatus || 'Unknown'}</span>
+                  </div>
+                  <div className="pd-feature">
+                    <span className="pd-feature-label">Spayed/Neutered:</span>
+                    <span>{pet.spayedNeutered ? 'Yes' : 'No'}</span>
+                  </div>
+                  <div className="pd-feature">
+                    <span className="pd-feature-label">Medical History:</span>
+                    <span>{pet.medicalHistory || 'No significant medical history'}</span>
+                  </div>
+                  <div className="pd-feature">
+                    <span className="pd-feature-label">Special Needs:</span>
+                    <span>{pet.specialNeeds || 'None reported'}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'behavior' && (
+              <div className="pet-detail-section">
+                <h3 className="pet-detail-section-title">
+                  <FaPaw /> Behavior & Personality
+                </h3>
+                <div className="pet-detail-features">
+                  <div className="pd-feature">
+                    <span className="pd-feature-label">Temperament:</span>
+                    <span>{pet.behavior || 'Not specified'}</span>
+                  </div>
+                
+                
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Owner Information */}
+          <div className="pet-detail-section">
+            <h3 className="pet-detail-section-title">Owner Information</h3>
+            <div className="pet-detail-owner">
+              {pet.ownerProfileImage ? (
+                <img 
+                  src={pet.ownerProfileImage.startsWith('http') ? pet.ownerProfileImage : `http://localhost:8080${pet.ownerProfileImage}`}
+                  alt={pet.ownerName || 'Pet owner'}
+                  className="pet-detail-owner-avatar"
+                  onError={(e) => {
+                    e.target.src = 'https://cdn-icons-png.flaticon.com/512/10542/10542486.png';
+                  }}
+                />
+                ) : (
+                <FaUserCircle className="pet-detail-owner-avatar" />
+              )}
+              <div className="pet-detail-owner-info">
+                <h4 className="pet-detail-owner-name">
+                  {pet.ownerName || 'Unknown Owner'}
+                </h4>
+                <div className="pet-detail-contact">
+                  <a href={`mailto:${pet.contactEmail}`} className="pet-detail-contact-link">
+                    <FaEnvelope /> {pet.contactEmail}
+                  </a>
+                  <a href={`tel:${pet.contactPhoneNumber}`} className="pet-detail-contact-link">
+                    <FaPhone /> {pet.contactPhoneNumber}
+                  </a>
+                </div>
+              </div>
+          </div>
+        
+
+            <button 
+              className="pet-detail-chat-btn"
+              onClick={() => setShowChatBox(true)}
+              >
+              <FaComment /> Message Owner
+            </button>
+          </div>
+        </div>
+     
+          
+        {recommendedPets.length > 0 && (
+          <div className="pet-detail-recommended ">
+            <h2 className="pet-detail-recommended-title">Other {pet.specie}s you might like</h2>
+            <div className="pet-detail-recommended-grid">
+              {recommendedPets.map(recommendedPet => (
+                <div key={recommendedPet.id} className="plp-pet-card">
+                  <div className="plp-pet-image-wrapper">
+                    <Link to={`/petDetail/${recommendedPet.id}`} className="plp-pet-card-link">
+                      <div className="plp-pet-image-container">
+                        <PetImage pet={recommendedPet} />
+                        <div className={`plp-pet-status ${recommendedPet.isAvailable ? 'available' : 'adopted'}`}>
+                          {recommendedPet.isAvailable ? 'Available' : 'Adopted'}
+                        </div>
+                      </div>
+                    </Link>
+                    <div className="plp-favorite-button-container">
+                      <FavoriteButton petId={recommendedPet.id} />
+                    </div>
+                  </div>
+                  <div className="plp-pet-info">
+                    <div className="plp-pet-info-header">
+                    
+                      <h3>{recommendedPet.petName}</h3>
+                      <div className="plp-pet-meta">
+                        <span className="plp-pet-gender">{recommendedPet.gender}</span>
+                      </div>
+                    </div>
+                    <div className="plp-pet-details">
+                      <p className="plp-pet-breed">
+                        {recommendedPet.breed}
+                      </p>
+                      <div className="plp-pet-location">
+                        <FaMapMarkerAlt className="plp-location-icon" /> 
+                        <span>{recommendedPet.location}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
 
-          {activeTab === 'health' && (
-            <div className="pet-detail-section">
-              <h3 className="pet-detail-section-title">
-                <FaNotesMedical /> Health Information
-              </h3>
-              <div className="pet-detail-features">
-                <div className="feature">
-                  <span className="feature-label">Vaccination Status:</span>
-                  <span>{pet.vaccinationStatus || 'Unknown'}</span>
-                </div>
-                <div className="feature">
-                  <span className="feature-label">Spayed/Neutered:</span>
-                  <span>{pet.spayedNeutered ? 'Yes' : 'No'}</span>
-                </div>
-                <div className="feature">
-                  <span className="feature-label">Medical History:</span>
-                  <span>{pet.medicalHistory || 'No significant medical history'}</span>
-                </div>
-                <div className="feature">
-                  <span className="feature-label">Special Needs:</span>
-                  <span>{pet.specialNeeds || 'None reported'}</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'behavior' && (
-            <div className="pet-detail-section">
-              <h3 className="pet-detail-section-title">
-                <FaPaw /> Behavior & Personality
-              </h3>
-              <div className="pet-detail-features">
-                <div className="feature">
-                  <span className="feature-label">Temperament:</span>
-                  <span>{pet.behavior || 'Not specified'}</span>
-                </div>
-               
-               
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Owner Information */}
-        <div className="pet-detail-section">
-          <h3 className="pet-detail-section-title">Owner Information</h3>
-          <div className="pet-detail-owner">
-  {pet.ownerProfileImage ? (
-    <img 
-      src={pet.ownerProfileImage.startsWith('http') ? pet.ownerProfileImage : `http://localhost:8080${pet.ownerProfileImage}`}
-      alt={pet.ownerName || 'Pet owner'}
-      className="pet-detail-owner-avatar"
-      onError={(e) => {
-        e.target.src = 'https://cdn-icons-png.flaticon.com/512/10542/10542486.png';
-      }}
-    />
-  ) : (
-    <FaUserCircle className="pet-detail-owner-avatar" />
-  )}
-  <div className="pet-detail-owner-info">
-    <h4 className="pet-detail-owner-name">
-      {pet.ownerName || 'Unknown Owner'}
-    </h4>
-              <div className="pet-detail-contact">
-                <a href={`mailto:${pet.contactEmail}`} className="pet-detail-contact-link">
-                  <FaEnvelope /> {pet.contactEmail}
-                </a>
-                <a href={`tel:${pet.contactPhoneNumber}`} className="pet-detail-contact-link">
-                  <FaPhone /> {pet.contactPhoneNumber}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button 
-          className="pet-detail-chat-btn"
-          onClick={() => setShowChatBox(true)}
-        >
-          <FaComment /> Message Owner
-        </button>
-      </div>
-    </div>
-
-
-      {recommendedPets.length > 0 && (
-        <div className="pet-detail-recommended">
-          <h2 className="pet-detail-recommended-title">Other {pet.specie}s you might like</h2>
-          <div className="pet-detail-recommended-grid">
-            {recommendedPets.map(recommendedPet => (
-              <Link 
-                to={`/petDetail/${recommendedPet.id}`} 
-                key={recommendedPet.id} 
-                className="pet-detail-recommended-card"
-              >
-                <div className="pet-detail-recommended-image">
-                  <PetImage pet={recommendedPet} />
-                  <div className={`pet-detail-recommended-status ${recommendedPet.isAvailable ? 'available' : 'adopted'}`}>
-                    {recommendedPet.isAvailable ? 'Available' : 'Adopted'}
+              {showChatBox && (
+                <div className="pet-detail-chatbox">
+                  <div className="pet-detail-chatbox-header">
+                    <h3>Message {owner?.name || 'the owner'}</h3>
+                    <button 
+                      className="pet-detail-chatbox-close"
+                      onClick={() => setShowChatBox(false)}
+                    >
+                      &times;
+                    </button>
+                  </div>
+                  <div className="pet-detail-chatbox-body">
+                    <textarea
+                      placeholder={`Hi, I'm interested in ${pet.petName}. Can you tell me more?`}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                    />
+                  </div>
+                  <div className="pet-detail-chatbox-footer">
+                    <button 
+                      className="pet-detail-chatbox-send"
+                      onClick={handleSendMessage}
+                      disabled={!message.trim()}
+                    >
+                      Send Message
+                    </button>
                   </div>
                 </div>
-                <div className="pet-detail-recommended-info">
-                  <h3>{recommendedPet.petName}</h3>
-                  <p>{recommendedPet.breed} • {recommendedPet.age}</p>
-                  <p><FaMapMarkerAlt /> {recommendedPet.location}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {showChatBox && (
-        <div className="pet-detail-chatbox">
-          <div className="pet-detail-chatbox-header">
-            <h3>Message {owner?.name || 'the owner'}</h3>
-            <button 
-              className="pet-detail-chatbox-close"
-              onClick={() => setShowChatBox(false)}
-            >
-              &times;
-            </button>
-          </div>
-          <div className="pet-detail-chatbox-body">
-            <textarea
-              placeholder={`Hi, I'm interested in ${pet.petName}. Can you tell me more?`}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-          </div>
-          <div className="pet-detail-chatbox-footer">
-            <button 
-              className="pet-detail-chatbox-send"
-              onClick={handleSendMessage}
-              disabled={!message.trim()}
-            >
-              Send Message
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+              )}
+            </div>
+          );
+      
 };
 
 export default PetDetail;

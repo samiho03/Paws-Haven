@@ -14,8 +14,8 @@ const Home = () => {
   return (
     <main className="home-page">
       <Hero />
-      <About />
       <PetCategory />
+   
       {isLoggedIn && <Pets />}
       <Features />
       <FAQ/>

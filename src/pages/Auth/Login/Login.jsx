@@ -97,7 +97,7 @@ const Login = ({ onLoginSuccess = () => {} }) => {  // Default empty function
             <form className="login__form" onSubmit={handleSubmit}>
                 <div className="login__content-wrapper">
                     <div className="login__left-section">
-                        <Link to="/" className="login__logo">
+                        <Link to="/login" className="login__logo">
                             <FaPaw className="login__paw-icon" />
                             <h1 className="login__logo-text">Paws Haven</h1>
                         </Link>
@@ -111,13 +111,7 @@ const Login = ({ onLoginSuccess = () => {} }) => {  // Default empty function
                     </div>
                     
                     <div className="login__form-content">
-                        <h2 className="login__title">Welcome Back!</h2>
-
-                        {error && (
-                            <div className="login__error-message">
-                                {error}
-                            </div>
-                        )}
+                        <h2 className="login__title">Welcome Back!</h2>                      
 
                         <div className="login__form-group">
                             <label className="login__label">Email</label>

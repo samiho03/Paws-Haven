@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { FaSearch, FaFilter, FaPaw, FaMapMarkerAlt, FaTimes, FaUserPlus, FaHeart , FaCat} from 'react-icons/fa';
+import { FaSearch, FaFilter, FaPaw, FaMapMarkerAlt, FaTimes, FaUserPlus, FaHeart , FaCat, FaArrowRight} from 'react-icons/fa';
 import { GiRabbit, GiParrotHead } from 'react-icons/gi';
 import { IoMdPaw } from 'react-icons/io';
 import PetImage from '../Profile/PetImage';
@@ -9,12 +9,13 @@ import FavoriteButton from '../Favorites/FavoriteButton';
 import './PetList.css';
 
 const PetList = () => {
+    const location = useLocation();
     const [pets, setPets] = useState([]);
     const [filteredPets, setFilteredPets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [filters, setFilters] = useState({
-        specie: '',
+        specie: location.state?.initialFilter || '',
         breed: '',
         gender: '',
         location: '',
@@ -36,6 +37,28 @@ const PetList = () => {
         'Ampara', 'Trincomalee', 'Kurunegala', 'Puttalam', 'Anuradhapura',
         'Polonnaruwa', 'Badulla', 'Moneragala', 'Ratnapura', 'Kegalle'
     ];
+
+    const getTitle = () => {
+        const activeSpecie = filters.specie.toLowerCase();
+        switch(activeSpecie) {
+            case 'dog': return 'Available Dogs';
+            case 'cat': return 'Available Cats';
+            case 'rabbit': return 'Available Rabbits';
+            case 'bird': return 'Available Birds';
+            default: return 'Available Pets';
+        }
+    };
+
+    const getSubtitle = () => {
+        const activeSpecie = filters.specie.toLowerCase();
+        switch(activeSpecie) {
+            case 'dog': return 'Find your perfect canine companion';
+            case 'cat': return 'Discover your ideal feline friend';
+            case 'rabbit': return 'Meet adorable bunnies waiting for homes';
+            case 'bird': return 'Find colorful feathered friends';
+            default: return 'Find your perfect companion from our loving pets';
+        }
+    };
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -151,7 +174,7 @@ const PetList = () => {
             default: return <FaPaw className="plp-specie-icon" />;
         }
     };
-
+ 
     if (!isLoggedIn) {
         return (
             <div className="plp-container">
@@ -224,12 +247,20 @@ const PetList = () => {
 
     return (
         <div className="plp-container">
+         
+        <div className="plp-header-container">
             <div className="plp-header">
-                <h1 className="plp-title">
-                    <span className="plp-title-highlight">Available</span> Pets
-                </h1>
-                <p className="plp-subtitle">Find your perfect companion from our loving pets</p>
+            <h1 className="plp-title">
+                <span className="plp-title-highlight">{getTitle()}</span>
+            </h1>
+            <p className="plp-subtitle">{getSubtitle()}</p>
+                <div className="plp-header-decoration">
+                    <div className="plp-header-paw plp-header-paw-1"><FaPaw /></div>
+                    <div className="plp-header-paw plp-header-paw-2"><FaPaw /></div>
+                    <div className="plp-header-paw plp-header-paw-3"><FaPaw /></div>
+                </div>
             </div>
+        </div>
 
             <div className="plp-search-filter-container">
                 <div className="plp-search-box">
@@ -309,12 +340,7 @@ const PetList = () => {
                                     <option value="Female">Female</option>
                                 </select>
                             </div>
-                        </div>
-                    </div>
 
-                    <div className="plp-filter-section">
-                        <h3 className="plp-section-title">Location & Details</h3>
-                        <div className="plp-filter-grid">
                             <div className="plp-filter-group">
                                 <label className="plp-filter-label">Location</label>
                                 <select 
@@ -344,24 +370,11 @@ const PetList = () => {
                                     <option value="Large">Large</option>
                                 </select>
                             </div>
-
-                            <div className="plp-filter-group">
-                                <label className="plp-filter-label">Age</label>
-                                <select 
-                                    name="age" 
-                                    className="plp-filter-select"
-                                    value={filters.age}
-                                    onChange={handleFilterChange}
-                                >
-                                    <option value="">Any Age</option>
-                                    <option value="Puppy/Kitten">Puppy/Kitten</option>
-                                    <option value="Young">Young</option>
-                                    <option value="Adult">Adult</option>
-                                    <option value="Senior">Senior</option>
-                                </select>
-                            </div>
+                            
                         </div>
                     </div>
+
+                   
 
                     <div className="plp-filter-section">
                         <h3 className="plp-section-title">Health & Adoption</h3>
@@ -440,38 +453,95 @@ const PetList = () => {
                     </button>
                 </div>
             ) : (
-                <div className="plp-grid">
-                    {filteredPets.length > 0 ? (
-                        filteredPets.map(pet => (
-                            <div key={pet.id} className="plp-card">
-                                <div className="plp-card-header">
-                                    <FavoriteButton petId={pet.id} />
-                                    <div className={`plp-status-badge ${pet.isAvailable ? 'plp-available' : 'plp-adopted'}`}>
-                                        {pet.isAvailable ? 'Available' : 'Adopted'}
+                
+                <div className="plp-pets-section">
+                
+                
+                {filteredPets.length > 0 ? (
+                    <>
+                        <div className="plp-grid">
+                            {filteredPets.slice(0, 2).map(pet => (
+                            <div key={pet.id} className="plp-pet-card">
+                                <div className="plp-pet-image-wrapper">
+                                    <Link to={`/petDetail/${pet.id}`} className="plp-pet-card-link">
+                                        <div className="plp-pet-image-container">
+                                            <PetImage pet={pet} />
+                                        </div>
+                                    </Link>
+                                    <div className="plp-favorite-button-container">
+                                        <FavoriteButton petId={pet.id} />
                                     </div>
+                                   
                                 </div>
-                                <Link to={`/petDetail/${pet.id}`} className="plp-card-link">
-                                    <div className="plp-image-container">
-                                        <PetImage pet={pet} className="plp-image" />
+                                <div className="plp-pet-info">
+                                    <div className="plp-pet-info-header">
+                                        {getSpecieIcon(pet.specie)}
+                                        <h3>{pet.petName}</h3>
+                                        <div className="plp-pet-meta">
+                                            <span className="plp-pet-gender">{pet.gender}</span>
+                                        </div>
                                     </div>
-                                    <div className="plp-info">
-                                        <div className="plp-name-row">
-                                            {getSpecieIcon(pet.specie)}
-                                            <h3 className="plp-name">{pet.petName}</h3>
-                                        </div>
-                                        <p className="plp-breed">{pet.breed}</p>
-                                        <div className="plp-meta">
-                                            <span className="plp-gender">{pet.gender}</span>
-                                            <span className="plp-age">{pet.age}</span>
-                                        </div>
-                                        <div className="plp-location">
+                                    <div className="plp-pet-details">
+                                        <p className="plp-pet-breed">
+                                            {pet.breed}
+                                        </p>
+                                        <div className="plp-pet-location">
                                             <FaMapMarkerAlt className="plp-location-icon" /> 
                                             <span>{pet.location}</span>
                                         </div>
                                     </div>
-                                </Link>
+                                </div>
                             </div>
-                        ))
+                        ))}
+                          {/* Quiz Card - appears alongside first 6 pets */}
+                        <div className="plp-quiz-card">
+                            <div className="plp-quiz-content">
+                                <h3>Can't find your perfect pet match?</h3>
+                                <p>Take our quick quiz and we'll help you discover the ideal companion based on your lifestyle!</p>
+                                <button 
+                                className="plp-quiz-button"
+                                onClick={() => navigate('/quiz')}
+                                >
+                                Take Quiz <FaArrowRight />
+                                </button>
+                            </div>
+                            <div className="plp-quiz-decoration"></div>
+                            </div>
+                                {filteredPets.slice(2).map(pet => (
+                                    <div key={pet.id} className="plp-pet-card">
+                                        <div className="plp-pet-image-wrapper">
+                                            <Link to={`/petDetail/${pet.id}`} className="plp-pet-card-link">
+                                                <div className="plp-pet-image-container">
+                                                    <PetImage pet={pet} />
+                                                </div>
+                                            </Link>
+                                            <div className="plp-favorite-button-container">
+                                                <FavoriteButton petId={pet.id} />
+                                            </div>
+                                        
+                                        </div>
+                                        <div className="plp-pet-info">
+                                            <div className="plp-pet-info-header">
+                                                {getSpecieIcon(pet.specie)}
+                                                <h3>{pet.petName}</h3>
+                                                <div className="plp-pet-meta">
+                                                    <span className="plp-pet-gender">{pet.gender}</span>
+                                                </div>
+                                            </div>
+                                            <div className="plp-pet-details">
+                                                <p className="plp-pet-breed">
+                                                    {pet.breed}
+                                                </p>
+                                                <div className="plp-pet-location">
+                                                    <FaMapMarkerAlt className="plp-location-icon" /> 
+                                                    <span>{pet.location}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                             </div>
+                      </>   
                     ) : (
                         <div className="plp-empty-state">
                             <div className="plp-empty-icon">
@@ -489,8 +559,11 @@ const PetList = () => {
                     )}
                 </div>
             )}
-        </div>
-    );
+            </div>
+       
+    
+);
 };
+
 
 export default PetList;

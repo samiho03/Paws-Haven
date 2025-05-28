@@ -45,7 +45,7 @@ const Navbar = () => {
           <ul className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
             <li><Link to="/petlist" onClick={() => setMobileMenuOpen(false)}>Browse pets</Link></li>
             <li><Link to="/form" onClick={() => setMobileMenuOpen(false)}>Add New Pet</Link></li>
-            <li><Link to="/services" onClick={() => setMobileMenuOpen(false)}>Services</Link></li>
+            <li><Link to="/map" onClick={() => setMobileMenuOpen(false)}>Map</Link></li>
             <li><Link to="/faq" onClick={() => setMobileMenuOpen(false)}>FAQ</Link></li>
             <li><Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</Link></li>
           </ul>

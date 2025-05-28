@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FaPaw, FaArrowRight } from 'react-icons/fa';
+import { FaPaw, FaArrowRight, FaHeart, FaRegHeart } from 'react-icons/fa';
 import PetImage from '../../pages/Profile/PetImage';
+import FavoriteButton from '../../pages/Favorites/FavoriteButton';
 import './Pets.css';
-
+import '../PetCategory/PetCategory.css'; // Assuming you have a CSS file for styling
 const Pets = () => {
     const [recentPets, setRecentPets] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -16,7 +17,6 @@ const Pets = () => {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
-                    // If not logged in, don't even try to fetch
                     setLoading(false);
                     return;
                 }
@@ -38,7 +38,6 @@ const Pets = () => {
         fetchRecentPets();
     }, []);
 
-
     if (isLoading) {
         return (
             <div className="recent-pets-loading">
@@ -55,13 +54,28 @@ const Pets = () => {
             </div>
         );
     }
-
+   
     return (
         <section className="recent-pets-section">
+            {/* Add the paw prints background */}
+            <div className="paw-prints-background">
+                {[...Array(15)].map((_, i) => (
+                    <FaPaw 
+                        key={i}
+                        className="floating-paw"
+                        style={{
+                            left: `${Math.random() * 100 + 5}%`,
+                            top: `${Math.random() * 100 + 5}%`,
+                            animationDelay: `${i * 0.2}s`,
+                            fontSize: `${Math.random() * 1.7 + 1}rem`,
+                            opacity: Math.random() * 0.3 + 0.1,
+                        }}
+                    />
+                ))}
+            </div>
+            
             <div className="recent-pets-header">
-                <h2>
-                    <FaPaw className="paw-icon" /> Recently Added Pets
-                </h2>
+                <h2>Recently Added Pets</h2>
                 <p>Meet our newest furry friends looking for homes</p>
             </div>
 
@@ -69,16 +83,27 @@ const Pets = () => {
                 {recentPets.length > 0 ? (
                     recentPets.map(pet => (
                         <div key={pet.id} className="recent-pet-card">
-                            <Link to={`/petDetail/${pet.id}`} className="recent-pet-card-link">
-                                <div className="recent-pet-image-container">
+                            <div className="recent-pet-image-wrapper">
+                                <Link to={`/petDetail/${pet.id}`} className="recent-pet-card-link">
+                                    <div className="recent-pet-image-container">
                                     <PetImage pet={pet} />
+                                    </div>
+                                </Link>
+                                <div className="favorite-button-container">
+                                    <FavoriteButton petId={pet.id} />
                                 </div>
-                                <div className="recent-pet-info">
+                            </div>
+                            <div className="recent-pet-info">
+                                <div className="pet-info-header">
                                     <h3>{pet.petName}</h3>
-                                    <p className="recent-pet-breed">{pet.breed}</p>
-                                    <p className="recent-pet-age">{pet.age}</p>
+                                    <span className="pet-gender">{pet.gender}</span>
                                 </div>
-                            </Link>
+                                <div className="pet-details">
+                                    <p className="recent-pet-breed">
+                                        {pet.breed}
+                                    </p>        
+                                </div>
+                            </div>
                         </div>
                     ))
                 ) : (
@@ -89,8 +114,8 @@ const Pets = () => {
             </div>
 
             <div className="recent-view-more-container">
-                <Link to="/petlist" className="recent-view-more-btn">
-                    View More Pets <FaArrowRight className="arrow-icon" />
+                <Link to="/petlist" className="recent-view-more-btn hero-button">
+                    View More Pets <FaArrowRight className="hero-button-arrow" />
                 </Link>
             </div>
         </section>

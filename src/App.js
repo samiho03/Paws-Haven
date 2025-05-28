@@ -15,13 +15,14 @@ import Pets from './components/Pets/Pets';
 import Favorites from './pages/Favorites/Favorites';
 import PetDetail from './pages/PetDetail/PetDetail';
 import PetList from './pages/PetList/PetList';
+import Map from './pages/Map/Map';
+import Quiz from './pages/Quiz/Quiz';
 import LayoutWrapper from './layouts/LayoutWrapper';
 import PetDetailsForm from './adminPanel/PetDetails/PetDetails';
-import DoctorDetails from './adminPanel/DocDetails/DocDetails';
-import EmployeeDetails from './adminPanel/EmpDetails/EmpDetails';
+import MessageDetails from './adminPanel/MessageDetails/MessageDetails';
+
 import Sidebar from './adminPanel/Sidebar/Sidebar';
 import PetProfile from './adminPanel/PetProfile/PetProfile';
-import DocDecision from './adminPanel/DocDecision/DocDecision';
 import './App.css';
 
 const App = () => {
@@ -73,9 +74,7 @@ const App = () => {
             <Routes>
               <Route path="/admin/pets" element={<AdminRoute><PetDetailsForm /></AdminRoute>} />
               <Route path="/admin/pet-profile" element={<AdminRoute><PetProfile /></AdminRoute>} />
-              <Route path="/admin/doctor-decision" element={<AdminRoute><DocDecision /></AdminRoute>} />
-              <Route path="/admin/doctors" element={<AdminRoute><DoctorDetails /></AdminRoute>} />
-              <Route path="/admin/employees" element={<AdminRoute><EmployeeDetails /></AdminRoute>} />
+              <Route path="/admin/messages" element={<AdminRoute><MessageDetails /></AdminRoute>} />
               <Route path="*" element={<Navigate to="/admin/pets" />} />
             </Routes>
           </div>
@@ -92,6 +91,8 @@ const App = () => {
             <Route path= "/petDetail/:id" element={<PetDetail />} />
             <Route path= "/favorites" element={<Favorites />} />
             <Route path="/form" element={<Form />} />
+            <Route path= "/map" element={<Map />} />
+            <Route path="/quiz" element={<Quiz />} />
             <Route path="/signup" element={<Signup />} />
             <Route 
               path="/login" 

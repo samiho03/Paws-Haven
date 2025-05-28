@@ -1,22 +1,51 @@
 /* Fully Isolated Form Styles */
+.isolated-container-form{
+    max-width: 1400px;
+    margin:  90px auto;
+    padding: 0 60px;
+    font-family: 'poppins', sans-serif;
+}
 .isolated-user-form {
-  width: 650px;
-  margin: 150px 0 100px 330px;
+  max-width: 800px;
   background-color: #f9f7ff;
-  padding: 30px;
-  border: 2px solid #000000;
-  border-radius: 20px;
+  align-items: center;
+  margin: 0px auto;
+  padding: 50px;
+  border-radius: 25px;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
-.isolated-form-title {
-  text-align: center;
-  font-size: 30px;
-  padding: 20px 0 30px;
-  margin: 0;
-  color: #333;
+.plp-subtitle2 {
+  color: #5a4a68;
+  font-size: 1.1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  font-weight: 500;
+  position: relative;
+  display: inline-block;
+  padding: 0 1rem;
 }
+
+.plp-subtitle2::before,
+.plp-subtitle2::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(139, 92, 246, 0.3), rgba(139, 92, 246, 0));
+}
+
+.plp-subtitle2::before {
+  left: -20px;
+  transform: translateY(-50%);
+}
+
+.plp-subtitle2::after {
+  right: -20px;
+  transform: translateY(-50%) rotate(180deg);
+}
+
 
 .isolated-form-row {
   display: flex;
@@ -163,7 +192,7 @@
 
 .isolated-radio-label input:checked ~ .isolated-radio-custom {
   background-color: transparent;
-  border-color: #93775d;
+  border-color: #8b5cf6;
 }
 
 .isolated-radio-label input:checked ~ .isolated-radio-custom::after {
@@ -175,10 +204,11 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #93775d;
+  background: #8b5cf6;
 }
 
 .isolated-section-title {
+  padding-left: 10px;
   margin: 0 0 15px;
   font-size: 20px;
   color: #333;
@@ -426,3 +456,472 @@
     justify-content: center;
   }
 }
+
+/* Progress Steps */
+.pet-form-progress-container {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  position: relative;
+}
+
+.pet-form-progress-line {
+  height: 4px;
+  background-color: #e0e0e0;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.pet-form-progress-fill {
+  height: 100%;
+  background-color: #8b5cf6;
+  transition: width 0.3s ease;
+}
+
+.pet-form-steps {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.pet-form-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.pet-form-step.active {
+  color: #8b5cf6;
+}
+
+.pet-form-step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 8px;
+  border: 3px solid white;
+}
+
+.pet-form-step.active .pet-form-step-number {
+  background-color: #8b5cf6;
+  color: white;
+}
+
+.pet-form-step-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Step Content */
+.pet-form-step-content {
+  padding: 20px 0;
+}
+
+.pet-form-step-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.pet-form-prev-btn,
+.pet-form-next-btn {
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.pet-form-prev-btn {
+  background-color: white;
+  border: 2px solid #8b5cf6;
+  color: #8b5cf6;
+}
+
+.pet-form-prev-btn:hover {
+  background-color: #f3f0ff;
+}
+
+/* Submit Button Styles */
+.pet-form-submit-btn {
+  padding: 12px 25px;
+  background-color: #8b5cf6;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-left: auto; 
+}
+
+.pet-form-submit-btn:hover {
+  background-color: #7d4ce6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
+}
+
+.pet-form-submit-btn:disabled {
+  background-color: #b8b8b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.pet-form-submit-btn svg {
+  margin-right: 8px;
+}
+
+.pet-form-next-btn,
+.pet-form-submit-btn {
+  background-color: #8b5cf6;
+  color: white;
+  border: none;
+}
+
+.pet-form-next-btn:hover,
+.pet-form-submit-btn:hover {
+  background-color: #7d4ce6;
+}
+
+/* Prediction Section */
+.pet-prediction-section {
+  text-align: center;
+  padding: 30px;
+  background-color: white;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.pet-prediction-title {
+  color: #8b5cf6;
+  margin-bottom: 10px;
+}
+
+.pet-prediction-description {
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.pet-prediction-btn {
+  padding: 12px 30px;
+  background-color: #8b5cf6;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.pet-prediction-btn:hover {
+  background-color: #7d4ce6;
+  transform: translateY(-2px);
+}
+
+.pet-prediction-result {
+  margin-top: 25px;
+  padding: 15px;
+  background-color: #f9f7ff;
+  border-radius: 10px;
+}
+
+/* Submission Complete */
+.pet-submission-complete-container {
+  max-width: 600px;
+  margin: 0px auto !important;
+  padding: 40px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.pet-submission-complete-card {
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pet-submission-complete-icon {
+  width: 80px;
+  height: 80px;
+  background-color: #8b5cf6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 36px;
+  margin-bottom: 25px;
+}
+
+.pet-submission-complete-container h2 {
+  color: #8b5cf6;
+  margin-bottom: 15px;
+}
+
+.pet-submission-complete-container p {
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.pet-submission-profile-btn {
+  padding: 12px 30px;
+  background-color: #8b5cf6;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.pet-submission-profile-btn:hover {
+  background-color: #7d4ce6;
+  transform: translateY(-2px);
+}
+
+/* Notification */
+.pet-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: white;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+  max-width: 350px;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.pet-notification-info {
+  background-color: #65b3e7;
+}
+
+.pet-notification-success {
+  background-color: #64de97;
+}
+
+.pet-notification-error {
+  background-color: #ec6e60;
+}
+
+.pet-notification-icon {
+  margin-right: 12px;
+  font-size: 20px;
+}
+
+.pet-notification-message {
+  flex: 1;
+}
+
+/* Contact Info Note */
+.contact-info-note {
+  background-color: #f8f9fa;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  color: #5a4a68;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.contact-info-note svg {
+  margin-right: 10px;
+  color: #8b5cf6;
+}
+
+/* Submission Complete */
+.pet-submission-complete-container {
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 40px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.pet-submission-complete-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pet-submission-complete-icon {
+  width: 80px;
+  height: 80px;
+  background-color: #8b5cf6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 36px;
+  margin-bottom: 25px;
+}
+
+.pet-submission-complete-container h2 {
+  color: #8b5cf6;
+  margin-bottom: 15px;
+}
+
+.pet-submission-complete-container p {
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.pet-submission-note {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 20px 0;
+  text-align: left;
+  font-size: 14px;
+  color: #5a4a68;
+  display: flex;
+  align-items: flex-start;
+}
+
+.pet-submission-note svg {
+  margin-right: 10px;
+  color: #8b5cf6;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.pet-submission-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.pet-submission-profile-btn,
+.pet-submission-another-btn {
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pet-submission-profile-btn {
+  background-color: #8b5cf6;
+  color: white;
+  border: none;
+}
+
+.pet-submission-profile-btn:hover {
+  background-color: #7d4ce6;
+  transform: translateY(-2px);
+}
+
+.pet-submission-another-btn {
+  background-color: white;
+  border: 2px solid #8b5cf6;
+  color: #8b5cf6;
+}
+
+.pet-submission-another-btn:hover {
+  background-color: #f3f0ff;
+  transform: translateY(-2px);
+}
+
+/* Form Icons */
+.isolated-form-label svg {
+  margin-right: 8px;
+  color: #8b5cf6;
+}
+
+/* Prediction Section */
+.pet-prediction-section {
+  text-align: center;
+  padding: 30px;
+  background-color: white;
+  border-radius: 15px;
+  margin-bottom: 50px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.pet-prediction-title {
+  color: #8b5cf6;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pet-prediction-description {
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.pet-prediction-btn {
+  padding: 12px 30px;
+  background-color: #8b5cf6;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto;
+}
+
+.pet-prediction-btn:hover {
+  background-color: #7d4ce6;
+  transform: translateY(-2px);
+}
+
+.pet-prediction-result {
+  margin-top: 25px;
+  padding: 15px;
+  background-color: #f9f7ff;
+  border-radius: 10px;
+  border-left: 4px solid #8b5cf6;
+}
+
+/* Step Buttons with Icons */
+.pet-form-step-buttons button svg {
+  margin-right: 8px;
+}
+
+.pet-form-next-btn svg:last-child,
+.pet-form-submit-btn svg {
+  margin-right: 0;
+  margin-left: 8px;
+}
+

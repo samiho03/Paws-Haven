@@ -138,6 +138,7 @@
 .login__signup-text {
     text-align: center;
     margin-top: 20px;
+    font-size: 13px;
     color: #666;
 }
 
@@ -181,7 +182,7 @@
     top: 20px;
     right: 20px;
     padding: 13px 45px;
-    border-radius: 8px;
+    border-radius: 15px;
     color: white;
     font-weight: 500;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);

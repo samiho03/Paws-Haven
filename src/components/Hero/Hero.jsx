@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaPaw, FaHeart, FaDog, FaCat, FaUserPlus, FaPlusCircle } from 'react-icons/fa';
+import { FaPaw, FaHeart, FaDog, FaCat, FaArrowRight, FaPlusCircle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import Button from "../ui/button";
 import './Hero.css';
@@ -35,7 +35,7 @@ const Hero = () => {
   const buttonVariants = {
     hover: { 
       scale: 1.05,
-      boxShadow: "0 8px 20px rgba(255, 107, 107, 0.4)",
+      boxShadow: "0 8px 20px rgba(154, 107, 255, 0.4)",
       transition: { duration: 0.3 }
     },
     tap: { scale: 0.98 }
@@ -62,7 +62,7 @@ const Hero = () => {
           initial={{ y: 0, x: Math.random() * 100 }}
           animate={{
             y: [0, -100, 0],
-            x: [0, Math.random() * 50 - 25, 0]
+            x: [0, Math.random() * 50 - 35, 0]
           }}
           transition={{
             duration: pet.duration,
@@ -86,27 +86,28 @@ const Hero = () => {
     
         {/* Decorative corner images */}
         <img 
-          src="/images/bone.png" 
+          src="/images/bone1.png" 
           alt="" 
           className="decorative-image top-left" 
         />
         <img 
-          src="/images/paws.png" 
+          src="/images/paws1.png" 
           alt="" 
           className="decorative-image top-right" 
         />
 
         <h1 className="hero-title">
-          The best place to get <br /> your favorite pet without <br /> any doubt
+        Snag Your Dream Pet Here
+
         </h1>
 
         <img 
-          src="/images/husky.png" 
+          src="/images/beaglee.png" 
           alt="" 
           className="decorative-image bottom-left" 
         />
         <img 
-          src="/images/orangie.png" 
+          src="/images/orangiee.png" 
           alt="" 
           className="decorative-image bottom-right" 
         />
@@ -124,44 +125,22 @@ const Hero = () => {
         >
           {isLoggedIn ? (
             <>
-              <FaPlusCircle className="button-icon" /> Post a Pet
+              Post Your Pet <FaPlusCircle className="hero-button-icon" /> 
             </>
           ) : (
             <>
-              <FaUserPlus className="button-icon" /> Get Started Now
+              Get Started Now<FaArrowRight className="hero-button-icon hero-button-arrow" /> 
             </>
           )}
         </Button>
       </motion.div>
 
       
-      <div className="hero-images">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="pet-card pink-bg"
-        >
-          <img src="/images/garfie.png" alt="Pomeranian" className="pet-image" />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="pet-card purple-bg always-hover"
-        >
-          <img src="/images/shihtzu-girl.png" alt="Cartoon Dog" className="pet-image" />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9 }}
-          className="pet-card yellow-bg"
-        >
-          <img src="/images/pup.png" alt="pup" className="pet-image" />
-        </motion.div>
+      <div className="hero-images">   
+        <div className="clouds-container">
+          <img src="/images/clouds1.png" alt="Cloud Background" className="cloud-image" />
+          <img src="/images/shitzu-girl.png" alt="Shih Tzu Dog" className="dog-image" />
+        </div>
       </div>
       
     

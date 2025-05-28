@@ -12,7 +12,6 @@
   
   /* Title styling */
   .pet-list-title {
-   
     color: #19222b;
     font-size: 2rem;
     margin-bottom: 10px;
@@ -112,59 +111,188 @@
   
   /* Button Styling */
   .approve-button, .reject-button {
-    /* padding: 5px 10px; */
+    padding: 12px; 
     border: none;
-    border-radius: 10px;
+    border-radius: 50%;
     cursor: pointer;
     display: flex;
+    text-align: center;
     align-items: center;
     justify-content: center;
     font-size: 0.9rem;
     font-weight: bold;
     transition: background-color 0.3s ease;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.372);
   }
   
-  .approve-button i, .reject-button i {
-    margin-right: 8px; /* Add some space between icon and text */
+ 
+  
+  .pet-image-cell {
+    width: 100px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+  }
+  
+  .pet-image-link {
+    display: block;
+    text-decoration: none;
+  }
+  
+  .pet-image-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    border: 2px solid #ddd;
+    transition: transform 0.3s ease;
+  }
+  
+  .pet-image-container:hover {
+    transform: scale(1.05);
+  }
+  
+  .pet-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .decision-cell {
+    vertical-align: middle;
+    padding: 10px;
+  }
+  
+  .decision-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .button-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .approve-button, .reject-button {
+    padding: 12px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
   }
   
   .approve-button {
-    background-color: #27ae60;
+    background-color: #4CAF50;
     color: white;
   }
   
-  .approve-button:hover {
-    background-color: #2ecc71;
+  .approve-button:hover:not(:disabled) {
+    background-color: #3e8e41;
   }
   
   .reject-button {
-    background-color: #e74c3c;
+    background-color: #f44336;
     color: white;
   }
   
-  .reject-button:hover {
-    background-color: #c0392b;
+  .reject-button:hover:not(:disabled) {
+    background-color: #d32f2f;
   }
   
-  /* Add some padding to ensure the buttons don't feel cramped */
-  .approve-button{
-    padding: 10px 5px;
-  }
-   .reject-button {
-     padding: 10px 12px; 
+  .approve-button:disabled, .reject-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
   
-  /* Button container to align buttons in the decision column */
-  .button-container {
-    display: flex;
-    gap: 10px; /* Space between the buttons */
-    justify-content: center;
+  .status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
   }
   
-  /* No pets message */
-  .no-pets-message {
-    text-align: center;
-    color: #888;
-    font-size: 1.2rem;
+  /* Search Container */
+.search-container {
+  display: flex;
+  margin-bottom: 20px;
+  max-width: 400px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  font-size: 14px;
+}
+
+.search-button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.search-button:hover {
+  background-color: #45a049;
+}
+
+.search-button i {
+  margin-right: 5px;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 5px;
+}
+
+.pagination-button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #f1f1f1;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-button.active {
+  background-color: #4CAF50;
+  color: white;
+  border-color: #4CAF50;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .pet-list-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
   }
+}
   

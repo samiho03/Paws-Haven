@@ -16,7 +16,7 @@ const Sidebar = ({ onLogout }) => {
       <div className="sidebar">
         <div className="sidebar-logo">
           {/* Use the logo from src/assets or public */}
-          <img  alt="Logo" className="sidebar-logo-img" />
+          <img alt="Logo" className="sidebar-logo-img"  src='/images/paww.png'/>
         </div>
         <h2 className="sidebar-title">Paws Haven</h2>
         <ul className="sidebar-list">
@@ -33,23 +33,12 @@ const Sidebar = ({ onLogout }) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/admin/doctor-decision" activeClassName="active-link">
-              <FaFileInvoice className="sidebar-icon" />
-              Doctor's Decision
+            <NavLink to="/admin/messages" activeClassName="active-link">
+              <FaHome className="sidebar-icon" />
+              Contact Messages
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/admin/doctors" activeClassName="active-link">
-              <FaUserMd className="sidebar-icon" />
-              Doctors
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/admin/employees" activeClassName="active-link">
-              <FaClipboardList className="sidebar-icon" />
-              Employees
-            </NavLink>
-          </li>
+         
         </ul>
 
         {/* Logout Button */}

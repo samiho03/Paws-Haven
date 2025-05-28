@@ -13,16 +13,16 @@
     height: 100%;
     pointer-events: none;
     z-index: -1;
-    color: #ecdaff;
+    color: #fffef9;
   }
   
   .paw-print {
     position: absolute;
-    animation: float 8s infinite ease-in-out;
+    animation: float-hero 8s infinite ease-in-out;
     opacity: 0;
   }
   
-  @keyframes float {
+  @keyframes float-hero {
     0% {
       transform: translateY(0) rotate(0deg) scale(1);
       opacity: 0;
@@ -53,42 +53,45 @@
  /* Decorative corner images */
 .decorative-image {
     position: absolute;
-    width: 55px;
-    height: 55px;
+    width: 155px;
+    height: 155px;
     object-fit: contain;
     z-index: 1;
   }
   
   .decorative-image.top-left {
     top: 70px;
-    left: 155px;
+    left: 120px;
     animation-delay: 0.2s;
   }
   
   .decorative-image.top-right {
     top: 70px;
-    right: 155px;
+    right:120px;
     animation-delay: 0.4s;
   }
   
   .decorative-image.bottom-left {
-    width: 115px;
-    height: 115px;
-    top: 300px;
-    left: 155px;
+    width: 155px;
+    height: 155px;
+    top: 260px;
+    left: 90px;
     animation-delay: 0.6s;
 
   }
   
   .decorative-image.bottom-right {
-    width: 115px;
-    height: 115px;
-    top: 300px;
-    right: 155px;
+    width: 155px;
+    height: 155px;
+    top: 260px;
+    right: 90px;
     animation-delay: 0.8s;
 
   }
   
+body{
+  background-color: #fbfaf5;
+}
 .hero-content {
     position: relative;
     display: flex;
@@ -96,19 +99,19 @@
     margin-top: 0px;
     align-items: center;
     text-align: center;
-    padding: 1rem 1.1rem;
     gap: 1.5rem;
     z-index: 2;
+    background: linear-gradient(to bottom, #ffffff, #e6d0fd);
   }
   
   .hero-title {
     font-family: "DynaPuff", system-ui;
-    font-size: 3.2rem;
-    font-weight: 600;
+    font-size: 2.8rem;
+    font-weight: 700;
     color: black;
     line-height: 1.5;
+    margin-top: 13px;
     animation: textFadeIn 1s ease-out forwards;
-
   }
   
   @keyframes textFadeIn {
@@ -123,40 +126,106 @@
   }
 
   .hero-description {
-    margin-top: -35px;
-    color: #6b7280;
-    max-width: 28rem;
+    font-family: 'Poppins', sans-serif;
+    margin-top: -55px;
+    color: #9f9f9f;
+    max-width: 26rem;
     animation: textFadeIn 1s ease-out 0.2s forwards;
     opacity: 0;
   }
   
   .hero-button {
     background-color: #8b5cf6;
+    margin-bottom: 150px;
+    margin-top: -100px;
     border: none;
     color: white;
-    padding: 1.2rem 2rem;
+    padding: 0.8rem 2rem;
     border-radius: 999px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
   }
   
   .hero-button:hover {
-    background-color: #7c3aed;
-    transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+    background-color: #8243f0;
+    transform: scale(1);
+    box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
   }
   
   .hero-button:active {
     transform: scale(0.98);
   }
+  
+  .hero-button-icon {
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Plus icon specific styles */
+  .hero-button:hover .fa-plus-circle {
+    transform: scale(1.1);
+  }
+  
+  .hero-button-arrow {
+    position: relative;
+    padding: 4px;
+    border-radius: 50%;
+    color: #8b5cf6;
+    background: rgb(255, 255, 255);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+  }
+  
+  .hero-button-arrow svg {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .hero-button:hover .hero-button-arrow {
+    transform: translateX(4px);
+  }
 
   .hero-images {
-    display: flex;
-    gap: 1.5rem;
-    padding-top: 1.5rem;
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    z-index: 1;
   }
+  
+  .clouds-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  
+  .cloud-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .dog-image {
+    position: absolute;
+    width: 29%; /* Adjust size as needed */
+    bottom: 0%; /* Position from bottom of container */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+   
+  }
+  
+ 
   
   /* .pet-card {
     padding: 3.5rem;
@@ -164,17 +233,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   } */
   
-  .pink-bg {
-    background-color: #fbcfe8;
-  }
-  
-  .purple-bg {
-    background-color: #e9d5ff;
-  }
-  
-  .yellow-bg {
-    background-color: #fef08a;
-  }
+
   
   .always-hover {
     transform: scale(0.9) translateY(0) !important;
@@ -195,11 +254,12 @@
 
   
   .pet-image {
-    width: 20rem;
-    height: 20rem;
+    width:100%;
+    height: auto;
     object-fit: cover;
     transition: transform 0.3s ease;
     transform-origin: center center;
+    bottom:0px;
   }
   
   .pet-card:hover .pet-image {

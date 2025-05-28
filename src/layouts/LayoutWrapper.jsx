@@ -4,7 +4,7 @@ import Footer from '../components/Footer/Footer';
 
 const LayoutWrapper = () => {
   const location = useLocation();
-  const hideLayout = ['/login', '/signup', '/profile'].includes(location.pathname);
+  const hideLayout = ['/login', '/signup', '/profile', '/quiz'].includes(location.pathname);
 
   return (
     <div className="app">      {!hideLayout && <Navbar />}

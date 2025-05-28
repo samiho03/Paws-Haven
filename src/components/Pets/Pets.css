@@ -3,6 +3,8 @@
     padding: 5rem 5rem;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative; /* Add this for proper positioning of paw prints */
+    overflow: hidden; /* Add this to contain the floating paws */
 }
 
 .recent-pets-header {
@@ -11,9 +13,11 @@
 }
 
 .recent-pets-header h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: "DynaPuff", cursive;
     color: #333;
-    margin-bottom: 0.5rem;
+    margin-bottom: -0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,6 +31,7 @@
 .recent-pets-header p {
     color: #666;
     font-size: 1.1rem;
+    margin-bottom: 4rem;
 }
 
 /* Pets Grid */
@@ -37,9 +42,12 @@
     margin-bottom: 2rem;
 }
 
+
 .recent-pet-card {
+    max-width: 280px;
+    margin: 10px auto;
     background: white;
-    border-radius: 10px;
+    border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -56,71 +64,214 @@
 }
 
 .recent-pet-image-container {
-    height: 230px;
+    height: 200px;
     overflow: hidden;
+    position: relative;
+    border-radius: 32px;
+    margin: 20px 20px 0px 20px; 
+    background: #ffffff; 
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
 }
+
+
+/* Add slight vignette effect */
+.recent-pet-image-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(211, 93, 237, 0) 60%,
+        
+    );
+    z-index: 1;
+    pointer-events: none;
+}
+
+.recent-pet-image-wrapper {
+    position: relative;
+    
+  }
+  
+  .favorite-button-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+  }
+  
+  .favorite-button-container:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 1);
+  }
+  
+  /* If your FavoriteButton uses Font Awesome hearts */
+  .favorite-button-container svg {
+    color: #3b0d52;
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* For the filled heart state */
+  .favorite-button-container .fa-heart {
+    color: #ff6b6b;
+  }
+  
+  /* For the empty heart state */
+  .favorite-button-container .fa-heart-o {
+    color: #666;
+  }
 
 .recent-pet-image-container img {
-    width: 100%;
-    height: 100%;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
     transition: transform 0.3s ease;
+    border-radius: 30px; /* Slightly rounded corners for the image */
+    position: relative;
+    z-index: 0;
+    /* Add slight color distortion for retro effect */
+    filter: contrast(1.1) saturate(1.1) brightness(0.9);
 }
 
-.recent-pet-card:hover .recent-pet-image-container img {
-    transform: scale(1.05);
+
+.favorite-button-container {
+    position: absolute;
+    top: -5px;
+    right: 15px;
+    z-index: 10;
 }
 
 .recent-pet-info {
-    padding: 0.5rem;
-    text-align: center;
+    padding: 1rem 1.5rem;
+    text-align: left;
+    background: white;
+    border-radius: 0 0 20px 20px;
+}
+
+
+
+.pet-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
 }
 
 .recent-pet-info h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1rem;
+    margin: 0;
+    font-size: 1.2rem;
     color: #333;
+    font-weight: 700;
 }
 
-.recent-pet-breed {
+.pet-gender {
+    background: #f0e6ff;
+    color: #7a4ada;
+    padding: 0.2rem 0.5rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.pet-details {
+    margin-top: 0.5rem;
+}
+
+.recent-pet-breed{
+    margin: 0.3rem 0;
+    font-size: 0.8rem;
+    letter-spacing: 2.3px;
+    color: #555;
+    display: flex;
+    text-align: center;
+    
+}
+
+.detail-icon {
+    margin-right: 0.5rem;
+    color: #ff6b6b;
+    font-size: 0.8rem;
+}
+
+.detail-label {
+    font-weight: 600;
     color: #666;
-    margin: 0.3rem 0;
-    font-size: 0.9rem;
+    margin-right: 0.3rem;
 }
 
-.recent-pet-age {
-    color: #888;
-    margin: 0.3rem 0;
-    font-size: 0.9rem;
-}
 
 /* View More Button */
 .recent-view-more-container {
     text-align: center;
-    margin-top: 3rem;
+    margin-top: 2.5rem;
     margin-bottom: 3rem;
 }
 
-.recent-view-more-btn {
+/* Reuse hero button styles */
+.recent-view-more-btn.hero-button {
+    margin: 1rem 0; /* Adjust margins as needed */
+    background-color: #8b5cf6;
+    border: none;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 999px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
-    padding: 0.8rem 1.5rem;
-    background-color: #ff6b6b;
-    color: white;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-}
-
-.recent-view-more-btn:hover {
-    background-color: #ff5252;
-}
-
-.recent-view-more-btn .arrow-icon {
-    margin-left: 0.5rem;
-}
-
+    gap: 8px;
+    text-decoration: none; /* Remove underline from Link */
+  }
+  
+  .recent-view-more-btn.hero-button:hover {
+    background-color: #7c3aed;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+  }
+  
+  .recent-view-more-btn.hero-button:active {
+    transform: scale(0.98);
+  }
+  
+  /* Arrow styles - same as hero button */
+  .recent-view-more-btn .hero-button-arrow {
+    position: relative;
+    padding: 4px;
+    border-radius: 50%;
+    background: rgb(255, 255, 255);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+  }
+  
+  .recent-view-more-btn .hero-button-arrow svg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .recent-view-more-btn:hover .hero-button-arrow {
+    transform: translateX(4px);
+  }
 /* Loading and Error States */
 .recent-pets-loading,
 .recent-pets-error {
@@ -164,5 +315,40 @@
     
     .recent-pets-header h2 {
         font-size: 1.5rem;
+    }
+}
+
+/* Paw Prints Background Styles */
+.paw-prints-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.floating-paw {
+    position: absolute;
+    animation: floattt 8s infinite ease-in-out;
+    color: rgb(236, 218, 255);
+}
+
+@keyframes floattt {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-150px) rotate(20deg) scale(0.8);
+        opacity: 0;
     }
 }

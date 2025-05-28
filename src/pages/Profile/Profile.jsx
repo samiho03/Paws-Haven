@@ -19,7 +19,9 @@ import {
   FaHeart,
   FaRegHeart,
   FaComment,
-  FaShare
+  FaShare,
+  FaEnvelope,
+  FaUser
 } from 'react-icons/fa';
 import { IoMdPaw } from 'react-icons/io';
 import { RiShieldUserLine } from 'react-icons/ri';
@@ -47,6 +49,7 @@ const Profile = () => {
 
     // Pet list state
     const [pets, setPets] = useState([]);
+    const [favorites, setFavorites] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [editMode, setEditMode] = useState(false);
     const [imagePreview, setImagePreview] = useState('');
@@ -86,11 +89,11 @@ const Profile = () => {
                 
                 setUserData({
                     name: userData.name || '',
-                email: userData.email || '',
-                profileImage: profileImage,
-                nic: userData.nic || '',
-                location: userData.location || '',
-                phone: userData.phone || ''
+                    email: userData.email || '',
+                    profileImage: profileImage,
+                    nic: userData.nic || '',
+                    location: userData.location || '',
+                    phone: userData.phone || ''
                 });
     
                 // Fetch user's pets with the same token
@@ -106,8 +109,16 @@ const Profile = () => {
                     photo: pet.photoUrl,
                     isAvailable: pet.isAvailable !== null ? pet.isAvailable : true // Default to true if null
                 }));
-    
                 setPets(processedPets);
+
+                 // Fetch user's favorites
+                 const favoritesResponse = await axios.get('http://localhost:8080/api/v1/favorites', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setFavorites(favoritesResponse.data);
+
             } catch (error) {
                 console.error('Error fetching data:', error);
                 if (error.response?.status === 401) {
@@ -342,198 +353,362 @@ const Profile = () => {
 
     return (
         <div className="profile-main-container">
-            {/* Header */}
-            <header className="profile-header-section">
-                <div className="profile-header-content">
-                    <Link to="/" className="profile-logo">
-                        <FaPaw className="profile-paw-icon" />
-                        <h1>Paws Haven</h1>
-                    </Link>
-                    <div className="profile-header-actions">
-                        <Link to="/form" className="profile-add-pet-btn">
-                            <FaPlus /> Add Pet
-                        </Link>
-                        <button 
-                            className="profile-settings-btn"
-                            onClick={() => setShowSettingsMenu(!showSettingsMenu)}
-                        >
-                            <FaEllipsisH />
-                        </button>
+            {/* Gradient Background Section */}
+            <div className="profile-gradient-bg">
+                {/* Profile Card */}
+                <div className="profile-card-container">
+                    <div className="profile-card">
+                        {/* Logo above profile image */}
+                        <div className="profile-logo-container">
+                            <Link to="/" className="profile-logo-link">
+                                <FaPaw className="profile-main-paw" />
+                                <span className="profile-logo-text">Paws Haven</span>
+                            </Link>
+                        </div>
                         
-                        {showSettingsMenu && (
-                            <div className="profile-settings-menu">
-                                <button 
-                                    className="profile-menu-item"
-                                    onClick={() => {
-                                        setEditMode(true);
-                                        setShowSettingsMenu(false);
-                                    }}
-                                >
-                                    <FaUserEdit /> Edit Profile
-                                </button>
-                                <button 
-                                    className="profile-menu-item"
-                                    onClick={() => {
-                                        setShowPasswordForm(true);
-                                        setShowSettingsMenu(false);
-                                    }}
-                                >
-                                    <FaLock /> Change Password
-                                </button>
-                                <button 
-                                    className="profile-menu-item profile-menu-item-danger"
-                                    onClick={handleLogout}
-                                >
-                                    <FaSignOutAlt /> Logout
-                                </button>
-                                <button 
-                                    className="profile-menu-item profile-menu-item-danger"
-                                    onClick={() => {
-                                        setShowDeleteConfirm(true);
-                                        setShowSettingsMenu(false);
-                                    }}
-                                >
-                                    <FaTrash /> Delete Account
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </header>
-
-            {/* Profile Hero Section */}
-            <div className="profile-hero-section">
-                <div className="profile-hero-content">
-                    <div className="profile-avatar-container">
-                        <div className="profile-avatar-wrapper">
-                            <img 
+                        {/* Left Side - Profile Image */}
+                        <div className="profile-image-section">
+                            <div className="profile-image-wrapper">
+                                <img 
                                 src={imagePreview || userData.profileImage}
                                 alt="Profile" 
-                                className="profile-avatar-image"
+                                className="profile-main-image"
                                 onError={(e) => {
                                     e.target.src = 'https://cdn-icons-png.flaticon.com/512/10542/10542486.png';
                                 }}
-                            />
-                            {editMode && (
-                                <label className="profile-avatar-upload">
+                                />
+                                {editMode && (
+                                <label className="profile-image-upload-label">
                                     <input
-                                        id="profile-image-upload"
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={handleImageChange}
-                                        style={{ display: 'none' }}
+                                    id="profile-image-upload"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    style={{ display: 'none' }}
                                     />
                                     <span className="profile-upload-text">Change Photo</span>
                                 </label>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="profile-info-container">
-                        <div className="profile-info-header">
-                            <h2 className="profile-username">{userData.name}</h2>
-                            {editMode ? (
-                                <div className="profile-edit-actions">
-                                    <button 
-                                        className="profile-cancel-btn"
-                                        onClick={() => setEditMode(false)}
-                                    >
-                                        <FaTimes /> Cancel
-                                    </button>
-                                    <button 
-                                        className="profile-save-btn"
-                                        onClick={handleSave}
-                                    >
-                                        <FaCheck /> Save
-                                    </button>
-                                </div>
-                            ) : (
-                                <button 
-                                    className="profile-edit-btn"
-                                    onClick={() => setEditMode(true)}
-                                >
-                                    <FaEdit /> Edit Profile
-                                </button>
-                            )}
-                        </div>
-
-                        <div className="profile-stats">
-                            <div className="profile-stat">
-                                <span className="profile-stat-count">{pets.length}</span>
-                                <span className="profile-stat-label">Pets</span>
+                                )}
                             </div>
-                           
-                        </div>
-
-                        <div className="profile-bio">
-                            {editMode ? (
-                                <>
-                                    <div className="profile-form-group">
-                                        <label>Full Name</label>
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            value={userData.name}
-                                            onChange={handleInputChange}
-                                            className="profile-form-input"
-                                        />
-                                    </div>
-                                    <div className="profile-form-group">
-                                        <label>Email</label>
-                                        <div className="profile-info-text">{userData.email}</div>
-                                    </div>
-                                    <div className="profile-form-group">
-                                        <label><FaIdCard /> NIC Number</label>
-                                        <input
-                                            type="text"
-                                            name="nic"
-                                            value={userData.nic}
-                                            onChange={handleInputChange}
-                                            className="profile-form-input"
-                                            placeholder="Enter your NIC"
-                                        />
-                                    </div>
-                                    <div className="profile-form-group">
-                                        <label><FaMapMarkerAlt /> Location</label>
-                                        <input
-                                            type="text"
-                                            name="location"
-                                            value={userData.location}
-                                            onChange={handleInputChange}
-                                            className="profile-form-input"
-                                            placeholder="Enter your location"
-                                        />
-                                    </div>
-                                    <div className="profile-form-group">
-                                        <label><FaPhone /> Phone Number</label>
-                                        <input
-                                            type="tel"
-                                            name="phone"
-                                            value={userData.phone}
-                                            onChange={handleInputChange}
-                                            className="profile-form-input"
-                                            placeholder="Enter your phone number"
-                                        />
-                                    </div>
-                                </>
-                            ) : (
-                                <>
-                                    <div className="profile-bio-text">
-                                        {userData.nic && (
-                                            <p><FaIdCard /> <strong>NIC:</strong> {userData.nic}</p>
-                                        )}
-                                        {userData.location && (
-                                            <p><FaMapMarkerAlt /> <strong>Location:</strong> {userData.location}</p>
-                                        )}
-                                        {userData.phone && (
-                                            <p><FaPhone /> <strong>Phone:</strong> {userData.phone}</p>
-                                        )}
-                                    </div>
-                                </>
+                            {editMode && (
+                                <div className="profile-email-under-image">
+                                <FaEnvelope className="profile-email-icon" />
+                                <span className="profile-email-text">{userData.email}</span>
+                                
+                                </div>
                             )}
+                            </div>
+                        
+                        {/* Right Side - Profile Info */}
+                        <div className="profile-info-section">
+                            <div className="profile-header-actions">
+                                <button 
+                                    className="profile-settings-btn"
+                                    onClick={() => setShowSettingsMenu(!showSettingsMenu)}
+                                >
+                                    <FaEllipsisH />
+                                </button>
+                                
+                                {showSettingsMenu && (
+                                    <div className="profile-settings-menu">
+                                        <div className="profile-menu-header">
+                                            <h4>Account Settings</h4>
+                                            <button 
+                                                className="profile-menu-close"
+                                                onClick={() => setShowSettingsMenu(false)}
+                                            >
+                                                <FaTimes />
+                                            </button>
+                                        </div>
+                                        <button 
+                                            className="profile-menu-item"
+                                            onClick={() => {
+                                                setShowPasswordForm(true);
+                                                setShowSettingsMenu(false);
+                                            }}
+                                        >
+                                            <FaLock /> Change Password
+                                        </button>
+                                        <button 
+                                            className="profile-menu-item"
+                                            onClick={handleLogout}
+                                        >
+                                            <FaSignOutAlt /> Logout
+                                        </button>
+                                        <button 
+                                            className="profile-menu-item profile-menu-item-danger"
+                                            onClick={() => {
+                                                setShowDeleteConfirm(true);
+                                                setShowSettingsMenu(false);
+                                            }}
+                                        >
+                                            <FaTrash /> Delete Account
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                            
+                            <div className="profile-info-content">
+                                <div className="profile-name-section">
+                                    <h1 className="profile-display-name">{userData.name}</h1>
+                                    {editMode ? (
+                                        <div className="profile-edit-actions">
+                                            <button 
+                                                className="profile-cancel-btn"
+                                                onClick={() => setEditMode(false)}
+                                            >
+                                                <FaTimes /> Cancel
+                                            </button>
+                                            <button 
+                                                className="profile-save-btn"
+                                                onClick={handleSave}
+                                            >
+                                                <FaCheck /> Save
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <button 
+                                            className="profile-edit-btn"
+                                            onClick={() => setEditMode(true)}
+                                        >
+                                            <FaEdit /> Edit Profile
+                                        </button>
+                                    )}
+                                </div>
+                                
+                                <div className="profile-stats-container">
+                                    <div className="profile-stat-item">
+                                        <div className="profile-stat-bubble">
+                                            <span className="profile-stat-number">{pets.length}</span>
+                                            <span className="profile-stat-label">Pets Added</span>
+                                        </div>
+                                    </div>
+                                    <div className="profile-stat-item">
+                                        <div className="profile-stat-bubble">
+                                            <span className="profile-stat-number">{favorites.length}</span>
+                                            <span className="profile-stat-label">Favorites</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="profile-details-section">
+                                    {editMode ? (
+                                        <>
+                                            <div className="profile-form-group">
+                                                <label><FaUser /> Full Name</label>
+                                                <input
+                                                    type="text"
+                                                    name="name"
+                                                    value={userData.name}
+                                                    onChange={handleInputChange}
+                                                    className="profile-form-input"
+                                                />
+                                            </div>
+                                          
+                                            <div className="profile-form-group">
+                                                <label><FaIdCard /> NIC Number</label>
+                                                <input
+                                                    type="text"
+                                                    name="nic"
+                                                    value={userData.nic}
+                                                    onChange={handleInputChange}
+                                                    className="profile-form-input"
+                                                    placeholder="Enter your NIC"
+                                                />
+                                            </div>
+                                           
+                                            <div className="profile-form-group">
+                                                <label><FaMapMarkerAlt /> Location</label>
+                                                <input
+                                                    type="text"
+                                                    name="location"
+                                                    value={userData.location}
+                                                    onChange={handleInputChange}
+                                                    className="profile-form-input"
+                                                    placeholder="Enter your location"
+                                                />
+                                            </div>
+                                            <div className="profile-form-group">
+                                                <label><FaPhone /> Phone Number</label>
+                                                <input
+                                                    type="tel"
+                                                    name="phone"
+                                                    value={userData.phone}
+                                                    onChange={handleInputChange}
+                                                    className="profile-form-input"
+                                                    placeholder="Enter your phone number"
+                                                />
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="profile-details-row">
+                                                <div className="profile-detail-item">
+                                                    <FaIdCard className="profile-detail-icon" />
+                                                    <span className="profile-detail-text">{userData.nic || 'Not provided'}</span>
+                                                </div>
+                                                <div className="profile-detail-item">
+                                                    <FaEnvelope className="profile-detail-icon" />
+                                                    <span className="profile-detail-text">{userData.email}</span>
+                                                </div>
+                                            </div>
+                                            <div className="profile-details-row">
+                                                <div className="profile-detail-item">
+                                                    <FaMapMarkerAlt className="profile-detail-icon" />
+                                                    <span className="profile-detail-text">{userData.location || 'Not provided'}</span>
+                                                </div>
+                                                <div className="profile-detail-item">
+                                                    <FaPhone className="profile-detail-icon" />
+                                                    <span className="profile-detail-text">{userData.phone || 'Not provided'}</span>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            {/* Rest of the profile content (tabs and pet display) */}
+            <div className="profile-content-container">
+                {/* Tabs */}
+                <div className="profile-tabs">
+                    <button 
+                        className={`profile-tab ${activeTab === 'pets' ? 'profile-tab-active' : ''}`}
+                        onClick={() => setActiveTab('pets')}
+                    >
+                        <IoMdPaw /> My Pets
+                    </button>
+                    <button 
+                        className={`profile-tab ${activeTab === 'saved' ? 'profile-tab-active' : ''}`}
+                        onClick={() => setActiveTab('saved')}
+                    >
+                        <FaRegHeart /> Saved
+                    </button>
+                </div>
+
+                {/* Conditional rendering based on active tab */}
+                {activeTab === 'pets' ? (
+                    <>
+                        <div className="profile-status-filters">
+                            <button 
+                                className={`status-filter-btn ${statusFilter === 'all' ? 'active' : ''}`}
+                                onClick={() => setStatusFilter('all')}
+                            >
+                                All Pets
+                            </button>
+                            <button 
+                                className={`status-filter-btn ${statusFilter === 'approved' ? 'active' : ''}`}
+                                onClick={() => setStatusFilter('approved')}
+                            >
+                                Approved
+                            </button>
+                            <button 
+                                className={`status-filter-btn ${statusFilter === 'pending' ? 'active' : ''}`}
+                                onClick={() => setStatusFilter('pending')}
+                            >
+                                Pending
+                            </button>
+                            <button 
+                                className={`status-filter-btn ${statusFilter === 'rejected' ? 'active' : ''}`}
+                                onClick={() => setStatusFilter('rejected')}
+                            >
+                                Rejected
+                            </button>
+                        </div>
+
+                        <div className="profile-pets-grid">
+                            {filteredPets.length === 0 ? (
+                                <div className="profile-no-pets">
+                                    <div className="profile-no-pets-icon">
+                                        <IoMdPaw />
+                                    </div>
+                                    <h3>No Pets Found</h3>
+                                    <p>No pets match the selected filter.</p>
+                                </div>
+                            ) : (
+                                filteredPets.map(pet => (
+                                    <div key={pet.id} className="profile-pet-card">
+                                        <div className="profile-pet-image-container">
+                                            <PetImage pet={pet} />
+                                            <div className="profile-pet-overlay">
+                                                <div className="profile-pet-actions">
+                                                    <select
+                                                        value={pet.isAvailable ? 'available' : 'not-available'}
+                                                        onChange={(e) => updatePetStatus(pet.id, e.target.value === 'available')}
+                                                        className="profile-pet-status-select"
+                                                    >
+                                                        <option value="available">Available</option>
+                                                        <option value="not-available">Not Available</option>
+                                                    </select>
+                                                    <button 
+                                                        className="profile-pet-delete-btn"
+                                                        onClick={() => deletePet(pet.id)}
+                                                    >
+                                                        <FaTrash />
+                                                    </button>
+                                                </div>
+                                                <div className="profile-pet-info">
+                                                    <h3>{pet.petName}</h3>
+                                                    <p>{pet.breed} • {pet.age}</p>
+                                                    <div className="profile-pet-status-container">
+                                                       
+                                                        <p className={`profile-registration-status ${!pet.regStatus ? 'pending' : pet.regStatus}`}>
+                                                            {!pet.regStatus ? 'Pending' : pet.regStatus}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </>
+                ) : (
+                    <div className="profile-favorites-section">
+    {favorites.length === 0 ? (
+        <div className="profile-no-favorites">
+            <p>You haven't favorited any pets yet.</p>
+            <Link to="/pets" className="profile-favorite-browse-link">
+                Browse available pets
+            </Link>
+        </div>
+    ) : (
+        <div className="profile-favorites-grid">
+            {favorites.map(pet => (
+                <div className="profile-favorite-card">
+                <div className="profile-favorite-image-wrapper">
+                    <Link to={`/petDetail/${pet.id}`} className="profile-favorite-card-link">
+                        <div className="profile-favorite-image">
+                            <PetImage pet={pet} />
+                        </div>
+                    </Link>
+                    <div className="profile-favorite-overlay">
+                        <div className="profile-favorite-info">
+                            <div className="profile-pet-info-header">
+                                <h3>{pet.petName}</h3>
+                                <span className="profile-pet-gender">{pet.gender}</span>
+                            </div>
+                            <div className="profile-favorite-pet-details">
+                                <p className="profile-favorite-pet-breed">
+                                    {pet.breed}
+                                </p>
+                                <p className='profile-favorite-pet-loc'>
+                                    <FaMapMarkerAlt /> {pet.location}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ))}
+        </div>
+    )}
+</div>
+                )}
             </div>
 
             {/* Password Update Form */}
@@ -557,6 +732,7 @@ const Profile = () => {
                                 value={passwordData.currentPassword}
                                 onChange={handlePasswordChange}
                                 className="profile-form-input"
+                                placeholder="Enter current password"
                             />
                         </div>
                         <div className="profile-form-group">
@@ -567,6 +743,7 @@ const Profile = () => {
                                 value={passwordData.newPassword}
                                 onChange={handlePasswordChange}
                                 className="profile-form-input"
+                                placeholder="Enter new password"
                             />
                         </div>
                         <div className="profile-form-group">
@@ -577,6 +754,7 @@ const Profile = () => {
                                 value={passwordData.confirmPassword}
                                 onChange={handlePasswordChange}
                                 className="profile-form-input"
+                                placeholder="Confirm new password"
                             />
                         </div>
                         <div className="profile-form-actions">
@@ -620,100 +798,6 @@ const Profile = () => {
                     </div>
                 </div>
             )}
-
-            {/* Tabs */}
-            <div className="profile-tabs">
-                <button 
-                    className={`profile-tab ${activeTab === 'pets' ? 'profile-tab-active' : ''}`}
-                    onClick={() => setActiveTab('pets')}
-                >
-                    <IoMdPaw /> My Pets
-                </button>
-                <button 
-                    className={`profile-tab ${activeTab === 'saved' ? 'profile-tab-active' : ''}`}
-                    onClick={() => setActiveTab('saved')}
-                >
-                    <FaRegHeart /> Saved
-                </button>
-            </div>
-
-{/* Add this above the pets grid */}
-<div className="profile-status-filters">
-    <button 
-        className={`status-filter-btn ${statusFilter === 'all' ? 'active' : ''}`}
-        onClick={() => setStatusFilter('all')}
-    >
-        All Pets
-    </button>
-    <button 
-        className={`status-filter-btn ${statusFilter === 'approved' ? 'active' : ''}`}
-        onClick={() => setStatusFilter('approved')}
-    >
-        Approved
-    </button>
-    <button 
-        className={`status-filter-btn ${statusFilter === 'pending' ? 'active' : ''}`}
-        onClick={() => setStatusFilter('pending')}
-    >
-        Pending
-    </button>
-    <button 
-        className={`status-filter-btn ${statusFilter === 'rejected' ? 'active' : ''}`}
-        onClick={() => setStatusFilter('rejected')}
-    >
-        Rejected
-    </button>
-</div>
-
-            <div className="profile-pets-grid">
-            {filteredPets.length === 0 ? (
-        <div className="profile-no-pets">
-            <div className="profile-no-pets-icon">
-                <IoMdPaw />
-            </div>
-            <h3>No Pets Found</h3>
-            <p>No pets match the selected filter.</p>
-        </div>
-    ) : (
-        filteredPets.map(pet => (
-            <div key={pet.id} className="profile-pet-card">
-                <div className="profile-pet-image-container">
-                    <PetImage pet={pet} />
-                    <div className="profile-pet-overlay">
-                        <div className="profile-pet-actions">
-                            <select
-                                value={pet.isAvailable ? 'available' : 'not-available'}
-                                onChange={(e) => updatePetStatus(pet.id, e.target.value === 'available')}
-                                className="profile-pet-status-select"
-                            >
-                                <option value="available">Available</option>
-                                <option value="not-available">Not Available</option>
-                            </select>
-                            <button 
-                                className="profile-pet-delete-btn"
-                                onClick={() => deletePet(pet.id)}
-                            >
-                                <FaTrash />
-                            </button>
-                        </div>
-                       <div className="profile-pet-info">
-    <h3>{pet.petName}</h3>
-    <p>{pet.breed} • {pet.age}</p>
-    <div className="pet-status-container">
-        <p className={`availability-status ${pet.isAvailable ? 'available' : 'not-available'}`}>
-            {pet.isAvailable ? 'Available' : 'Not Available'}
-        </p>
-        <p className={`registration-status ${!pet.regStatus ? 'pending' : pet.regStatus}`}>
-            {!pet.regStatus ? 'Pending' : pet.regStatus}
-        </p>
-    </div>
-</div>
-                    </div>
-                </div>
-            </div>
-        ))
-    )}
-</div>
         </div>
     );
 };
