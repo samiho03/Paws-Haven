@@ -18,8 +18,10 @@ import PetList from './pages/PetList/PetList';
 import Map from './pages/Map/Map';
 import Quiz from './pages/Quiz/Quiz';
 import LayoutWrapper from './layouts/LayoutWrapper';
+import Dashboard from './adminPanel/Dashboard/AdminDashboard';
 import PetDetailsForm from './adminPanel/PetDetails/PetDetails';
 import MessageDetails from './adminPanel/MessageDetails/MessageDetails';
+import UserDetails from './adminPanel/UserDetails/UserDetails';
 
 import Sidebar from './adminPanel/Sidebar/Sidebar';
 import PetProfile from './adminPanel/PetProfile/PetProfile';
@@ -72,10 +74,12 @@ const App = () => {
           <Sidebar onLogout={handleLogout} />
           <div className="content">
             <Routes>
+              <Route path="/admin/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
               <Route path="/admin/pets" element={<AdminRoute><PetDetailsForm /></AdminRoute>} />
+              <Route path="/admin/users" element={<AdminRoute><UserDetails /></AdminRoute>} />
               <Route path="/admin/pet-profile" element={<AdminRoute><PetProfile /></AdminRoute>} />
               <Route path="/admin/messages" element={<AdminRoute><MessageDetails /></AdminRoute>} />
-              <Route path="*" element={<Navigate to="/admin/pets" />} />
+              <Route path="*" element={<Navigate to="/admin/dashboard" />} />
             </Routes>
           </div>
         </div>

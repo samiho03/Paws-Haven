@@ -333,24 +333,30 @@ const UserForm = ({ onLogout }) => {
                <FaPlus /> Submit Another Pet
              </button>
            </div>
+           
          </div>
        </div>
       ) : (
         <>
 
-      {/* Progress Steps */}
+     
+        
       <div className="pet-form-progress-container">
+        
         <div className="pet-form-progress-line">
           <div 
             className="pet-form-progress-fill" 
             style={{ width: `${(currentStep - 1) * 33.33}%` }}
           ></div>
         </div>
+        
         <div className="pet-form-steps">
+          
           <div 
             className={`pet-form-step ${currentStep >= 1 ? 'active' : ''}`}
             onClick={() => currentStep > 1 && setCurrentStep(1)}
           >
+             
             <div className="pet-form-step-number">1</div>
             <div className="pet-form-step-label">Basic Details</div>
           </div>
@@ -369,13 +375,18 @@ const UserForm = ({ onLogout }) => {
             <div className="pet-form-step-label">Your Info</div>
           </div>
           <div 
+          
             className={`pet-form-step ${currentStep >= 4 ? 'active' : ''}`}
             onClick={() => currentStep > 4 && setCurrentStep(4)}
           >
+            
             <div className="pet-form-step-number">4</div>
             <div className="pet-form-step-label">Prediction</div>
           </div>
+
+
         </div>
+
       </div>
 
       <form className="isolated-user-form" onSubmit={handleSubmit}>

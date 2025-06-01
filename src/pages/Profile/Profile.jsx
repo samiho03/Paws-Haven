@@ -672,7 +672,7 @@ const Profile = () => {
     {favorites.length === 0 ? (
         <div className="profile-no-favorites">
             <p>You haven't favorited any pets yet.</p>
-            <Link to="/pets" className="profile-favorite-browse-link">
+            <Link to="/petlist" className="profile-favorite-browse-link">
                 Browse available pets
             </Link>
         </div>

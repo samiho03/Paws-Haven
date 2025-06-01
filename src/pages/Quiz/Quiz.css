@@ -25,8 +25,7 @@
   /* Back Button Styles */
 .quiz-back-button {
     position: absolute;
-    top: 20px;
-    
+    top: 0px;
     width: 40px;
     height: 40px;
     background: #9f7aea;
@@ -51,20 +50,7 @@
     font-size: 1.2rem;
     
   }
-  /* Background Floating Paws */
-  .quiz-paw-prints-bg .quiz-floating-paw-container {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-  }
-  
-  .quiz-floating-paw {
-    width: 100%;
-    height: 100%;
-    color: #b889e0;
-    filter: drop-shadow(0 2px 4px rgba(184, 137, 224, 0.2));
-  }
-  
+ 
   /* Header Section */
   .quiz-header-container {
     text-align: center;

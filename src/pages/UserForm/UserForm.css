@@ -105,7 +105,7 @@
 .isolated-form-select:focus,
 .isolated-form-textarea:focus {
   outline: none;
-  border-color: #8b5cf6;
+  border-color: #916ed6;
   box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
 }
 
@@ -128,7 +128,7 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background-color: #8b5cf6;
+  background: linear-gradient(135deg, #916ed6 0%, #ab80d1 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -192,7 +192,7 @@
 
 .isolated-radio-label input:checked ~ .isolated-radio-custom {
   background-color: transparent;
-  border-color: #8b5cf6;
+  border-color: #916ed6;
 }
 
 .isolated-radio-label input:checked ~ .isolated-radio-custom::after {
@@ -204,7 +204,7 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #8b5cf6;
+  background: #916ed6;
 }
 
 .isolated-section-title {
@@ -224,7 +224,7 @@
 .isolated-submit-btn {
   width: 100%;
   padding: 12px;
-  background-color: #8b5cf6;
+  background: linear-gradient(135deg, #916ed6 0%, #ab80d1 100%);
   color: white;
   border: none;
   border-radius: 30px;
@@ -476,7 +476,7 @@
 
 .pet-form-progress-fill {
   height: 100%;
-  background-color: #8b5cf6;
+  background: linear-gradient(135deg, #916ed6 0%, #ab80d1 100%);
   transition: width 0.3s ease;
 }
 
@@ -494,9 +494,6 @@
   cursor: pointer;
 }
 
-.pet-form-step.active {
-  color: #8b5cf6;
-}
 
 .pet-form-step-number {
   width: 40px;
@@ -512,7 +509,7 @@
 }
 
 .pet-form-step.active .pet-form-step-number {
-  background-color: #8b5cf6;
+  background: linear-gradient(135deg, #916ed6 0%, #ab80d1 100%);
   color: white;
 }
 
@@ -543,8 +540,8 @@
 
 .pet-form-prev-btn {
   background-color: white;
-  border: 2px solid #8b5cf6;
-  color: #8b5cf6;
+  border: 2px solid #916ed6;
+ 
 }
 
 .pet-form-prev-btn:hover {
@@ -554,7 +551,7 @@
 /* Submit Button Styles */
 .pet-form-submit-btn {
   padding: 12px 25px;
-  background-color: #8b5cf6;
+  background: linear-gradient(135deg, #916ed6 0%, #ab80d1 100%);
   color: white;
   border: none;
   border-radius: 30px;
@@ -587,14 +584,14 @@
 
 .pet-form-next-btn,
 .pet-form-submit-btn {
-  background-color: #8b5cf6;
+  background: linear-gradient(135deg, #916ed6 0%, #ab80d1 100%);
   color: white;
   border: none;
 }
 
 .pet-form-next-btn:hover,
 .pet-form-submit-btn:hover {
-  background-color: #7d4ce6;
+  background: linear-gradient(135deg, #916ed6 0%, #ab80d1 100%);
 }
 
 /* Prediction Section */
@@ -607,7 +604,7 @@
 }
 
 .pet-prediction-title {
-  color: #8b5cf6;
+  color: #916ed6;
   margin-bottom: 10px;
 }
 
@@ -618,7 +615,7 @@
 
 .pet-prediction-btn {
   padding: 12px 30px;
-  background-color: #8b5cf6;
+  background: linear-gradient(135deg, #916ed6 0%, #ab80d1 100%);
   color: white;
   border: none;
   border-radius: 30px;
@@ -660,7 +657,7 @@
 .pet-submission-complete-icon {
   width: 80px;
   height: 80px;
-  background-color: #8b5cf6;
+  background: linear-gradient(135deg, #916ed6 0%, #ab80d1 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -671,7 +668,7 @@
 }
 
 .pet-submission-complete-container h2 {
-  color: #8b5cf6;
+  color: #916ed6;
   margin-bottom: 15px;
 }
 
@@ -683,7 +680,7 @@
 
 .pet-submission-profile-btn {
   padding: 12px 30px;
-  background-color: #8b5cf6;
+  background: linear-gradient(135deg, #916ed6 0%, #ab80d1 100%);
   color: white;
   border: none;
   border-radius: 30px;
@@ -753,7 +750,7 @@
 
 .contact-info-note svg {
   margin-right: 10px;
-  color: #8b5cf6;
+  color: #916ed6;
 }
 
 /* Submission Complete */
@@ -773,21 +770,10 @@
   align-items: center;
 }
 
-.pet-submission-complete-icon {
-  width: 80px;
-  height: 80px;
-  background-color: #8b5cf6;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 36px;
-  margin-bottom: 25px;
-}
+
 
 .pet-submission-complete-container h2 {
-  color: #8b5cf6;
+  color: #916ed6;
   margin-bottom: 15px;
 }
 
@@ -811,7 +797,7 @@
 
 .pet-submission-note svg {
   margin-right: 10px;
-  color: #8b5cf6;
+  color: #916ed6;
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -835,7 +821,7 @@
 }
 
 .pet-submission-profile-btn {
-  background-color: #8b5cf6;
+  background: linear-gradient(135deg, #916ed6 0%, #ab80d1 100%);
   color: white;
   border: none;
 }
@@ -847,8 +833,8 @@
 
 .pet-submission-another-btn {
   background-color: white;
-  border: 2px solid #8b5cf6;
-  color: #8b5cf6;
+  border: 2px solid #916ed6;
+  color: #916ed6;
 }
 
 .pet-submission-another-btn:hover {
@@ -859,7 +845,7 @@
 /* Form Icons */
 .isolated-form-label svg {
   margin-right: 8px;
-  color: #8b5cf6;
+  color: #916ed6;
 }
 
 /* Prediction Section */
@@ -873,7 +859,7 @@
 }
 
 .pet-prediction-title {
-  color: #8b5cf6;
+  color: #916ed6;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -888,7 +874,7 @@
 
 .pet-prediction-btn {
   padding: 12px 30px;
-  background-color: #8b5cf6;
+  background: linear-gradient(135deg, #916ed6 0%, #ab80d1 100%);
   color: white;
   border: none;
   border-radius: 30px;
@@ -911,7 +897,7 @@
   padding: 15px;
   background-color: #f9f7ff;
   border-radius: 10px;
-  border-left: 4px solid #8b5cf6;
+  border-left: 4px solid #916ed6;
 }
 
 /* Step Buttons with Icons */
@@ -924,4 +910,5 @@
   margin-right: 0;
   margin-left: 8px;
 }
+
 

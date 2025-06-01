@@ -243,28 +243,7 @@ const Quiz = () => {
             >
             <FaArrowLeft className="quiz-back-icon" />
         </motion.button>
-        <div className="quiz-paw-prints-bg">
-            {[...Array(12)].map((_, i) => (
-            <motion.div
-                key={i}
-                className="quiz-floating-paw-container"
-                initial={{ opacity: 0 }}
-                animate={{ 
-                opacity: [0, 0.2, 0],
-                y: [0, -50, 0],
-                x: [0, Math.random() * 100 - 50, 0]
-                }}
-                transition={{
-                duration: Math.random() * 10 + 10,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: Math.random() * 5
-                }}
-            >
-                <FaPaw className="quiz-floating-paw" />
-            </motion.div>
-            ))}
-        </div>
+        
 
 
       <motion.div 
