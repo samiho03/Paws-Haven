@@ -1,167 +1,256 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaPaw, FaHeart, FaDog, FaCat, FaArrowRight, FaPlusCircle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import Button from "../ui/button";
 import './Hero.css';
 
-
 const Hero = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true);
     }
+    
+    // Trigger load animation after component mounts
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
   }, []);
 
+  // Function to create sparkles
+  const createSparkle = () => {
+    const sparklesContainer = document.querySelector('.sparkles');
+    if (sparklesContainer) {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.left = Math.random() * 100 + '%';
+      sparkle.style.top = Math.random() * 100 + '%';
+      sparkle.style.animationDelay = Math.random() * 2 + 's';
+      sparklesContainer.appendChild(sparkle);
 
-  // Floating pet animation variants
-  const floatingPets = [
-    { icon: <FaDog />, size: '2rem', delay: 0, duration: 8 },
-    { icon: <FaCat />, size: '1.8rem', delay: 1, duration: 10 },
-    { icon: <FaHeart />, size: '1.5rem', delay: 2, duration: 12 },
-  ];
-
-  // Text animation variants
-  const textVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+      setTimeout(() => {
+        if (sparkle.parentNode) {
+          sparkle.remove();
+        }
+      }, 2000);
+    }
   };
 
-  // Button animation variants
-  const buttonVariants = {
+  // Set up intervals for animations
+  useEffect(() => {
+    const sparkleInterval = setInterval(createSparkle, 100);
+
+    return () => {
+      clearInterval(sparkleInterval);
+    };
+  }, []);
+
+  // Handle title click for burst effect
+  const handleTitleClick = () => {
+    const title = document.querySelector('.hero-title');
+    if (title) {
+      title.style.animation = 'none';
+      setTimeout(() => {
+        title.style.animation = 'rainbowFlow 4s ease-in-out infinite, textBounce 2s ease-in-out infinite, glowPulse 3s ease-in-out infinite alternate';
+      }, 10);
+      
+      // Create burst of sparkles on click
+      for(let i = 0; i < 15; i++) {
+        setTimeout(createSparkle, i * 50);
+      }
+    }
+  };
+
+  // Animation variants
+   const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.15 
+      }
+    }
+  };
+
+  const itemVariants = (delay = 0) => ({
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        delay: delay * 0.15, 
+        type: "spring",
+        stiffness: 100,
+        damping: 10
+      }
+    }
+  });
+
+
+    const buttonVariants = {
+    hidden: { scale: 0.9, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 150
+      }
+    },
     hover: { 
       scale: 1.05,
-      boxShadow: "0 8px 20px rgba(154, 107, 255, 0.4)",
+      boxShadow: "0 8px 20px rgba(0, 0, 0, 0.4)",
       transition: { duration: 0.3 }
     },
     tap: { scale: 0.98 }
   };
 
-   const handleButtonClick = () => {
-    if (isLoggedIn) {
-      navigate('/form'); // Navigate to pet posting form
-    } else {
-      navigate('/signup'); // Navigate to signup page
+  const imageVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
     }
   };
+
+  const handleButtonClick = () => {
+    if (isLoggedIn) {
+      navigate('/form');
+    } else {
+      navigate('/signup');
+    }
+  };
+
+  
   
   return (
-    
-    <section className="hero" id="home">
+    <motion.section 
+      className="hero" 
+      id="home"
+      initial="hidden"
+      animate={isLoaded ? "visible" : "hidden"}
+      variants={containerVariants}
+    >
       <div className="hero-overlay"></div>
       
-      {/* Floating animated pets */}
-      {floatingPets.map((pet, index) => (
-        <motion.div
-          key={index}
-          className="floating-pet"
-          initial={{ y: 0, x: Math.random() * 100 }}
-          animate={{
-            y: [0, -100, 0],
-            x: [0, Math.random() * 50 - 35, 0]
-          }}
-          transition={{
-            duration: pet.duration,
-            delay: pet.delay,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut"
-          }}
-          style={{
-            fontSize: pet.size,
-            color: `rgba(255, 255, 255, ${Math.random() * 0.3 + 0.2})`,
-            left: `${Math.random() * 80 + 10}%`,
-            top: `${Math.random() * 80 + 10}%`
-          }}
-        >
-          {pet.icon}
-        </motion.div>
-      ))}
- 
       <div className="hero-content">
-    
         {/* Decorative corner images */}
-        <img 
-          src="/images/bone1.png" 
+        <motion.img 
+          src="/images/Frame 25.png" 
           alt="" 
-          className="decorative-image top-left" 
+          className="decorative-image top-left"
+           variants={itemVariants(0)}
         />
-        <img 
-          src="/images/paws1.png" 
+        <motion.img 
+          src="/images/bone.gif" 
           alt="" 
-          className="decorative-image top-right" 
+          className="decorative-gif top-left"
+          variants={itemVariants(1)}
         />
 
-        <h1 className="hero-title">
-        Snag Your Dream Pet Here
+        <motion.img 
+          src="/images/Frame 25.png" 
+          alt="" 
+          className="decorative-image top-right"
+          variants={itemVariants(0)}
+        />
+        <motion.img 
+          src="/images/cat-box.gif" 
+          alt="" 
+          className="decorative-gif top-right"
+          variants={itemVariants(1)}
+        />
 
-        </h1>
+        {/* Enhanced Animated Title Section */}
+        <motion.div 
+          className="title-container"
+          variants={containerVariants}
+        >
+          <div className="sparkles"></div>
+          <motion.h1 
+            className="hero-title" 
+            onClick={handleTitleClick}
+            variants={itemVariants(2)}
+          >
+            Snag Your Dream Pet Here
+          </motion.h1>
+          <motion.p 
+            className="hero-description"
+            variants={itemVariants(3)}
+          >
+            Changing lives, one adoption at a time. Meet your new best friend today.
+          </motion.p>
+        </motion.div>
 
-        <img 
+        <motion.img 
           src="/images/beaglee.png" 
           alt="" 
-          className="decorative-image bottom-left" 
+          className="decorative-image bottom-left"
+          variants={itemVariants(4)}
         />
-        <img 
+        <motion.img 
           src="/images/orangiee.png" 
           alt="" 
-          className="decorative-image bottom-right" 
+          className="decorative-image bottom-right"
+           variants={itemVariants(4)}
         />
   
-        <p className="hero-description">
-          Changing lives, one adoption at a time. Meet your new best friend today.
-        </p>
-        <motion.div
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <Button 
-          className="hero-button"
-          onClick={handleButtonClick} 
-        >
-          {isLoggedIn ? (
-            <>
-              Post Your Pet <FaPlusCircle className="hero-button-icon" /> 
-            </>
-          ) : (
-            <>
-              Get Started Now<FaArrowRight className="hero-button-icon hero-button-arrow" /> 
-            </>
-          )}
-        </Button>
-      </motion.div>
-
+         <motion.div
+             variants={itemVariants(5)}
+            initial="hidden"
+            animate={isLoaded ? "visible" : "hidden"}
+             whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
+          >
+          <button 
+            className="hero-button"
+            onClick={handleButtonClick} 
+          >
+            {isLoggedIn ? (
+              <>
+                <span className="button-text">Post Your Pet</span>
+                <FaPlusCircle className="hero-button-icon plus-icon" /> 
+              </>
+            ) : (
+              <>
+                <span className="button-text">Get Started Now</span>
+                <div className="arrow-container">
+                  <FaArrowRight className="hero-button-icon hero-button-arrow" /> 
+                </div>
+              </>
+            )}
+            <div className="ripple-effect"></div>
+          </button>
+        </motion.div>
       
-      <div className="hero-images">   
-        <div className="clouds-container">
-          <img src="/images/clouds1.png" alt="Cloud Background" className="cloud-image" />
-          <img src="/images/shitzu-girl.png" alt="Shih Tzu Dog" className="dog-image" />
-        </div>
-      </div>
-      
-    
-        {/* Paw prints background */}
-        <div className="paw-prints">
-          {[...Array(20)].map((_, i) => (
-            <FaPaw 
-              key={i} 
-              className="paw-print" 
-              style={{
-                left: `${Math.random() * 90 + 5}%`,
-                top: `${Math.random() * 85 + 5}%`,
-                animationDelay: `${i * 0.2}s`,
-                fontSize: `${Math.random() * 1.7 + 1}rem`,
-                opacity: Math.random() * 0.3 + 0.1
-              }} 
+        <motion.div 
+          className="hero-images"
+          variants={itemVariants(6)}
+        >   
+          <div className="clouds-container">
+            <img src="/images/clouds1.png" alt="Cloud Background" className="cloud-image" />
+            <motion.img 
+              src="/images/shitzu-wavee.gif" 
+              alt="Shih Tzu Dog" 
+              className="dog-image"
+              initial={{ y: 50, opacity: 0, x: '-50%' }} 
+              animate={{ y: 0, opacity: 1, x: '-50%' }} 
+              transition={{ delay: 0.7, duration: 0.8 }}
             />
-          ))}
-        </div>
+          </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

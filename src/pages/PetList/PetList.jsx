@@ -5,6 +5,7 @@ import { FaSearch, FaFilter, FaPaw, FaMapMarkerAlt, FaTimes, FaUserPlus, FaHeart
 import { GiRabbit, GiParrotHead } from 'react-icons/gi';
 import { IoMdPaw } from 'react-icons/io';
 import PetImage from '../Profile/PetImage';
+import search from '../../assets/search.png';
 import FavoriteButton from '../Favorites/FavoriteButton';
 import './PetList.css';
 
@@ -263,6 +264,9 @@ const PetList = () => {
         </div>
 
             <div className="plp-search-filter-container">
+                <div className="plp-paw-holder">
+                    <img src={search} alt="Paw" className="plp-paw-image" />
+                </div>
                 <div className="plp-search-box">
                     <FaSearch className="plp-search-icon" />
                     <input

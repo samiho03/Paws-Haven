@@ -3,6 +3,8 @@ import React from 'react';
 import Hero from '../../components/Hero/Hero';
 import Features from '../../components/Features/Features';
 import About from '../../components/About/About';
+import Contact from '../../components/Contact/Contact';
+import New from '../../components/New/New';
 import PetCategory from '../../components/PetCategory/PetCategory';
 import Pets from '../../components/Pets/Pets';
 
@@ -15,9 +17,9 @@ const Home = () => {
     <main className="home-page">
       <Hero />
       <PetCategory />
-   
+      <New />
       {isLoggedIn && <Pets />}
-      <Features />
+      <Contact />
       <FAQ/>
     </main>
   );

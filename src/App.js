@@ -15,6 +15,7 @@ import Pets from './components/Pets/Pets';
 import Favorites from './pages/Favorites/Favorites';
 import PetDetail from './pages/PetDetail/PetDetail';
 import PetList from './pages/PetList/PetList';
+import Chatbot from './pages/Chatbot/Chatbot';
 import Map from './pages/Map/Map';
 import Quiz from './pages/Quiz/Quiz';
 import LayoutWrapper from './layouts/LayoutWrapper';
@@ -69,6 +70,12 @@ const App = () => {
 
   return (
     <Router>
+       {!(isLoggedIn && userRole === 'ADMIN') && (
+        <div className="chatbot-container">
+          <Chatbot />
+        </div>
+      )}
+      
       {isLoggedIn && userRole === 'ADMIN' ? (
         <div className="app-container">
           <Sidebar onLogout={handleLogout} />
@@ -97,6 +104,7 @@ const App = () => {
             <Route path="/form" element={<Form />} />
             <Route path= "/map" element={<Map />} />
             <Route path="/quiz" element={<Quiz />} />
+
             <Route path="/signup" element={<Signup />} />
             <Route 
               path="/login" 

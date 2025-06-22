@@ -1,26 +1,60 @@
-/* Recent Pets Section */
-.recent-pets-section {
-    padding: 5rem 5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative; /* Add this for proper positioning of paw prints */
-    overflow: hidden; /* Add this to contain the floating paws */
-}
+ .recent-pets-sectionn{
+background-color: #7c50a1;
+} 
 
+.recent-pets-section {
+    padding: 4rem 5rem 5rem 5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative; 
+    overflow: hidden; 
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+}
 .recent-pets-header {
     text-align: center;
     margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header-content-wrapper {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 0.5rem;
 }
 
 .recent-pets-header h2 {
-    font-size: 2.5rem;
+    font-size: 2.7rem;
     font-weight: 700;
     font-family: "DynaPuff", cursive;
-    color: #333;
-    margin-bottom: -0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #fefff8;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.217);
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.recent-pet-gif {
+    width: 100px;
+    height: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    position: absolute;
+    right: -10px; 
+    top: -70px; 
+    transform: translateX(100%); 
+}
+
+.header-description {
+    color: #d7d7d7;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.121);
+    font-size: 1.1rem;
+    margin: 0;
+    width: 100%;
+    margin-bottom: 2rem;
 }
 
 .recent-pets-header .paw-icon {
@@ -28,28 +62,23 @@
     color: #ff6b6b;
 }
 
-.recent-pets-header p {
-    color: #666;
-    font-size: 1.1rem;
-    margin-bottom: 4rem;
-}
+
 
 /* Pets Grid */
 .recent-pets-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 
 .recent-pet-card {
     max-width: 280px;
     margin: 10px auto;
-    background: white;
+    background: linear-gradient(45deg, #fbffde 0%, #d7c3ff 100%);
     border-radius: 30px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -157,7 +186,7 @@
 .recent-pet-info {
     padding: 1rem 1.5rem;
     text-align: left;
-    background: white;
+    background: linear-gradient(135deg, #fbffde 0%, #d7c3ff 100%);
     border-radius: 0 0 20px 20px;
 }
 
@@ -225,7 +254,7 @@
     margin: 1rem 0; /* Adjust margins as needed */
     background-color: #8b5cf6;
     border: none;
-    color: white;
+    color: rgb(106, 41, 119);
     padding: 0.8rem 2rem;
     border-radius: 999px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -255,7 +284,7 @@
     position: relative;
     padding: 4px;
     border-radius: 50%;
-    background: rgb(255, 255, 255);
+    color: rgb(106, 41, 119);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -318,37 +347,3 @@
     }
 }
 
-/* Paw Prints Background Styles */
-.paw-prints-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
-}
-
-.floating-paw {
-    position: absolute;
-    animation: floattt 8s infinite ease-in-out;
-    color: rgb(236, 218, 255);
-}
-
-@keyframes floattt {
-    0% {
-        transform: translateY(0) rotate(0deg) scale(1);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-150px) rotate(20deg) scale(0.8);
-        opacity: 0;
-    }
-}

@@ -97,7 +97,7 @@ const Login = ({ onLoginSuccess = () => {} }) => {  // Default empty function
             <form className="login__form" onSubmit={handleSubmit}>
                 <div className="login__content-wrapper">
                     <div className="login__left-section">
-                        <Link to="/login" className="login__logo">
+                        <Link to="/" className="login__logo">
                             <FaPaw className="login__paw-icon" />
                             <h1 className="login__logo-text">Paws Haven</h1>
                         </Link>

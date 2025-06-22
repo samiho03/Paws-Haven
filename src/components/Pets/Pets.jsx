@@ -1,16 +1,57 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaPaw, FaArrowRight, FaHeart, FaRegHeart } from 'react-icons/fa';
 import PetImage from '../../pages/Profile/PetImage';
+import cat from '../../assets/Bee.gif';
 import FavoriteButton from '../../pages/Favorites/FavoriteButton';
 import './Pets.css';
-import '../PetCategory/PetCategory.css'; // Assuming you have a CSS file for styling
+import '../PetCategory/PetCategory.css';
+
 const Pets = () => {
     const [recentPets, setRecentPets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // Animation variants
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                when: "beforeChildren",
+                staggerChildren: 0.15
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { y: 50, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: {
+                type: "spring",
+                stiffness: 100,
+                damping: 10
+            }
+        }
+    };
+
+    const cardVariants = {
+        hidden: { scale: 0.9, opacity: 0 },
+        visible: (i) => ({
+            scale: 1,
+            opacity: 1,
+            transition: {
+                delay: i * 0.1,
+                type: "spring",
+                stiffness: 150
+            }
+        })
+    };
 
     useEffect(() => {
         const fetchRecentPets = async () => {
@@ -56,69 +97,97 @@ const Pets = () => {
     }
    
     return (
-        <section className="recent-pets-section">
-            {/* Add the paw prints background */}
-            <div className="paw-prints-background">
-                {[...Array(15)].map((_, i) => (
-                    <FaPaw 
-                        key={i}
-                        className="floating-paw"
-                        style={{
-                            left: `${Math.random() * 100 + 5}%`,
-                            top: `${Math.random() * 100 + 5}%`,
-                            animationDelay: `${i * 0.2}s`,
-                            fontSize: `${Math.random() * 1.7 + 1}rem`,
-                            opacity: Math.random() * 0.3 + 0.1,
-                        }}
-                    />
-                ))}
-            </div>
-            
-            <div className="recent-pets-header">
-                <h2>Recently Added Pets</h2>
-                <p>Meet our newest furry friends looking for homes</p>
-            </div>
-
-            <div className="recent-pets-grid">
-                {recentPets.length > 0 ? (
-                    recentPets.map(pet => (
-                        <div key={pet.id} className="recent-pet-card">
-                            <div className="recent-pet-image-wrapper">
-                                <Link to={`/petDetail/${pet.id}`} className="recent-pet-card-link">
-                                    <div className="recent-pet-image-container">
-                                    <PetImage pet={pet} />
+        <motion.div 
+            className="recent-pets-sectionn"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={containerVariants}
+        >
+            <motion.section className="recent-pets-section">
+              <motion.div 
+                className="recent-pets-header"
+                variants={itemVariants}
+            >
+                <div className="header-content-wrapper">
+                    <img src={cat} alt="Cat walking" className="recent-pet-gif" />
+                    <h2>Recently Added Pets</h2>
+                </div>
+                <p className="header-description">Meet our newest furry friends looking for homes</p>
+            </motion.div>
+                <motion.div 
+                    className="recent-pets-grid"
+                    variants={containerVariants}
+                >
+                    {recentPets.length > 0 ? (
+                        recentPets.map((pet, index) => (
+                            <motion.div 
+                                key={pet.id} 
+                                className="recent-pet-card"
+                                variants={cardVariants}
+                                custom={index}
+                                whileHover={{ y: -10 }}
+                            >
+                                <div className="recent-pet-image-wrapper">
+                                    <Link to={`/petDetail/${pet.id}`} className="recent-pet-card-link">
+                                        <motion.div 
+                                            className="recent-pet-image-container"
+                                            whileHover={{ scale: 1.03 }}
+                                        >
+                                            <PetImage pet={pet} />
+                                        </motion.div>
+                                    </Link>
+                                    <motion.div 
+                                        className="favorite-button-container"
+                                        whileHover={{ scale: 1.1 }}
+                                    >
+                                        <FavoriteButton petId={pet.id} />
+                                    </motion.div>
+                                </div>
+                                <div className="recent-pet-info">
+                                    <div className="pet-info-header">
+                                        <h3>{pet.petName}</h3>
+                                        <span className="pet-gender">{pet.gender}</span>
                                     </div>
-                                </Link>
-                                <div className="favorite-button-container">
-                                    <FavoriteButton petId={pet.id} />
+                                    <div className="pet-details">
+                                        <p className="recent-pet-breed">
+                                            {pet.breed}
+                                        </p>        
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="recent-pet-info">
-                                <div className="pet-info-header">
-                                    <h3>{pet.petName}</h3>
-                                    <span className="pet-gender">{pet.gender}</span>
-                                </div>
-                                <div className="pet-details">
-                                    <p className="recent-pet-breed">
-                                        {pet.breed}
-                                    </p>        
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <div className="recent-no-pets-message">
-                        <p>No recently added pets available at the moment.</p>
-                    </div>
-                )}
-            </div>
+                            </motion.div>
+                        ))
+                    ) : (
+                        <motion.div 
+                            className="recent-no-pets-message"
+                            variants={itemVariants}
+                        >
+                            <p>No recently added pets available at the moment.</p>
+                        </motion.div>
+                    )}
+                </motion.div>
 
-            <div className="recent-view-more-container">
-                <Link to="/petlist" className="recent-view-more-btn hero-button">
-                    View More Pets <FaArrowRight className="hero-button-arrow" />
-                </Link>
-            </div>
-        </section>
+                <motion.div 
+                    className="recent-view-more-container"
+                    variants={itemVariants}
+                >
+                    <Link to="/petlist" className="recent-view-more-btn hero-button">
+                        <motion.span
+                            whileHover={{ x: 5 }}
+                            transition={{ type: "spring", stiffness: 300 }}
+                        >
+                            View More Pets 
+                        </motion.span>
+                        <motion.span
+                            whileHover={{ x: 5 }}
+                            transition={{ type: "spring", stiffness: 300 }}
+                        >
+                            <FaArrowRight className="hero-button-arrow" />
+                        </motion.span>
+                    </Link>
+                </motion.div>
+            </motion.section>
+        </motion.div>
     );
 };
 

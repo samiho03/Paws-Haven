@@ -1,9 +1,11 @@
-/* src/components/FAQ/FAQ.css */
-  
+ 
   .faq-section {
     position: relative;
-    padding: 5rem 2rem;
+    padding: 10rem 12rem;
+    margin: -33px -63px;
+
     overflow: hidden;
+    background-color: #7c50a1;
   }
   
   .paww-prints-bg {
@@ -14,6 +16,7 @@
     height: 100%;
     pointer-events: none;
     z-index: 0;
+    
   }
   
   .floatingg-paw {
@@ -41,8 +44,9 @@
   .faq-container {
     position: relative;
     z-index: 1;
-    max-width: 800px;
+    max-width: 1400px;
     margin: 0 auto;
+    
   }
   
   .faq-header {
@@ -53,13 +57,14 @@
   .faq-header h2 {
     font-family: "DynaPuff", system-ui;
     font-size: 2.5rem;
-    color: black;
+    color: #fbfaf5;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.217);
     margin-bottom: 0.2rem;
     margin-top: -20px;
   }
   
   .faq-header p {
-    color: #6b7280;
+    color: #d2d1d1;
     font-size: 1.1rem;
   }
   
@@ -73,7 +78,7 @@
   
   .faq-item {
     background-color: white;
-    border-radius: 12px;
+    border-radius: 35px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;

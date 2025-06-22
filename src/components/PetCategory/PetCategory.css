@@ -1,13 +1,16 @@
 /* PetCategory.css */
 @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@600&family=Poppins:wght@400;600;700&display=swap');
 
+/* .category-containerr{
+
+  background-color:  #e6d0fd;
+}  */
 .category-container {
   position: relative;
   overflow: hidden;
   text-align: center;
-  padding: 5rem 0rem;
-  
-  
+  padding: 5rem 0rem 0rem 0rem;
+  background-color: #fbfaf5;  
 }
 .category-title,
 .category-description,
@@ -27,7 +30,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.313);
 }
 
 .category-description {
@@ -35,29 +38,30 @@
   max-width: 35rem;
   margin: 0 auto 4rem;
   font-size: 1.1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.121);
   font-family: 'Poppins', sans-serif;
 }
 
 .category-cards {
   display: flex;
-  gap: 2rem;
+  gap: 2.5rem;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .category-card {
-  background-color: white;
+  background: linear-gradient(135deg, #ffffff, #ffffff);
   border-radius: 10rem;
-  padding: 30px 10px 30px 10px;
+  padding: 30px 15px ;
   text-align: center;
-  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.048);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.048);
   width: 12rem;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  margin-bottom: 30px;
+  margin-bottom: 100px;
 }
-/* Add these to your existing CSS */
+
 .category-card {
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -69,10 +73,10 @@
 }
 
 .category-card:hover .category-image {
-  animation: pulseScale 1.5s infinite ease-in-out;
+  animation: pulseScalee 1.5s infinite ease-in-out;
 }
 
-@keyframes pulseScale {
+@keyframes pulseScalee {
   0%, 100% {
     transform: scale(1);
   }
@@ -87,12 +91,12 @@
 }
 
 .category-card:hover .category-dots .dot {
-  animation: bounce 0.8s infinite ease-in-out;
+  animation: bouncee 0.8s infinite ease-in-out;
 }
 
 .category-card:hover::before {
   opacity: 1;
-  animation: rotate 4s linear infinite;
+
 }
 
 .category-card::before {
@@ -102,7 +106,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(to bottom, #ffffff, #e6d0fd);
+  background: linear-gradient(to bottom, #fcffe9, #e6d0fd);
   z-index: -1;
   border-radius: 2.1rem;
   opacity: 0;
@@ -114,8 +118,8 @@
 }
 
 .category-image-container {
-  width: 9rem;
-  height: 9rem;
+  width: 10rem;
+  height: 10rem;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -125,10 +129,10 @@
 }
 
 .pulse-animation {
-  animation: pulse 2s infinite;
+  animation: pulsee 2s infinite;
 }
 
-@keyframes pulse {
+@keyframes pulsee {
   0% {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
   }
@@ -141,8 +145,8 @@
 }
 
 .category-image {
-  width: 8rem;
-  height: 8rem;
+  width: 9rem;
+  height: 9rem;
   object-fit: cover;
   border-radius: 50%;
   border: 3px solid white;
@@ -192,11 +196,11 @@
   border-radius: 50%;
   display: inline-block;
   opacity: 0.6;
-  animation: bounce 1.5s infinite ease-in-out;
+  animation: bouncee 1.5s infinite ease-in-out;
 }
 
 
-@keyframes bounce {
+@keyframes bouncee {
   0%, 100% {
     transform: translateY(0);
   }
@@ -217,6 +221,9 @@
   }
 }
 
+.cat-cloud-container .cloud-image{
+  background-color: #7c50a1;
+}
 
 /* Add to PetCategory.css */
 
@@ -253,142 +260,4 @@
     opacity: 0;
   }
 }
-
-
-/* Quiz Section Styles */
-.category-quiz-container {
-  position: relative;
-  background: linear-gradient(to bottom, #fbfaf5,#fbfaf5, #e6d0fdcb, #fbfaf5);
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  border-radius: 1.5rem;
-  padding: 2.4rem;
-  margin: 8rem 0rem 0rem 0rem;
-  max-width: 1400px;
-  cursor: pointer;
-  overflow: visible;
-  transition: all 0.3s ease;
-  z-index: 1;
-}
-
-
-
-/* .quiz-container::before {
-  content: '';
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  width: 150%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(193, 178, 202, 0.326) 0%, rgba(184, 169, 204, 0) 70%);
-  transform: rotate(0deg);
-  z-index: -1;
-} */
-
-.category-quiz-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-.category-quiz-icon-container {
-  position: relative;
-  width: 280px;
-  height: 280px;
-  flex-shrink: 0;
-  overflow: visible;
-}
-
-.category-quiz-icon {
-  width: 130%;
-  height: 130%;
-  object-fit: contain;
-  position: absolute;
-  top: -37%;
-  left: -17%;
-  z-index: 100;
-  animation: float-animation 4s ease-in-out infinite;
-}
-
-.category-quiz-icon-circle {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
-  z-index: 1;
-}
-
-.category-quiz-text {
-  flex: 1;
-  text-align: left;
-  color: white;
-}
-
-.category-quiz-title {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  font-size: 1.8rem;
-  margin-bottom: -0.8rem;
-  color: #511591;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.category-quiz-description {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  margin-bottom: 1.7rem;
-  color: #6A5385;
-  opacity: 0.9;
-}
-
-.category-quiz-button {
-  background-color: white;
-  color: #5c2398;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 2rem;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.category-quiz-button:hover {
-  background-color: #f3f4f6;
-  transform: translateX(5px);
-}
-
-.category-quiz-arrow {
-  transition: transform 0.3s ease;
-}
-
-.category-quiz-button:hover .category-quiz-arrow {
-  transform: translateX(3px);
-}
-
-@media (max-width: 768px) {
-  .category-quiz-content {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .category-quiz-text {
-    text-align: center;
-  }
-  
-  .category-quiz-button {
-    margin: 0 auto;
-  }
-}
-
 

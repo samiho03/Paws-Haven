@@ -63,17 +63,23 @@ const PetDetails = () => {
 
 
    const applyFilter = (filter) => {
-    setActiveFilter(filter);
-    if (filter === 'All') {
-      setFilteredPets([...pets].sort((a, b) => b.id - a.id));
-    } else {
-      const filtered = pets.filter(pet => 
-        pet.regStatus === filter
-      ).sort((a, b) => b.id - a.id);
-      setFilteredPets(filtered);
-    }
-    setCurrentPage(1);
-  };
+  setActiveFilter(filter);
+  if (filter === 'All') {
+    setFilteredPets([...pets].sort((a, b) => b.id - a.id));
+  } else {
+    const filtered = pets.filter(pet => {
+      if (filter === 'Pending') {
+        // Explicitly check for null or undefined
+        return pet.regStatus === null || pet.regStatus === undefined;
+      } else {
+        return pet.regStatus === filter;
+      }
+    }).sort((a, b) => b.id - a.id);
+    setFilteredPets(filtered);
+  }
+  setCurrentPage(1);
+};
+
 
 
   // Helper function to safely handle null values

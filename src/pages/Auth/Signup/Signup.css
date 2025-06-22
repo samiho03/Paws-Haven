@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(120deg, #e0c3fc, #8ec5fc);
+    background: linear-gradient(135deg,  #7c50a1 , #e0c3fc);
     padding: 0px;
 }
 
@@ -44,7 +44,7 @@
     font-size: 1.2rem;
     margin-right: 10px;
     margin-left: 10px;
-    color: #8b5cf6;
+    color: #923fd2;
 }
 
 .signup__logo:hover .signup__paw-icon {
@@ -101,11 +101,11 @@
 
 .signup__input:focus {
     outline: none;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 2px #8b5cf6;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 2px #7634a9;
 }
 
 .signup__button {
-    background-color: #8b5cf6;
+    background: linear-gradient(135deg, #c0c880 0%, #923fd2 100%);
     border: none;
     color: white;
     padding: 12px;
@@ -116,11 +116,27 @@
     cursor: pointer;
     margin-top: 30px;
     box-shadow:  0px 2px 3px  rgba(121, 83, 154, 0.329);
-    transition: all 0.3s ease;
+   transition: all 0.5s ease; 
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
-.signup__button:hover {
-    background-color: #7c4dff;
+.signup__button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+   background: linear-gradient(135deg,  #923fd2   0%, #c0c880 100%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.signup__button:hover::before {
+    opacity: 1;
 }
 
 .signup__button--disabled {
@@ -136,14 +152,14 @@
 }
 
 .signup__login-link {
-    color: #a17bfb;
+    color:#8438be;
     cursor: pointer;
     font-weight: 600;
     transition: color 0.2s ease;
 }
 
 .signup__login-link:hover {
-    color: #8458fc;
+    color:#652a92;
     text-decoration: underline;
 }
 
