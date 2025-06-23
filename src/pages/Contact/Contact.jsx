@@ -76,50 +76,9 @@ const Contact = () => {
      
         </div>
       </div>
-     <img src={Call} alt="Contact Us" className="contact-header-image" />
+     
           
       <div className="contact-content">
-        
-        <div className="contact-info-card">
-          <div className="contact-info-content">
-            <h2><IoMdPaw className="contact-paw-icon" /> Get In Touch</h2>
-            <p className="contact-info-description">
-              While we don't have a physical shelter, our team is available to assist you with any questions about pet adoption or using our platform.
-            </p>
-            
-            <div className="contact-details">
-              <div className="contact-item">
-                <div className="contact-icon-container">
-                  <FaEnvelope className="contact-icon" />
-                </div>
-                <div>
-                  <h3>Email Us</h3>
-                  <p>support@pawhaven.com</p>
-                </div>
-              </div>
-              
-              <div className="contact-item">
-                <div className="contact-icon-container">
-                  <FaPhone className="contact-icon" />
-                </div>
-                <div>
-                  <h3>Call Us</h3>
-                  <p>(555) 123-4567</p>
-                </div>
-              </div>
-              
-              <div className="contact-item">
-                <div className="contact-icon-container">
-                  <FaClock className="contact-icon" />
-                </div>
-                <div>
-                  <h3>Hours</h3>
-                  <p>Mon-Fri: 9am-7pm<br/>Weekends: 10am-5pm</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div className="contact-form-card">
           <h2><FaPaperPlane className="contact-send-icon" /> Send Us a Message</h2>
@@ -184,6 +143,49 @@ const Contact = () => {
             </button>
           </form>
         </div>
+
+            
+
+          <img src={Call} alt="Contact Us" className="contact-header-image" />
+
+      <div className="contact-info-card">
+          <div className="contact-info-content">
+           
+            
+            <div className="contact-details">
+              <div className="contact-item">
+                <div className="contact-icon-container">
+                  <FaEnvelope className="contact-icon" />
+                </div>
+                <div>
+                  <h3>Email Us</h3>
+                  <p>support@pawhaven.com</p>
+                </div>
+              </div>
+              
+              <div className="contact-item">
+                <div className="contact-icon-container">
+                  <FaPhone className="contact-icon" />
+                </div>
+                <div>
+                  <h3>Call Us</h3>
+                  <p>(555) 123-4567</p>
+                </div>
+              </div>
+              
+              <div className="contact-item">
+                <div className="contact-icon-container">
+                  <FaClock className="contact-icon" />
+                </div>
+                <div>
+                  <h3>Hours</h3>
+                  <p>Mon-Fri: 9am-7pm<br/>Weekends: 10am-5pm</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </main>
   );
