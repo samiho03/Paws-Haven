@@ -632,7 +632,9 @@ const Profile = () => {
                                 filteredPets.map(pet => (
                                     <div key={pet.id} className="profile-pet-card">
                                         <div className="profile-pet-image-container">
-                                            <PetImage pet={pet} />
+                                            <Link to={`/petDetail/${pet.id}`} className="profile-pet-link">
+                                                <PetImage pet={pet} />
+                                            </Link>
                                             <div className="profile-pet-overlay">
                                                 <div className="profile-pet-actions">
                                                     <select
@@ -654,7 +656,6 @@ const Profile = () => {
                                                     <h3>{pet.petName}</h3>
                                                     <p>{pet.breed} • {pet.age}</p>
                                                     <div className="profile-pet-status-container">
-                                                       
                                                         <p className={`profile-registration-status ${!pet.regStatus ? 'pending' : pet.regStatus}`}>
                                                             {!pet.regStatus ? 'Pending' : pet.regStatus}
                                                         </p>
@@ -678,28 +679,28 @@ const Profile = () => {
         </div>
     ) : (
         <div className="profile-favorites-grid">
-            {favorites.map(pet => (
-                <div className="profile-favorite-card">
-                <div className="profile-favorite-image-wrapper">
-                    <Link to={`/petDetail/${pet.id}`} className="profile-favorite-card-link">
-                        <div className="profile-favorite-image">
-                            <PetImage pet={pet} />
+    {favorites.map(pet => (
+        <div key={pet.id} className="profile-favorite-card">
+            <div className="profile-favorite-image-wrapper">
+                <Link to={`/petDetail/${pet.id}`} className="profile-favorite-card-link">
+                    <div className="profile-favorite-image">
+                        <PetImage pet={pet} />
+                    </div>
+                </Link>
+                <div className="profile-favorite-overlay">
+                    <div className="profile-favorite-info">
+                        <div className="profile-pet-info-header">
+                            <h3>{pet.petName}</h3>
+                            <span className="profile-pet-gender">{pet.gender}</span>
                         </div>
-                    </Link>
-                    <div className="profile-favorite-overlay">
-                        <div className="profile-favorite-info">
-                            <div className="profile-pet-info-header">
-                                <h3>{pet.petName}</h3>
-                                <span className="profile-pet-gender">{pet.gender}</span>
-                            </div>
-                            <div className="profile-favorite-pet-details">
-                                <p className="profile-favorite-pet-breed">
-                                    {pet.breed}
-                                </p>
-                                <p className='profile-favorite-pet-loc'>
-                                    <FaMapMarkerAlt /> {pet.location}
-                                </p>
-                            </div>
+                        <div className="profile-favorite-pet-details">
+                            <p className="profile-favorite-pet-breed">
+                                {pet.breed}
+                            </p>
+                            <p className='profile-favorite-pet-loc'>
+                                <FaMapMarkerAlt /> {pet.location}
+                            </p>
+                        </div>
                         </div>
                     </div>
                 </div>
