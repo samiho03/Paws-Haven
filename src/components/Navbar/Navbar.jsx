@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FaPaw, FaUserPlus, FaUserCircle, FaHeart } from 'react-icons/fa';
+import axios from 'axios';
 import PetCat from '../../assets/advice.png';
 import Dogs from '../../assets/d1.png';
 import Cats from '../../assets/c1.png';
@@ -17,9 +18,40 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [visible, setVisible] = useState(true);
   const navbarRef = useRef(null);
+  const [profileImage, setProfileImage] = useState('');
 
   const isHomePage = location.pathname === '/';
   const homeNotScrolled = isHomePage && !scrolled;
+
+  // Fetch user profile data
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        const response = await axios.get('http://localhost:8080/api/v1/profile/get', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        // Handle profile image URL
+        if (response.data.profileImage) {
+          const imgUrl = response.data.profileImage.startsWith('http')
+            ? response.data.profileImage
+            : `http://localhost:8080${response.data.profileImage}`;
+          
+          // Add cache busting parameter
+          setProfileImage(`${imgUrl}?t=${Date.now()}`);
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const navigateToPetList = (filterValue) => {
     navigate('/petlist', { state: { initialFilter: filterValue } });
@@ -157,7 +189,22 @@ const Navbar = () => {
               setMobileMenuOpen(false);
             }}
           >
-            Profile<FaUserCircle className="profile-icon" />
+           
+            {profileImage ? (
+              <img 
+                src={profileImage} 
+                alt="Profile" 
+                className="navbar-profile-image"
+                onError={(e) => {
+                  e.target.src = '';
+                  e.target.onerror = null;
+                  return <FaUserCircle className="profile-icon" />;
+                }}
+              />
+            ) : (
+              <FaUserCircle className="profile-icon" />
+            )}
+             Profile
           </button>
         </div>
 

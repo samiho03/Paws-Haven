@@ -431,6 +431,25 @@
     font-size: 1.4rem;
   }
 
+  .navbar-profile-image {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 4px;
+}
+
+.profile-btn .profile-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fallback for when image fails to load */
+.profile-btn .profile-icon svg {
+  font-size: 1.4rem;
+}
+
 /* Favorites Button Styles */
 .favorites-btn {
   background: none;

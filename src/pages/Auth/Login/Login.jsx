@@ -6,7 +6,7 @@ import { FaPaw } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './Login.css';
 
-const Login = ({ onLoginSuccess = () => {} }) => {  // Default empty function
+const Login = ({ onLoginSuccess = () => {} }) => {  
     
     const [formData, setFormData] = useState({
         email: '',

@@ -80,7 +80,7 @@ const Chatbot = () => {
     
     try {
        const response = await axios.post(API_URL, {
-         message: `You are a pet adoption assistant for PetAdopt website. The website helps people adopt pets.
+        message: `You are a pet adoption assistant for PetAdopt website. The website helps people adopt pets.
         Here's how our platform works:
       
         ADOPTION PROCESS (3 Simple Steps):

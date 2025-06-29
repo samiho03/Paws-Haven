@@ -277,7 +277,7 @@
 }
 
 .pasc-card-button:hover {
-  background: #923fd2;
+  background: linear-gradient(135deg,  #923fd2 0%, #f0fba1 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(139, 92, 246, 0.3);
 }
