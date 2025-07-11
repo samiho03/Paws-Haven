@@ -3,24 +3,24 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recha
 import './PieChart.css';
 
 const PieChartComponent = ({ data, title }) => {
-  // Transform the dashboard data for pie chart
-  const chartData = [
-    {
-      name: 'Pending',
-      value: data.pendingRequests || 0,
-      color: '#ff9500'
-    },
-    {
-      name: 'Approved',
-      value: data.approvedRequests || 0,
-      color: '#28a745'
-    },
-    {
-      name: 'Rejected',
-      value: data.rejectedRequests || 0,
-      color: '#dc3545'
-    }
-  ].filter(item => item.value > 0); // Only show segments with data
+  const isUserData = Array.isArray(data);
+  const defaultColors = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#8dd1e1', '#a4de6c'];
+
+  let chartData = [];
+  if (isUserData) {
+    chartData = data.map((item, idx) => ({
+      name: item.name,
+      location: item.location,
+      value: item.count,
+      color: defaultColors[idx % defaultColors.length]
+    })).filter(item => item.value > 0);
+  } else {
+    chartData = [
+      { name: 'Pending', value: data.pendingRequests || 0, color: '#ff9500' },
+      { name: 'Approved', value: data.approvedRequests || 0, color: '#28a745' },
+      { name: 'Rejected', value: data.rejectedRequests || 0, color: '#dc3545' }
+    ].filter(item => item.value > 0);
+  }
 
   // Custom label function
   const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
@@ -49,15 +49,16 @@ const PieChartComponent = ({ data, title }) => {
   // Custom tooltip
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      const data = payload[0];
+      const info = payload[0].payload;
       return (
         <div className="pie-tooltip">
-          <p className="tooltip-label">{data.name}</p>
-          <p className="tooltip-value">
-            Count: <strong>{data.value}</strong>
-          </p>
+          <p className="tooltip-label">{info.name}</p>
+          {isUserData && (
+            <p className="tooltip-value">Location: <strong>{info.location || 'N/A'}</strong></p>
+          )}
+          <p className="tooltip-value">Count: <strong>{info.value}</strong></p>
           <p className="tooltip-percentage">
-            Percentage: <strong>{((data.value / chartData.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%</strong>
+            Percentage: <strong>{((info.value / chartData.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%</strong>
           </p>
         </div>
       );
@@ -66,29 +67,25 @@ const PieChartComponent = ({ data, title }) => {
   };
 
   // Custom legend
-  const CustomLegend = ({ payload }) => {
-    return (
-      <div className="pie-legend">
-        {payload.map((entry, index) => (
-          <div key={`legend-${index}`} className="legend-item">
-            <div 
-              className="legend-color" 
-              style={{ backgroundColor: entry.color }}
-            ></div>
-            <span className="legend-text">
-              {entry.value}: {chartData.find(item => item.name === entry.value)?.value || 0}
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  const CustomLegend = ({ payload }) => (
+    <div className="pie-legend">
+      {payload.map((entry, index) => (
+        <div key={`legend-${index}`} className="legend-item">
+          <div
+            className="legend-color"
+            style={{ backgroundColor: entry.color }}
+          ></div>
+          <span className="legend-text">{entry.payload.name}</span>
+        </div>
+      ))}
+    </div>
+  );
 
   if (chartData.length === 0) {
     return (
       <div className="chart-container">
         <div className="chart-header">
-          <h3>{title || 'Pet Registration Distribution'}</h3>
+        <h3>{title || (isUserData ? 'Pets by User' : 'Pet Registration Distribution')}</h3>
         </div>
         <div className="no-data">
           <p>No data available for pie chart</p>
@@ -100,8 +97,10 @@ const PieChartComponent = ({ data, title }) => {
   return (
     <div className="chart-container">
       <div className="chart-header">
-        <h3>{title || 'Pet Registration Distribution'}</h3>
-        <p className="chart-subtitle">Breakdown of registration status</p>
+        <h3>{title || (isUserData ? 'Pets by User' : 'Pet Registration Distribution')}</h3>
+        <p className="chart-subtitle">
+          {isUserData ? 'Number of pets per user' : 'Breakdown of registration status'}
+        </p>
       </div>
       
       <div className="pie-chart-wrapper">
@@ -129,25 +128,32 @@ const PieChartComponent = ({ data, title }) => {
         </ResponsiveContainer>
       </div>
 
-      <div className="pie-summary">
-        <div className="summary-grid">
-          <div className="summary-card">
-            <h4>Most Common Status</h4>
-            <p className="highlight">
-              {chartData.length > 0 
-                ? chartData.reduce((prev, current) => (prev.value > current.value) ? prev : current).name
-                : 'N/A'
-              }
-            </p>
-          </div>
-          <div className="summary-card">
-            <h4>Total Entries</h4>
-            <p className="highlight">
-              {chartData.reduce((sum, item) => sum + item.value, 0)}
-            </p>
+      {!isUserData && (
+        <div className="pie-summary">
+          <div className="summary-grid">
+            <div className="summary-card">
+              <h4>Most Common Status</h4>
+              <p className="highlight">
+                {chartData.length > 0
+                  ? chartData.reduce((prev, current) => (prev.value > current.value) ? prev : current).name
+                  : 'N/A'}
+              </p>
+            </div>
+            <div className="summary-card">
+              <h4>Total Entries</h4>
+              <p className="highlight">
+                {chartData.reduce((sum, item) => sum + item.value, 0)}
+              </p>
+            </div>
+            <div className="summary-card">
+              <h4>Pending Rate</h4>
+              <p className="highlight">
+                {data.totalPets > 0 ? ((data.pendingRequests / data.totalPets) * 100).toFixed(1) : 0}%
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

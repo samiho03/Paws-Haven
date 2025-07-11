@@ -23,7 +23,7 @@ import Dashboard from './adminPanel/Dashboard/AdminDashboard';
 import PetDetailsForm from './adminPanel/PetDetails/PetDetails';
 import MessageDetails from './adminPanel/MessageDetails/MessageDetails';
 import UserDetails from './adminPanel/UserDetails/UserDetails';
-
+import SpeciesAdmin from './adminPanel/SpeciesAdmin/SpeciesAdmin';
 import Sidebar from './adminPanel/Sidebar/Sidebar';
 import PetProfile from './adminPanel/PetProfile/PetProfile';
 import './App.css';
@@ -83,6 +83,7 @@ const App = () => {
             <Routes>
               <Route path="/admin/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
               <Route path="/admin/pets" element={<AdminRoute><PetDetailsForm /></AdminRoute>} />
+              <Route path="/admin/species" element={<AdminRoute><SpeciesAdmin /></AdminRoute>} />
               <Route path="/admin/users" element={<AdminRoute><UserDetails /></AdminRoute>} />
               <Route path="/admin/pet-profile" element={<AdminRoute><PetProfile /></AdminRoute>} />
               <Route path="/admin/messages" element={<AdminRoute><MessageDetails /></AdminRoute>} />

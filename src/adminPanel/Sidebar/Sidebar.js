@@ -32,6 +32,13 @@ const Sidebar = ({ onLogout }) => {
               Requested Pets
             </NavLink>
           </li>
+           <li>
+            <NavLink exact to="/admin/species" activeClassName="active-link">
+              <FaPaw className="sidebar-icon" />
+              Manage Species
+            </NavLink>
+          </li>
+         
          
            <li>
             <NavLink to ="/admin/users" activeClassName="active-link">

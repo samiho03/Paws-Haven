@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { FaSearch, FaFilter, FaPaw, FaMapMarkerAlt, FaTimes, FaUserPlus, FaHeart , FaCat, FaArrowRight} from 'react-icons/fa';
+import { FaSearch, FaFilter, FaPaw, FaMapMarkerAlt, FaTimes, FaUserPlus, FaHeart, FaCat, FaArrowRight } from 'react-icons/fa';
 import { GiRabbit, GiParrotHead } from 'react-icons/gi';
+import axiosInstance from "../../api/axiosConfig";
 import { IoMdPaw } from 'react-icons/io';
 import PetImage from '../Profile/PetImage';
 import search from '../../assets/search.png';
@@ -16,7 +16,7 @@ const PetList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [filters, setFilters] = useState({
-        specie: location.state?.initialFilter || '',
+        specie: location.state?.specie || location.state?.initialFilter || '',
         breed: '',
         gender: '',
         location: '',
@@ -28,7 +28,38 @@ const PetList = () => {
     });
     const [showFilters, setShowFilters] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [speciesList, setSpeciesList] = useState([]);
     const navigate = useNavigate();
+
+    // Default species configuration (always included)
+    const defaultSpeciesConfig = {
+        dog: {
+            icon: <IoMdPaw className="plp-specie-icon" />,
+            title: 'Available Dogs',
+            subtitle: 'Find your perfect canine companion'
+        },
+        cat: {
+            icon: <FaCat className="plp-specie-icon" />,
+            title: 'Available Cats',
+            subtitle: 'Discover your ideal feline friend'
+        },
+        rabbit: {
+            icon: <GiRabbit className="plp-specie-icon" />,
+            title: 'Available Rabbits',
+            subtitle: 'Meet adorable bunnies waiting for homes'
+        },
+        bird: {
+            icon: <GiParrotHead className="plp-specie-icon" />,
+            title: 'Available Birds',
+            subtitle: 'Find colorful feathered friends'
+        }
+    };
+
+    // Default icons for any additional species
+    const defaultIcons = {
+        ...defaultSpeciesConfig,
+        default: <FaPaw className="plp-specie-icon" />
+    };
 
     // Sri Lankan districts
     const districts = [
@@ -39,26 +70,68 @@ const PetList = () => {
         'Polonnaruwa', 'Badulla', 'Moneragala', 'Ratnapura', 'Kegalle'
     ];
 
+    // Fetch all species from backend and combine with defaults
+    useEffect(() => {
+        const fetchSpecies = async () => {
+            try {
+                const response = await axiosInstance.get('/species');
+                // Combine default species with fetched species, removing duplicates
+                const combinedSpecies = [
+                    ...Object.keys(defaultSpeciesConfig).map(name => ({ 
+                        name: name.charAt(0).toUpperCase() + name.slice(1) 
+                    })),
+                    ...response.data.filter(species => 
+                        !Object.keys(defaultSpeciesConfig).includes(species.name.toLowerCase())
+                    )
+                ];
+                setSpeciesList(combinedSpecies);
+            } catch (err) {
+                console.error('Error fetching species:', err);
+                // If fetch fails, just use the default species
+                setSpeciesList(
+                    Object.keys(defaultSpeciesConfig).map(name => ({ 
+                        name: name.charAt(0).toUpperCase() + name.slice(1) 
+                    }))
+                );
+            }
+        };
+        fetchSpecies();
+    }, []);
+
+    // Generate combined species configuration
+    const getSpeciesConfig = () => {
+        // Start with default configuration
+        const config = { ...defaultSpeciesConfig };
+        
+        // Add dynamic species
+        speciesList.forEach(species => {
+            const lowerName = species.name.toLowerCase();
+            if (!config[lowerName]) { // Only add if not already in defaults
+                config[lowerName] = {
+                    icon: defaultIcons[lowerName] || defaultIcons.default,
+                    title: `Available ${species.name}s`,
+                    subtitle: `Find your perfect ${species.name.toLowerCase()} companion`
+                };
+            }
+        });
+        
+        return config;
+    };
+
+    const speciesConfig = getSpeciesConfig();
+
     const getTitle = () => {
         const activeSpecie = filters.specie.toLowerCase();
-        switch(activeSpecie) {
-            case 'dog': return 'Available Dogs';
-            case 'cat': return 'Available Cats';
-            case 'rabbit': return 'Available Rabbits';
-            case 'bird': return 'Available Birds';
-            default: return 'Available Pets';
-        }
+        return speciesConfig[activeSpecie]?.title || 'Available Pets';
     };
 
     const getSubtitle = () => {
         const activeSpecie = filters.specie.toLowerCase();
-        switch(activeSpecie) {
-            case 'dog': return 'Find your perfect canine companion';
-            case 'cat': return 'Discover your ideal feline friend';
-            case 'rabbit': return 'Meet adorable bunnies waiting for homes';
-            case 'bird': return 'Find colorful feathered friends';
-            default: return 'Find your perfect companion from our loving pets';
-        }
+        return speciesConfig[activeSpecie]?.subtitle || 'Find your perfect companion from our loving pets';
+    };
+
+    const getSpecieIcon = (specie) => {
+        return speciesConfig[specie.toLowerCase()]?.icon || defaultIcons.default;
     };
 
     useEffect(() => {
@@ -78,7 +151,7 @@ const PetList = () => {
                     return;
                 }
                 
-                const response = await axios.get('http://localhost:8080/api/v1/pets/approved', {
+                const response = await axiosInstance.get('/pets/approved', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 
@@ -166,16 +239,6 @@ const PetList = () => {
 
     const activeFilterCount = Object.values(filters).filter(val => val !== '').length;
 
-    const getSpecieIcon = (specie) => {
-        switch(specie.toLowerCase()) {
-            case 'dog': return <IoMdPaw className="plp-specie-icon" />;
-            case 'cat': return <FaCat className="plp-specie-icon" />;
-            case 'rabbit': return <GiRabbit className="plp-specie-icon" />;
-            case 'bird': return <GiParrotHead className="plp-specie-icon" />;
-            default: return <FaPaw className="plp-specie-icon" />;
-        }
-    };
- 
     if (!isLoggedIn) {
         return (
             <div className="plp-container">
@@ -248,20 +311,19 @@ const PetList = () => {
 
     return (
         <div className="plp-container">
-         
-        <div className="plp-header-container">
-            <div className="plp-header">
-            <h1 className="plp-title">
-                <span className="plp-title-highlight">{getTitle()}</span>
-            </h1>
-            <p className="plp-subtitle">{getSubtitle()}</p>
-                <div className="plp-header-decoration">
-                    <div className="plp-header-paw plp-header-paw-1"><FaPaw /></div>
-                    <div className="plp-header-paw plp-header-paw-2"><FaPaw /></div>
-                    <div className="plp-header-paw plp-header-paw-3"><FaPaw /></div>
+            <div className="plp-header-container">
+                <div className="plp-header">
+                    <h1 className="plp-title">
+                        <span className="plp-title-highlight">{getTitle()}</span>
+                    </h1>
+                    <p className="plp-subtitle">{getSubtitle()}</p>
+                    <div className="plp-header-decoration">
+                        <div className="plp-header-paw plp-header-paw-1"><FaPaw /></div>
+                        <div className="plp-header-paw plp-header-paw-2"><FaPaw /></div>
+                        <div className="plp-header-paw plp-header-paw-3"><FaPaw /></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
             <div className="plp-search-filter-container">
                 <div className="plp-paw-holder">
@@ -312,10 +374,11 @@ const PetList = () => {
                                     onChange={handleFilterChange}
                                 >
                                     <option value="">All Species</option>
-                                    <option value="Dog">Dog</option>
-                                    <option value="Cat">Cat</option>
-                                    <option value="Bird">Bird</option>
-                                    <option value="Rabbit">Rabbit</option>
+                                    {speciesList.map(species => (
+                                        <option key={species.name} value={species.name}>
+                                            {species.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -374,11 +437,8 @@ const PetList = () => {
                                     <option value="Large">Large</option>
                                 </select>
                             </div>
-                            
                         </div>
                     </div>
-
-                   
 
                     <div className="plp-filter-section">
                         <h3 className="plp-section-title">Health & Adoption</h3>
@@ -446,7 +506,7 @@ const PetList = () => {
                 </div>
             ) : error ? (
                 <div className="plp-error-state">
-                    <div className="plp-error-icon">⚠️</div>
+                    <div className="plp-error-icon">⚠</div>
                     <h3>Oops! Something went wrong</h3>
                     <p>{error}</p>
                     <button 
@@ -457,61 +517,11 @@ const PetList = () => {
                     </button>
                 </div>
             ) : (
-                
                 <div className="plp-pets-section">
-                
-                
-                {filteredPets.length > 0 ? (
-                    <>
-                        <div className="plp-grid">
-                            {filteredPets.slice(0, 2).map(pet => (
-                            <div key={pet.id} className="plp-pet-card">
-                                <div className="plp-pet-image-wrapper">
-                                    <Link to={`/petDetail/${pet.id}`} className="plp-pet-card-link">
-                                        <div className="plp-pet-image-container">
-                                            <PetImage pet={pet} />
-                                        </div>
-                                    </Link>
-                                    <div className="plp-favorite-button-container">
-                                        <FavoriteButton petId={pet.id} />
-                                    </div>
-                                   
-                                </div>
-                                <div className="plp-pet-info">
-                                    <div className="plp-pet-info-header">
-                                        {getSpecieIcon(pet.specie)}
-                                        <h3>{pet.petName}</h3>
-                                        <div className="plp-pet-meta">
-                                            <span className="plp-pet-gender">{pet.gender}</span>
-                                        </div>
-                                    </div>
-                                    <div className="plp-pet-details">
-                                        <p className="plp-pet-breed">
-                                            {pet.breed}
-                                        </p>
-                                        <div className="plp-pet-location">
-                                            <FaMapMarkerAlt className="plp-location-icon" /> 
-                                            <span>{pet.location}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                          {/* Quiz Card - appears alongside first 6 pets */}
-                        <div className="plp-quiz-card">
-                            <div className="plp-quiz-content">
-                                <h3>Can't find your perfect pet match?</h3>
-                                <p>Take our quick quiz and we'll help you discover the ideal companion based on your lifestyle!</p>
-                                <button 
-                                className="plp-quiz-button"
-                                onClick={() => navigate('/quiz')}
-                                >
-                                Take Quiz <FaArrowRight />
-                                </button>
-                            </div>
-                            <div className="plp-quiz-decoration"></div>
-                            </div>
-                                {filteredPets.slice(2).map(pet => (
+                    {filteredPets.length > 0 ? (
+                        <>
+                            <div className="plp-grid">
+                                {filteredPets.slice(0, 2).map(pet => (
                                     <div key={pet.id} className="plp-pet-card">
                                         <div className="plp-pet-image-wrapper">
                                             <Link to={`/petDetail/${pet.id}`} className="plp-pet-card-link">
@@ -522,7 +532,6 @@ const PetList = () => {
                                             <div className="plp-favorite-button-container">
                                                 <FavoriteButton petId={pet.id} />
                                             </div>
-                                        
                                         </div>
                                         <div className="plp-pet-info">
                                             <div className="plp-pet-info-header">
@@ -544,8 +553,53 @@ const PetList = () => {
                                         </div>
                                     </div>
                                 ))}
-                             </div>
-                      </>   
+                                <div className="plp-quiz-card">
+                                    <div className="plp-quiz-content">
+                                        <h3>Can't find your perfect pet match?</h3>
+                                        <p>Take our quick quiz and we'll help you discover the ideal companion based on your lifestyle!</p>
+                                        <button 
+                                            className="plp-quiz-button"
+                                            onClick={() => navigate('/quiz')}
+                                        >
+                                            Take Quiz <FaArrowRight />
+                                        </button>
+                                    </div>
+                                    <div className="plp-quiz-decoration"></div>
+                                </div>
+                                {filteredPets.slice(2).map(pet => (
+                                    <div key={pet.id} className="plp-pet-card">
+                                        <div className="plp-pet-image-wrapper">
+                                            <Link to={`/petDetail/${pet.id}`} className="plp-pet-card-link">
+                                                <div className="plp-pet-image-container">
+                                                    <PetImage pet={pet} />
+                                                </div>
+                                            </Link>
+                                            <div className="plp-favorite-button-container">
+                                                <FavoriteButton petId={pet.id} />
+                                            </div>
+                                        </div>
+                                        <div className="plp-pet-info">
+                                            <div className="plp-pet-info-header">
+                                                {getSpecieIcon(pet.specie)}
+                                                <h3>{pet.petName}</h3>
+                                                <div className="plp-pet-meta">
+                                                    <span className="plp-pet-gender">{pet.gender}</span>
+                                                </div>
+                                            </div>
+                                            <div className="plp-pet-details">
+                                                <p className="plp-pet-breed">
+                                                    {pet.breed}
+                                                </p>
+                                                <div className="plp-pet-location">
+                                                    <FaMapMarkerAlt className="plp-location-icon" /> 
+                                                    <span>{pet.location}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
                     ) : (
                         <div className="plp-empty-state">
                             <div className="plp-empty-icon">
@@ -563,11 +617,8 @@ const PetList = () => {
                     )}
                 </div>
             )}
-            </div>
-       
-    
-);
+        </div>
+    );
 };
-
 
 export default PetList;

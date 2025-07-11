@@ -550,23 +550,58 @@
     display: flex;
     justify-content: center;
     gap: 15px;
+    margin-top: 10px;
 }
 
-.profile-delete-account-btn {
-    background: #ef4444;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
+.profile-cancel-btn, 
+.profile-delete-btn {
+    padding: none;
+    border-radius: 25px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    border: none;
+    font-size: 0.95rem;
+}
+
+.profile-cancel-btn {
+    background: #f3f4f6;
+    color: #4b5563;
+}
+
+.profile-cancel-btn:hover {
+    background: #e5e7eb;
+}
+
+.profile-delete-btn {
+    background: #ef4444;
+    color: white;
+}
+
+.profile-delete-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+.profile-delete-account-btn{
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0px 20px;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 45px;
+    margin-top: 30px;
 }
 
 .profile-delete-account-btn:hover {
     background: #dc2626;
     transform: translateY(-2px);
 }
+
+
 
 /* Rest of the styles */
 .profile-content-container {
@@ -1283,3 +1318,35 @@
     background-color: var(--primary-dark);
     transform: translateY(-2px);
 }
+
+
+/* Add to your Profile.css */
+.profile-delete-modal .profile-form-group {
+    margin: 20px 0;
+}
+
+.profile-delete-modal .profile-form-input {
+    width: 90%;
+    padding: 12px 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.profile-delete-account-btn:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.profile-delete-account-btn:disabled:hover {
+    transform: none;
+    background-color: #9ca3af;
+}
+
+
+
+
+
+
+
+

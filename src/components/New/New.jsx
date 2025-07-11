@@ -128,7 +128,7 @@ const New = () => {
       title: 'Contact',
       image: 'https://www.pumpkin.care/wp-content/uploads/2023/12/Renewal-and-cancellation-policies-in-pet-insurance.png',
       description: 'Chat, call, or email pet owners directly anytime.',
-      buttonText: 'Reach Out',
+      buttonText: '',
       link: '/vet',
       IconComponent: ChatIcon
     },
@@ -169,7 +169,7 @@ const New = () => {
             className="pasc-star-gif pasc-star-left" 
             variants={starVariants}
           />
-          Make Adoption Effortless With Our Smart Features``
+          Make Adoption Effortless With Our Smart Features
           <motion.img 
             src={star3Gif} 
             alt="star" 

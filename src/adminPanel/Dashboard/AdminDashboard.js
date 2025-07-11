@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaPaw, FaUsers, FaEnvelope, FaCheckCircle, FaTimesCircle, FaChartBar } from 'react-icons/fa';
+import { FaPaw, FaCheckCircle, FaTimesCircle, FaChartBar } from 'react-icons/fa';
 import axiosInstance from '../../api/axiosConfig';
 import BarChartComponent from './BarChart';
 import PieChartComponent from './PieChart';
@@ -10,15 +10,20 @@ const AdminDashboard = () => {
     totalPets: 0,
     pendingRequests: 0,
     approvedRequests: 0,
-    rejectedRequests: 0,
+    rejectedRequests: 0
+  });
+  const [userPetCounts, setUserPetCounts] = useState([]);
+  const [messageMetrics, setMessageMetrics] = useState({
     totalMessages: 0,
-    recentActivity: []
+    respondedMessages: 0,
+    pendingMessages: 0
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchDashboardData();
+    // No recent activity section
   }, []);
 
   const fetchDashboardData = async () => {
@@ -26,30 +31,42 @@ const AdminDashboard = () => {
       setLoading(true);
       
       const petsResponse = await axiosInstance.get("/pets/getAll");
+      const usersResponse = await axiosInstance.get("/auth/users");
+      const messagesResponse = await axiosInstance.get("/contact/admin/messages");
+
       const pets = petsResponse.data;
+      const users = usersResponse.data || [];
+      const messages = messagesResponse.data || [];
       
       const totalPets = pets.length;
       const approvedRequests = pets.filter(pet => pet.regStatus === "Approved").length;
       const rejectedRequests = pets.filter(pet => pet.regStatus === "Rejected").length;
       const pendingRequests = pets.filter(pet => !pet.regStatus || pet.regStatus === "Pending").length;
       
-      const recentActivity = pets
-        .slice(0, 5)
-        .map((pet, index) => ({
-          id: pet.id,
-          type: getActivityType(pet.regStatus),
-          message: getActivityMessage(pet),
-          time: `${index + 1} ${index === 0 ? 'hour' : 'hours'} ago`
-        }));
-
       setDashboardData({
         totalPets,
         pendingRequests,
         approvedRequests,
-        rejectedRequests,
-        totalMessages: 0,
-        recentActivity
+        rejectedRequests
       });
+
+      const respondedMessages = messages.filter(m => m.responded).length;
+      const pendingMessages = messages.filter(m => !m.responded).length;
+      setMessageMetrics({
+        totalMessages: messages.length,
+        respondedMessages,
+        pendingMessages
+      });
+
+      // Calculate pet count per user
+      const counts = users.map(u => {
+        const count = pets.filter(p => p.ownerName === u.name).length;
+        if (count > 0) {
+          return { name: u.name, location: u.location, count };
+        }
+        return null;
+      }).filter(Boolean);
+      setUserPetCounts(counts);
       
       setError(null);
     } catch (error) {
@@ -60,24 +77,8 @@ const AdminDashboard = () => {
     }
   };
 
-  const getActivityType = (status) => {
-    if (status === "Approved") return 'approval';
-    if (status === "Rejected") return 'rejection';
-    return 'request';
-  };
+  // Recent activity section removed
 
-  const getActivityMessage = (pet) => {
-    const petName = pet.petName || `Pet ID ${pet.id}`;
-    const ownerName = pet.ownerName || 'Unknown Owner';
-    
-    if (pet.regStatus === "Approved") {
-      return `Pet adoption request approved for ${petName} by ${ownerName}`;
-    } else if (pet.regStatus === "Rejected") {
-      return `Pet adoption request rejected for ${petName} by ${ownerName}`;
-    } else {
-      return `New adoption request received for ${petName} from ${ownerName}`;
-    }
-  };
 
   const StatCard = ({ icon, title, value, color }) => (
     <div className={`admin-stat-card admin-stat-${color}`}>
@@ -91,38 +92,7 @@ const AdminDashboard = () => {
     </div>
   );
 
-  const ActivityItem = ({ activity }) => {
-    const getActivityIcon = (type) => {
-      switch (type) {
-        case 'approval':
-          return <FaCheckCircle className="admin-activity-icon admin-activity-approved" />;
-        case 'rejection':
-          return <FaTimesCircle className="admin-activity-icon admin-activity-rejected" />;
-        case 'request':
-          return <FaPaw className="admin-activity-icon admin-activity-pending" />;
-        case 'message':
-          return <FaEnvelope className="admin-activity-icon admin-activity-message" />;
-        default:
-          return <FaPaw className="admin-activity-icon" />;
-      }
-    };
-
-    return (
-      <div className="admin-activity-item">
-        {getActivityIcon(activity.type)}
-        <div className="admin-activity-content">
-          <p className="admin-activity-message">{activity.message}</p>
-          <span className="admin-activity-time">{activity.time}</span>
-        </div>
-      </div>
-    );
-  };
-
-  const handleQuickAction = (action) => {
-    if (action === 'messages') {
-      window.location.href = '/admin/messages';
-    }
-  };
+  // Activity list removed
 
   if (loading) {
     return (
@@ -190,19 +160,19 @@ const AdminDashboard = () => {
           {/* Analytics Mini View */}
           <div className="admin-analytics-mini">
             <h2 className="admin-section-title">
-              <FaChartBar className="admin-section-icon" /> Registration Analytics
+              <FaChartBar className="admin-section-icon" /> User Pet Distribution
             </h2>
             <div className="admin-mini-charts">
               <div className="admin-mini-chart">
-                <PieChartComponent 
-                  data={dashboardData} 
+                <PieChartComponent
+                  data={userPetCounts}
                   title={null}
                   miniView={true}
                 />
               </div>
               <div className="admin-mini-chart">
-                <BarChartComponent 
-                  data={dashboardData} 
+                <BarChartComponent
+                  data={dashboardData}
                   title={null}
                   miniView={true}
                 />
@@ -210,25 +180,10 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-         
         </div>
 
         {/* Right Column */}
         <div className="admin-dashboard-right">
-          {/* Recent Activity */}
-          <div className="admin-recent-activity">
-            <h2 className="admin-section-title">Recent Activity</h2>
-            <div className="admin-activity-list">
-              {dashboardData.recentActivity.length > 0 ? (
-                dashboardData.recentActivity.map(activity => (
-                  <ActivityItem key={activity.id} activity={activity} />
-                ))
-              ) : (
-                <p className="admin-no-activity">No recent activity found.</p>
-              )}
-            </div>
-          </div>
-
           {/* Summary Stats */}
           <div className="admin-summary-stats">
             <h2 className="admin-section-title">Key Metrics</h2>
@@ -254,6 +209,26 @@ const AdminDashboard = () => {
                 <p className="admin-metric-description">
                   of requests processed
                 </p>
+              </div>
+            </div>
+          </div>
+          <div className="admin-summary-stats">
+            <h2 className="admin-section-title">Contact Messages</h2>
+            <div className="admin-metrics-grid">
+              <div className="admin-metric-card">
+                <h4>Total Messages</h4>
+                <p className="admin-metric-value">{messageMetrics.totalMessages}</p>
+                <p className="admin-metric-description">messages received</p>
+              </div>
+              <div className="admin-metric-card">
+                <h4>Responded</h4>
+                <p className="admin-metric-value">{messageMetrics.respondedMessages}</p>
+                <p className="admin-metric-description">messages responded</p>
+              </div>
+              <div className="admin-metric-card">
+                <h4>Pending</h4>
+                <p className="admin-metric-value">{messageMetrics.pendingMessages}</p>
+                <p className="admin-metric-description">awaiting reply</p>
               </div>
             </div>
           </div>

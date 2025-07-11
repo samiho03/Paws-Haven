@@ -152,7 +152,7 @@ const Hero = () => {
            variants={itemVariants(0)}
         />
         <motion.img 
-          src="/images/bone.gif" 
+          src="/images/bone.png" 
           alt="" 
           className="decorative-gif top-left"
           variants={itemVariants(1)}
@@ -165,7 +165,7 @@ const Hero = () => {
           variants={itemVariants(0)}
         />
         <motion.img 
-          src="/images/cat-box.gif" 
+          src="/images/paws.png" 
           alt="" 
           className="decorative-gif top-right"
           variants={itemVariants(1)}
@@ -240,7 +240,7 @@ const Hero = () => {
           <div className="clouds-container">
             <img src="/images/clouds1.png" alt="Cloud Background" className="cloud-image" />
             <motion.img 
-              src="/images/shitzu-wavee.gif" 
+              src="/images/shihtzuuuu.png" 
               alt="Shih Tzu Dog" 
               className="dog-image"
               initial={{ y: 50, opacity: 0, x: '-50%' }} 

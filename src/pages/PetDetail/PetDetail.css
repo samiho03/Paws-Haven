@@ -325,42 +325,7 @@
     color: #8b5cf6;
   }
   
-  /* Chat Button */
-  .pet-detail-chat-btn {
-    background: linear-gradient(135deg,  #f5ffac , #916ed6);
-    color: white;
-    border: none;
-    padding: 1rem 1.5rem;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 2rem;
-    width: 25%;
-    justify-content: center;
-  }
-
-  .pet-detail-chat-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width:auto;
-    height: auto;
-   background: linear-gradient(135deg,  #923fd2   0%, #c0c880 100%);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.pet-detail-chat-btn:hover::before {
-    opacity: 1;
-}
-
+ 
   /* Recommended Pets */
   .pet-detail-recommended {
     margin-top: 8rem;
@@ -382,81 +347,6 @@
   }
   
  
-  /* Chat Box */
-  .pet-detail-chatbox {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 350px;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    overflow: hidden;
-  }
-  
-  .pet-detail-chatbox-header {
-    background: #8b5cf6;
-    color: white;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .pet-detail-chatbox-header h3 {
-    margin: 0;
-    font-size: 1.1rem;
-  }
-  
-  .pet-detail-chatbox-close {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0 0.5rem;
-  }
-  
-  .pet-detail-chatbox-body {
-    padding: 1rem;
-  }
-  
-  .pet-detail-chatbox-body textarea {
-    width: 90%;
-    min-height: 120px;
-    padding: 0.8rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    resize: none;
-    font-family: inherit;
-  }
-  
-  .pet-detail-chatbox-footer {
-    padding: 0.8rem 1rem;
-    background: #f9fafb;
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .pet-detail-chatbox-send {
-    background: #8b5cf6;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  
-  .pet-detail-chatbox-send:hover {
-    background: #7952d5;
-  }
-  
-  .pet-detail-chatbox-send:disabled {
-    background: #d5cbe1;
-    cursor: not-allowed;
-  }
   
   /* Loading and Error States */
   .pet-detail-loading,

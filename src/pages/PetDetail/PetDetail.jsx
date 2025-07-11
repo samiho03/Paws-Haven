@@ -361,17 +361,11 @@ const PetDetail = () => {
                     <FaPhone /> {pet.contactPhoneNumber}
                   </a>
                 </div>
-              </div>
+              </div>   
+            </div>
+            
           </div>
-        
 
-            <button 
-              className="pet-detail-chat-btn"
-              onClick={() => setShowChatBox(true)}
-              >
-              <FaComment /> Message Owner
-            </button>
-          </div>
         </div>
      
           
@@ -418,35 +412,7 @@ const PetDetail = () => {
           </div>
         )}
 
-              {showChatBox && (
-                <div className="pet-detail-chatbox">
-                  <div className="pet-detail-chatbox-header">
-                    <h3>Message {owner?.name || 'the owner'}</h3>
-                    <button 
-                      className="pet-detail-chatbox-close"
-                      onClick={() => setShowChatBox(false)}
-                    >
-                      &times;
-                    </button>
-                  </div>
-                  <div className="pet-detail-chatbox-body">
-                    <textarea
-                      placeholder={`Hi, I'm interested in ${pet.petName}. Can you tell me more?`}
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                    />
-                  </div>
-                  <div className="pet-detail-chatbox-footer">
-                    <button 
-                      className="pet-detail-chatbox-send"
-                      onClick={handleSendMessage}
-                      disabled={!message.trim()}
-                    >
-                      Send Message
-                    </button>
-                  </div>
-                </div>
-              )}
+              
             </div>
           );
       

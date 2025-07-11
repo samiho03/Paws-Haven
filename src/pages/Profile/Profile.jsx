@@ -46,6 +46,14 @@ const Profile = () => {
         newPassword: '',
         confirmPassword: ''
     });
+    const [showDeleteAccountConfirm, setShowDeleteAccountConfirm] = useState(false);
+    const [deletePassword, setDeletePassword] = useState('');
+
+    const [deleteConfirmation, setDeleteConfirmation] = useState({
+    show: false,
+    petId: null,
+    petName: ''
+    });
 
     // Pet list state
     const [pets, setPets] = useState([]);
@@ -295,20 +303,32 @@ const Profile = () => {
         }
     };
 
-    const deletePet = async (petId) => {
-        if (!window.confirm('Are you sure you want to delete this pet?')) return;
-        
+   const showDeleteConfirmation = (petId, petName) => {
+    setDeleteConfirmation({
+        show: true,
+        petId,
+        petName
+    });
+    };
+
+    const deletePet = async () => {
         try {
-            await axios.delete(`http://localhost:8080/api/v1/pets/delete/${petId}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
+            await axios.delete(`http://localhost:8080/api/v1/pets/delete/${deleteConfirmation.petId}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
             });
-            setPets(pets.filter(pet => pet.id !== petId));
+            setPets(pets.filter(pet => pet.id !== deleteConfirmation.petId));
             showNotification('Pet deleted successfully!');
         } catch (error) {
             console.error('Error deleting pet:', error);
             showNotification('Failed to delete pet', 'error');
+        } finally {
+            setDeleteConfirmation({
+            show: false,
+            petId: null,
+            petName: ''
+            });
         }
     };
 
@@ -318,22 +338,38 @@ const Profile = () => {
     };
 
     const handleDeleteAccount = async () => {
-        if (!window.confirm('Are you absolutely sure? This will permanently delete your account and all associated data.')) return;
+    if (!deletePassword) {
+        showNotification('Please enter your password', 'error');
+        return;
+    }
+
+    try {
+        await axios.delete('http://localhost:8080/api/v1/profile', {
+            params: { password: deletePassword },
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
         
-        try {
-            await axios.delete('http://localhost:8080/api/v1/profile', {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-            localStorage.removeItem('token');
+        localStorage.removeItem('token');
+        showNotification('Account deleted successfully');
+        
+        // Redirect after a short delay
+        setTimeout(() => {
             window.location.href = '/';
-            showNotification('Account deleted successfully');
-        } catch (error) {
-            console.error('Error deleting account:', error);
-            showNotification('Failed to delete account', 'error');
-        }
-    };
+        }, 1500);
+    } catch (error) {
+        console.error('Error deleting account:', error);
+        const errorMessage = error.response?.data?.message || 
+                           error.response?.data || 
+                           'Failed to delete account';
+        showNotification(errorMessage, 'error');
+    } finally {
+        setDeletePassword('');
+        setShowDeleteAccountConfirm(false);
+    }
+};
+
 
     const toggleLike = (petId) => {
         setLikedPets(prev => ({
@@ -437,10 +473,7 @@ const Profile = () => {
                                         </button>
                                         <button 
                                             className="profile-menu-item profile-menu-item-danger"
-                                            onClick={() => {
-                                                setShowDeleteConfirm(true);
-                                                setShowSettingsMenu(false);
-                                            }}
+                                            onClick={() => setShowDeleteAccountConfirm(true)}
                                         >
                                             <FaTrash /> Delete Account
                                         </button>
@@ -637,20 +670,16 @@ const Profile = () => {
                                             </Link>
                                             <div className="profile-pet-overlay">
                                                 <div className="profile-pet-actions">
-                                                    <select
-                                                        value={pet.isAvailable ? 'available' : 'not-available'}
-                                                        onChange={(e) => updatePetStatus(pet.id, e.target.value === 'available')}
-                                                        className="profile-pet-status-select"
-                                                    >
-                                                        <option value="available">Available</option>
-                                                        <option value="not-available">Not Available</option>
-                                                    </select>
+                                                   
                                                     <button 
                                                         className="profile-pet-delete-btn"
-                                                        onClick={() => deletePet(pet.id)}
-                                                    >
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            showDeleteConfirmation(pet.id, pet.petName);
+                                                        }}
+                                                        >
                                                         <FaTrash />
-                                                    </button>
+                                                        </button>
                                                 </div>
                                                 <div className="profile-pet-info">
                                                     <h3>{pet.petName}</h3>
@@ -777,27 +806,71 @@ const Profile = () => {
             )}
 
             {/* Delete Account Confirmation */}
-            {showDeleteConfirm && (
+            {showDeleteAccountConfirm && (
                 <div className="profile-delete-modal">
                     <div className="profile-delete-container">
                         <h3>Delete Your Account</h3>
-                        <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                        <p>This action cannot be undone. Please enter your password to confirm.</p>
+                        
+                        <div className="profile-form-group">
+                            <label><FaLock /> Password</label>
+                            <input
+                                type="password"
+                                value={deletePassword}
+                                onChange={(e) => setDeletePassword(e.target.value)}
+                                className="profile-form-input"
+                                placeholder="Enter your password"
+                            />
+                        </div>
+                        
                         <div className="profile-delete-actions">
                             <button 
                                 className="profile-cancel-btn"
-                                onClick={() => setShowDeleteConfirm(false)}
+                                onClick={() => {
+                                    setShowDeleteAccountConfirm(false);
+                                    setDeletePassword('');
+                                }}
                             >
                                 Cancel
                             </button>
                             <button 
                                 className="profile-delete-account-btn"
                                 onClick={handleDeleteAccount}
+                                disabled={!deletePassword}
                             >
                                 Delete Account
                             </button>
                         </div>
                     </div>
                 </div>
+            )}
+            
+            {/* Delete Pet Confirmation */}
+            {deleteConfirmation.show && (
+            <div className="profile-delete-modal">
+                <div className="profile-delete-container">
+                <h3>Delete Pet</h3>
+                <p>Are you sure you want to delete {deleteConfirmation.petName}? This action cannot be undone.</p>
+                <div className="profile-delete-actions">
+                    <button 
+                    className="profile-cancel-btn"
+                    onClick={() => setDeleteConfirmation({
+                        show: false,
+                        petId: null,
+                        petName: ''
+                    })}
+                    >
+                    Cancel
+                    </button>
+                    <button 
+                    className="profile-delete-account-btn"
+                    onClick={deletePet}
+                    >
+                    Delete
+                    </button>
+                </div>
+                </div>
+            </div>
             )}
         </div>
     );

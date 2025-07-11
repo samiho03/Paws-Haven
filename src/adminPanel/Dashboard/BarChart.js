@@ -3,33 +3,35 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import './BarChart.css';
 
 const BarChartComponent = ({ data, title }) => {
-  // Transform the dashboard data for bar chart
-  const chartData = [
-    {
-      name: 'Pending',
-      count: data.pendingRequests || 0,
-      fill: '#ff9500'
-    },
-    {
-      name: 'Approved',
-      count: data.approvedRequests || 0,
-      fill: '#28a745'
-    },
-    {
-      name: 'Rejected',
-      count: data.rejectedRequests || 0,
-      fill: '#dc3545'
-    }
-  ];
+  const isUserData = Array.isArray(data);
+  const defaultColors = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#8dd1e1', '#a4de6c'];
+
+  const chartData = isUserData
+    ? data.map((item, idx) => ({
+        name: item.name,
+        location: item.location,
+        count: item.count,
+        fill: defaultColors[idx % defaultColors.length]
+      }))
+    : [
+        { name: 'Pending', count: data.pendingRequests || 0, fill: '#ff9500' },
+        { name: 'Approved', count: data.approvedRequests || 0, fill: '#28a745' },
+        { name: 'Rejected', count: data.rejectedRequests || 0, fill: '#dc3545' }
+      ];
 
   // Custom tooltip
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
+      const info = payload[0].payload;
       return (
         <div className="custom-tooltip">
-          <p className="tooltip-label">{`${label}: ${payload[0].value}`}</p>
+          <p className="tooltip-label">{info.name}</p>
+          {isUserData && (
+            <p className="tooltip-desc">Location: {info.location || 'N/A'}</p>
+          )}
+          <p className="tooltip-desc">Count: {info.count}</p>
           <p className="tooltip-desc">
-            {`${((payload[0].value / data.totalPets) * 100).toFixed(1)}% of total pets`}
+            {`${((info.count / chartData.reduce((s, i) => s + i.count, 0)) * 100).toFixed(1)}% of total`}
           </p>
         </div>
       );
@@ -40,8 +42,10 @@ const BarChartComponent = ({ data, title }) => {
   return (
     <div className="chart-container">
       <div className="chart-header">
-        <h3>{title || 'Pet Registration Status'}</h3>
-        <p className="chart-subtitle">Distribution of pet registration requests</p>
+        <h3>{title || (isUserData ? 'Pets by User' : 'Pet Registration Status')}</h3>
+        <p className="chart-subtitle">
+          {isUserData ? 'Number of pets registered per user' : 'Distribution of pet registration requests'}
+        </p>
       </div>
       
       <div className="chart-wrapper">
@@ -79,21 +83,23 @@ const BarChartComponent = ({ data, title }) => {
         </ResponsiveContainer>
       </div>
 
-      <div className="chart-stats">
-        <div className="stat-item">
-          <span className="stat-label">Total Requests:</span>
-          <span className="stat-value">{data.totalPets}</span>
+      {!isUserData && (
+        <div className="chart-stats">
+          <div className="stat-item">
+            <span className="stat-label">Total Requests:</span>
+            <span className="stat-value">{data.totalPets}</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-label">Processing Rate:</span>
+            <span className="stat-value">
+              {data.totalPets > 0
+                ? `${(((data.approvedRequests + data.rejectedRequests) / data.totalPets) * 100).toFixed(1)}%`
+                : '0%'
+              }
+            </span>
+          </div>
         </div>
-        <div className="stat-item">
-          <span className="stat-label">Processing Rate:</span>
-          <span className="stat-value">
-            {data.totalPets > 0 
-              ? `${(((data.approvedRequests + data.rejectedRequests) / data.totalPets) * 100).toFixed(1)}%`
-              : '0%'
-            }
-          </span>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

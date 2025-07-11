@@ -261,3 +261,116 @@
   }
 }
 
+
+/* Four Items with Single Swap Styles */
+.pet-category-four-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 0px;
+}
+
+.pet-category-four-track {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  padding: 0 10px;
+}
+
+.pet-category-four-button {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  padding: 22px;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  backdrop-filter: blur(2px);
+}
+
+.pet-category-four-button:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.pet-category-four-button.prev {
+  left: 0;
+}
+
+.pet-category-four-button.next {
+  right: 0;
+}
+
+.pet-category-four-button svg {
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.pet-category-four-button svg path {
+  stroke-width: 3px;
+}
+
+/* Update the indicator styles */
+.pet-category-four-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.pet-category-four-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #e2e2e2;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.pet-category-four-indicator.active {
+  background-color: #7c50a1;
+  transform: scale(1.2);
+}
+
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .pet-category-four-container {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pet-category-four-container {
+    padding: 0 20px;
+  }
+  
+  .pet-category-four-track {
+    gap: 1.5rem;
+  }
+  
+  .category-card {
+    width: calc(50% - 1rem);
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pet-category-four-container {
+    padding: 0 10px;
+  }
+  
+  .category-card {
+    width: 100%;
+    max-width: 18rem;
+  }
+}

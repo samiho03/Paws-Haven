@@ -20,8 +20,8 @@
 
   .decorative-gif {
     position: absolute;
-    width: 70px;
-    height: 100px;
+    width: 55px;
+    height: 75px;
     object-fit: contain;
     z-index: 1;
     
@@ -29,8 +29,8 @@
   
 
   .decorative-gif.top-left{
-     top: 87px;
-    left: 150px;
+     top: 100px;
+    left: 157px;
       filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.274));
   }
   
@@ -41,7 +41,7 @@
     top: 70px;
     left: 120px;
     animation-delay: 0.2s;
-    animation: rotatee 8s linear infinite;
+    
 }
 
 .decorative-image.top-right {
@@ -50,20 +50,13 @@
     top: 70px;
     right: 120px;
     animation-delay: 0.4s;
-    animation: rotatee 8s linear infinite;
+    
 }
 
-@keyframes rotatee {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
+
     .decorative-gif.top-right{
-     top: 83px;
-    right: 148px;
+     top: 98px;
+    right: 158px;
       filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.274));
   }
   
@@ -145,10 +138,10 @@ body{
     135deg, 
     #fbffde 0%,
     #ffffd4 15%,
-    #ffffff 30%,
-    #ffffff 45%,
+    #ffffd4 30%,
+    #ffffd4 45%,
     #fbffde 60%,
-    #ffffff 75%,
+    #ffffd4 75%,
     #ffffff 90%,
     #fbffde 100%
   );
@@ -444,8 +437,8 @@ body{
   
   .dog-image {
     position: absolute;
-    width: 25%; /* Adjust size as needed */
-    bottom: 0%; /* Position from bottom of container */
+    width: 31%; /* Adjust size as needed */
+    bottom: 8%; /* Position from bottom of container */
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
