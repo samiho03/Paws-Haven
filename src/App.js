@@ -14,6 +14,7 @@ import Contact from './pages/Contact/Contact';
 import Pets from './components/Pets/Pets';
 import Favorites from './pages/Favorites/Favorites';
 import PetDetail from './pages/PetDetail/PetDetail';
+import Inbox from './pages/MessageInbox/MessageInbox';
 import PetList from './pages/PetList/PetList';
 import Chatbot from './pages/Chatbot/Chatbot';
 import Map from './pages/Map/Map';
@@ -102,6 +103,7 @@ const App = () => {
             <Route path="/petlist" element={<PetList />} />
             <Route path= "/petDetail/:id" element={<PetDetail />} />
             <Route path= "/favorites" element={<Favorites />} />
+            <Route path="/inbox" element={<Inbox />} />
             <Route path="/form" element={<Form />} />
             <Route path= "/map" element={<Map />} />
             <Route path="/quiz" element={<Quiz />} />

@@ -314,7 +314,7 @@ const PetCategory = () => {
           transition={{ delay: 0.1 }}
         >
           <img 
-            src="/images/clouds2.png" 
+            src="/images/Frame-37.png" 
             alt="Cat Cloud" 
             className="cloud-image"
           />

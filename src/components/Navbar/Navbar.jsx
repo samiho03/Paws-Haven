@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { FaPaw, FaUserPlus, FaUserCircle, FaHeart } from 'react-icons/fa';
+import { FaPaw, FaUserPlus, FaUserCircle, FaHeart, FaEnvelope } from 'react-icons/fa'
 import axios from 'axios';
 import PetCat from '../../assets/advice.png';
 import Dogs from '../../assets/d1.png';
@@ -173,6 +173,17 @@ const Navbar = () => {
 
         <div className="nav-right">
           <button 
+              className={`inbox-btn ${homeNotScrolled ? 'home-inbox-btn' : ''}`} 
+              onClick={() => {
+                navigate('/inbox');
+                setMobileMenuOpen(false);
+              }}
+              aria-label="Inbox"
+            >
+              <FaEnvelope className="inbox-icon" />
+          </button>
+
+          <button 
             className={`favorites-btn ${homeNotScrolled ? 'home-favorites-btn' : ''}`} 
             onClick={() => {
               navigate('/favorites');
@@ -182,6 +193,7 @@ const Navbar = () => {
           >
             <FaHeart className="heart-icon" />
           </button>
+          
           <button 
             className={`profile-btn ${homeNotScrolled ? 'home-profile-btn' : ''}`} 
             onClick={() => {

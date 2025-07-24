@@ -132,7 +132,7 @@ body{
 
 .hero-title {
   font-family: "DynaPuff", system-ui;
-  font-size: 3.2rem;
+  font-size: 3.6rem;
   font-weight: 700;
   background: linear-gradient(
     135deg, 
@@ -427,6 +427,8 @@ body{
     position: relative;
     width: 100%;
     height: auto;
+    margin-top: 19%;
+    
   }
   
   .cloud-image {
@@ -437,8 +439,8 @@ body{
   
   .dog-image {
     position: absolute;
-    width: 31%; /* Adjust size as needed */
-    bottom: 8%; /* Position from bottom of container */
+    width: 100%; /* Adjust size as needed */
+    bottom: 0%; /* Position from bottom of container */
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
@@ -487,10 +489,10 @@ body{
     opacity: 0;
     animation: fadeInUp 0.8s forwards;
     transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  will-change: transform;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    will-change: transform;
 
   }
   

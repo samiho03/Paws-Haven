@@ -144,32 +144,7 @@ const Hero = () => {
       <div className="hero-overlay"></div>
       
       <div className="hero-content">
-        {/* Decorative corner images */}
-        <motion.img 
-          src="/images/Frame 25.png" 
-          alt="" 
-          className="decorative-image top-left"
-           variants={itemVariants(0)}
-        />
-        <motion.img 
-          src="/images/bone.png" 
-          alt="" 
-          className="decorative-gif top-left"
-          variants={itemVariants(1)}
-        />
-
-        <motion.img 
-          src="/images/Frame 25.png" 
-          alt="" 
-          className="decorative-image top-right"
-          variants={itemVariants(0)}
-        />
-        <motion.img 
-          src="/images/paws.png" 
-          alt="" 
-          className="decorative-gif top-right"
-          variants={itemVariants(1)}
-        />
+        
 
         {/* Enhanced Animated Title Section */}
         <motion.div 
@@ -192,19 +167,7 @@ const Hero = () => {
           </motion.p>
         </motion.div>
 
-        <motion.img 
-          src="/images/beaglee.png" 
-          alt="" 
-          className="decorative-image bottom-left"
-          variants={itemVariants(4)}
-        />
-        <motion.img 
-          src="/images/orangiee.png" 
-          alt="" 
-          className="decorative-image bottom-right"
-           variants={itemVariants(4)}
-        />
-  
+       
          <motion.div
              variants={itemVariants(5)}
             initial="hidden"
@@ -238,9 +201,9 @@ const Hero = () => {
           variants={itemVariants(6)}
         >   
           <div className="clouds-container">
-            <img src="/images/clouds1.png" alt="Cloud Background" className="cloud-image" />
+          
             <motion.img 
-              src="/images/shihtzuuuu.png" 
+              src="/images/Frame-44.png" 
               alt="Shih Tzu Dog" 
               className="dog-image"
               initial={{ y: 50, opacity: 0, x: '-50%' }} 
